@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <!-- Setting the rollNo property of the Student bean -->
+        <property name="rollNo" value="12" />
+        <!-- Setting the name property of the Student bean -->
+        <property name="name" value="Ganesh Gupta" />
+    </bean>
+
+</beans>
