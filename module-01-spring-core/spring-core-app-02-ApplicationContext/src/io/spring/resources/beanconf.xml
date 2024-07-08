@@ -4,12 +4,20 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Definition of the Student bean with id "studentObj" -->
-    <bean class="io.spring.beans.Student" id="studentObj">
+    <!-- Definition of the Student bean with id "studentObj01" -->
+    <bean class="io.spring.beans.Student" id="studentObj01">
         <!-- Setting the rollNo property of the Student bean -->
         <property name="rollNo" value="12" />
         <!-- Setting the name property of the Student bean -->
         <property name="name" value="Ganesh Gupta" />
+    </bean>
+
+    <!-- Definition of the Student bean with id "studentObj02" -->
+    <bean class="io.spring.beans.Student" id="studentObj02">
+        <!-- Setting the rollNo property of the Student bean -->
+        <property name="rollNo" value="13" />
+        <!-- Setting the name property of the Student bean -->
+        <property name="name" value="Virat Gupta" />
     </bean>
 
 </beans>

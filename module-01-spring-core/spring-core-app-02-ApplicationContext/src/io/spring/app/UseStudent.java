@@ -17,19 +17,17 @@ public class UseStudent {
         System.out.println("Container Started");
 
         // 👇🏼 Fetching Student Object from the Spring Container
+        // Using .getBean(String) method
+        Student studentObj01 = (Student) container.getBean("studentObj01");
+        Student studentObj02 = (Student) container.getBean("studentObj02");
 
-        /*
-        Version 1: Using .getBean(String) method
-        This method requires providing the bean name as a string argument and explicit type casting.
-        Student studentObj = (Student) container.getBean("studentObj");
-        */
+        // 📇 Printing out the details of the retrieved Student object
+        System.out.println("\nStudent name: " + studentObj01.getName());
+        System.out.println("Student Roll no: " + studentObj01.getRollNo());
 
-        // Version 2: Using .getBean(Class<T>) method
-        // This method requires the class type as an argument and eliminates the need for explicit type casting.
-        Student studentObj = container.getBean(Student.class);
+        System.out.println("=============================");
 
-        // Printing out the details of the retrieved Student object
-        System.out.println("Student name: " + studentObj.getName());
-        System.out.println("Student Roll no: " + studentObj.getRollNo());
+        System.out.println("Student name: " + studentObj02.getName());
+        System.out.println("Student Roll no: " + studentObj02.getRollNo());
     }
 }
