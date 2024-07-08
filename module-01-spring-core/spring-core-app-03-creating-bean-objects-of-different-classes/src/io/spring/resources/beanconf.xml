@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Laptop bean with name "laptopObj" -->
+    <bean class="io.spring.beans.Laptop" name="laptopObj">
+        <!-- Setting the brand property of the Laptop bean -->
+        <property name="brand" value="Dell" />
+        <!-- Setting the model property of the Laptop bean -->
+        <property name="model" value="XPS 15" />
+        <!-- Setting the ramSize property of the Laptop bean -->
+        <property name="ramSize" value="16" />
+        <!-- Setting the storageSize property of the Laptop bean -->
+        <property name="storageSize" value="512" />
+    </bean>
+
+    <!-- Definition of the Programmer bean with name "programmerObj" -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj">
+        <!-- Setting the name property of the Programmer bean -->
+        <property name="name" value="Ganesh Gupta" />
+        <!-- Setting the age property of the Programmer bean -->
+        <property name="age" value="22" />
+        <!-- Setting the language property of the Programmer bean -->
+        <property name="language" value="Java" />
+    </bean>
+
+</beans>
