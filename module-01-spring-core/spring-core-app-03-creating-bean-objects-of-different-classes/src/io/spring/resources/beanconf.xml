@@ -24,6 +24,14 @@
         <property name="age" value="22" />
         <!-- Setting the language property of the Programmer bean -->
         <property name="language" value="Java" />
+
+        <!-- 👉 So far I have only injected property values with primitive data. -->
+        <!-- 👉 Values can also be injected by reference i.e., one bean definition can be injected into another. -->
+        <!-- 👉 To do this, we use ref attribute of <property> tag instead of the value attribute. -->
+        <!-- 👉 The ref attribute then refers to another bean definition's id/name. -->
+
+        <!-- Setting the laptop property of the Programmer bean using ref attribute -->
+        <property name="laptop" ref="laptopObj" />
     </bean>
 
 </beans>
