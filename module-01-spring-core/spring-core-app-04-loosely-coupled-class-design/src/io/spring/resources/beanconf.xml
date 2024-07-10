@@ -48,7 +48,7 @@
         <!-- 👉 The ref attribute then refers to another bean definition's id/name. -->
 
         <!-- Setting the computer property of the Programmer bean using ref attribute -->
-        <property name="computer" ref="desktop" />
+        <property name="computer" ref="desktopObj" />
     </bean>
 
 </beans>
