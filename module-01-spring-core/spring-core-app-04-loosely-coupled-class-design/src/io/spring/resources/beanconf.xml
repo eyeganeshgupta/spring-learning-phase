@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Laptop bean with name "laptopObj" -->
+    <bean class="io.spring.beans.Laptop" name="laptopObj">
+        <property name="brand" value="Dell" />
+        <property name="processor" value="Intel i7" />
+        <property name="ramSize" value="16" />
+        <property name="storageSize" value="512" />
+    </bean>
+
+    <!-- Definition of the Programmer bean with name "programmerObj01" -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj01">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="22" />
+        <property name="language" value="Java" />
+
+        <!-- 👉 So far I have only injected property values with primitive data. -->
+        <!-- 👉 Values can also be injected by reference i.e., one bean definition can be injected into another. -->
+        <!-- 👉 To do this, we use ref attribute of <property> tag instead of the value attribute. -->
+        <!-- 👉 The ref attribute then refers to another bean definition's id/name. -->
+
+        <!-- Setting the computer property of the Programmer bean using ref attribute -->
+        <property name="computer" ref="laptopObj" />
+    </bean>
+
+
+    <!-- Definition of the Desktop bean with name "desktopObj" -->
+    <bean class="io.spring.beans.Desktop" name="desktopObj">
+        <property name="brand" value="HP" />
+        <property name="processor" value="AMD Ryzen 7" />
+        <property name="ramSize" value="32" />
+        <property name="storageSize" value="1024" />
+    </bean>
+
+    <!-- Definition of the Programmer bean with name "programmerObj02" -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj02">
+        <property name="name" value="Virat Gupta" />
+        <property name="age" value="8" />
+        <property name="language" value="JavaScript" />
+
+        <!-- 👉 So far I have only injected property values with primitive data. -->
+        <!-- 👉 Values can also be injected by reference i.e., one bean definition can be injected into another. -->
+        <!-- 👉 To do this, we use ref attribute of <property> tag instead of the value attribute. -->
+        <!-- 👉 The ref attribute then refers to another bean definition's id/name. -->
+
+        <!-- Setting the computer property of the Programmer bean using ref attribute -->
+        <property name="computer" ref="desktop" />
+    </bean>
+
+</beans>
