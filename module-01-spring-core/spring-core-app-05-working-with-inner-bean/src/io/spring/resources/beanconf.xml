@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the AccountHolder bean with name "accountHolderObj01" -->
+    <bean class="io.spring.beans.AccountHolder" name="accountHolderObj01">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="address" value="Block no. 08 Sai Darshan Society, Valai Pada Road, Palghar - 401209" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="+91 89X39 XX7XX" />
+    </bean>
+
+    <!-- Definition of the AccountHolder bean with name "accountHolderObj02" -->
+    <bean class="io.spring.beans.AccountHolder" name="accountHolderObj02">
+        <property name="name" value="Virat Gupta" />
+        <property name="address" value="Block no. 02 Santoshi Mata Society, Valai Pada Road, Palghar - 401209" />
+        <property name="email" value="eyeviratgupta@gmail.com" />
+        <property name="phoneNumber" value="+91 XXX17 52X88" />
+    </bean>
+
+</beans>
