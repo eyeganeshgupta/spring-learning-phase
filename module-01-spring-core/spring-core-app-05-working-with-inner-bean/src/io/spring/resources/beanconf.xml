@@ -4,10 +4,25 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 📌 We must remember 5 important points when dealing with inner beans: -->
+        <!-- 1️⃣ When a bean does not need to be shared with other beans, then it can be declared as an inner bean. -->
+        <!-- 2️⃣ An inner bean cannot be injected into any other bean except for the enclosing bean. -->
+        <!-- 3️⃣ An inner bean is defined within the context of its enclosing bean. -->
+        <!-- 4️⃣ Inner bean typically does not has an id associated with it although it is perfectly legal to provide an id. -->
+        <!-- 5️⃣ This is because, by its very definition, an inner bean will not be shared outside of its enclosing bean so the value of the id/name attribute of an inner bean is ignored by Spring. -->
+
     <!-- Definition of the AccountHolder bean with name "accountHolderObj01" -->
     <bean class="io.spring.beans.AccountHolder" name="accountHolderObj01">
-        <property name="name" value="Ganesh Gupta" />
-        <property name="address" value="Block no. 08 Sai Darshan Society, Valai Pada Road, Palghar - 401209" />
+        <property name="name" value="Sai Siddhi Traders" />
+        <property name="account">
+            <!-- Definition of the Account InnerBean -->
+            <bean class="io.spring.beans.Account">
+                <property name="accountNumber" value="59298620000732" />
+                <property name="balance" value="1733" />
+                <property name="accountType" value="Current Account" />
+            </bean>
+        </property>
+        <property name="address" value="Shop no. 08 Sai Siddhi Traders, Valai Pada Road, Palghar - 401209" />
         <property name="email" value="eyeganeshgupta@gmail.com" />
         <property name="phoneNumber" value="+91 89X39 XX7XX" />
     </bean>
@@ -15,6 +30,14 @@
     <!-- Definition of the AccountHolder bean with name "accountHolderObj02" -->
     <bean class="io.spring.beans.AccountHolder" name="accountHolderObj02">
         <property name="name" value="Virat Gupta" />
+        <property name="account">
+            <!-- Definition of the Account InnerBean -->
+            <bean class="io.spring.beans.Account">
+                <property name="accountNumber" value="923020002682010" />
+                <property name="balance" value="3508" />
+                <property name="accountType" value="Saving Account" />
+            </bean>
+        </property>
         <property name="address" value="Block no. 02 Santoshi Mata Society, Valai Pada Road, Palghar - 401209" />
         <property name="email" value="eyeviratgupta@gmail.com" />
         <property name="phoneNumber" value="+91 XXX17 52X88" />
