@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <property name="subjects">
+            <list>
+                <value>Data Science</value>
+                <value>Cloud Computing and Web Services</value>
+                <value>Wireless and Sensor Networks</value>
+                <value>Data Mining and Warehousing</value>
+                <value>Cyber Laws and IPR</value>
+            </list>
+        </property>
+        <property name="marks">
+            <list>
+                <value>55</value>
+                <value>61</value>
+                <value>40</value>
+                <value>59</value>
+                <value>72</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>
