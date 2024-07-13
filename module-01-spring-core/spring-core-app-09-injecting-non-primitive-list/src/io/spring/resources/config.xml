@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Company bean with id "companyObj" -->
+    <bean class="io.spring.beans.Company" id="companyObj">
+        <property name="companyName" value="Oracle Corporation" />
+        <property name="address" value="Austin, Texas" />
+        <property name="workers">
+            <!-- Injecting Non-primitive list -->
+            <list>
+                <bean class="io.spring.beans.Employee">
+                    <property name="employeeId" value="E001" />
+                    <property name="name" value="Ganesh Gupta" />
+                    <property name="department" value="Engineering" />
+                    <property name="salary" value="850000" />
+                </bean>
+                <bean class="io.spring.beans.Employee">
+                    <property name="employeeId" value="E002" />
+                    <property name="name" value="Virat Gupta" />
+                    <property name="department" value="Research" />
+                    <property name="salary" value="714000" />
+                </bean>
+                <bean class="io.spring.beans.Employee">
+                    <property name="employeeId" value="E003" />
+                    <property name="name" value="Hrithik Roshan" />
+                    <property name="department" value="Sales" />
+                    <property name="salary" value="400000" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>
