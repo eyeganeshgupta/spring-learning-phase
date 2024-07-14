@@ -11,6 +11,10 @@
         <property name="age" value="21" />
         <property name="grade" value="T.Y.B.Sc.CS" />
         <property name="emails">
+            <!-- ▶ Spring provides <set> tag to inject a Java Set using XML -->
+            <!-- ▶ The <set> tag is used within <property> or <constructor-arg> -->
+            <!-- ▶ To add values in the Set, the Spring framework provides <value> tag which is nested within <set> tag. -->
+            <!-- ▶ The <set> tag creates and passes the java.util.LinkedHashSet object. -->
             <set>
                 <value>eyeganeshgupta@gmail.com</value>
                 <value>ganeshgupta9762@gmail.com</value>
