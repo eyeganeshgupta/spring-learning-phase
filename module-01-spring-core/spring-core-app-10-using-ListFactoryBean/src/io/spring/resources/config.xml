@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- ❓🤔 What type of object does <list> tag create? -->
+    <!-- 🙋🏻‍♂️ The <list> tag by default creates and passes the java.util.ArrayList object -->
+
+    <!-- ❓🤔 Can we change it to LinkedList or some other type? -->
+    <!-- 🙋🏻‍♂️ Yes we can do this in 2 ways: -->
+        <!-- 1️⃣ By using the class ListFactoryBean inside XML file -->
+        <!-- 2️⃣ By adding a new schema called util. -->
+
+    <!-- 👉 The class ListFactoryBean provides developer a way to use a concrete List implementation class (ArrayList and LinkedList) in Spring's bean configuration file. -->
+    <!-- 👉 To use this class we have to add extra <bean> and <property> tags as child tags of the outer <property> tag. -->
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <property name="subjects">
+            <list>
+                <value>Data Science</value>
+                <value>Cloud Computing and Web Services</value>
+                <value>Wireless and Sensor Networks</value>
+                <value>Data Mining and Warehousing</value>
+                <value>Cyber Laws and IPR</value>
+            </list>
+        </property>
+        <!-- Working with ListFactoryBean -->
+        <property name="marks">
+            <bean class="org.springframework.beans.factory.config.ListFactoryBean">
+                <property name="targetListClass">
+                    <value>java.util.LinkedList</value>
+                </property>
+                <property name="sourceList">
+                    <list>
+                        <value>55</value>
+                        <value>61</value>
+                        <value>40</value>
+                        <value>59</value>
+                        <value>72</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+</beans>
