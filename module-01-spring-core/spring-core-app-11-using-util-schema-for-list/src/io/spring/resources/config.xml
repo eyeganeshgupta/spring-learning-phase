@@ -5,6 +5,51 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <!-- bean definitions here -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <property name="subjects">
+            <list>
+                <value>Data Science</value>
+                <value>Cloud Computing and Web Services</value>
+                <value>Wireless and Sensor Networks</value>
+                <value>Data Mining and Warehousing</value>
+                <value>Cyber Laws and IPR</value>
+            </list>
+        </property>
+        <!-- 🔥 Working with util Schema 🔥 -->
+        <property name="marks">
+            <!--
+            <bean class="org.springframework.beans.factory.config.ListFactoryBean">
+                <property name="targetListClass">
+                    <value>java.util.LinkedList</value>
+                </property>
+                <property name="sourceList">
+                    <list>
+                        <value>55</value>
+                        <value>61</value>
+                        <value>40</value>
+                        <value>59</value>
+                        <value>72</value>
+                    </list>
+                </property>
+            </bean>
+            -->
+
+            <!-- 👉 Using the class ListFactoryBean solves the problem but requires some extra tags and makes the code a bit difficult. -->
+            <!-- 👉 As an easy alternate to this Spring provides util schema and tags. -->
+            <!-- 👉 As the name implies, the util tags deal with common, utility configuration issues, such as configuring collections. -->
+            <util:list id="marks" list-class="java.util.LinkedList">
+                <value>55</value>
+                <value>61</value>
+                <value>40</value>
+                <value>59</value>
+                <value>72</value>
+            </util:list>
+        </property>
+
+    </bean>
 
 </beans>
