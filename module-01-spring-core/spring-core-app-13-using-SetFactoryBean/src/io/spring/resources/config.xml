@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 👉 The <set> tag creates and passes the java.util.LinkedHashSet object. -->
+    <!-- 👉 If we want to inject some other Set implementation then as usual we have 2 options: -->
+        <!-- 1️⃣ Using a class called SetFactoryBean -->
+        <!-- 2️⃣ Using <util> tag -->
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <property name="emails">
+            <bean class="org.springframework.beans.factory.config.SetFactoryBean">
+                <property name="targetSetClass">
+                    <value>java.util.TreeSet</value>
+                </property>
+                <property name="sourceSet">
+                    <set>
+                        <value>eyeganeshgupta@gmail.com</value>
+                        <value>ganeshgupta9762@gmail.com</value>
+                    </set>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
