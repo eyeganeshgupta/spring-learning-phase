@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <!-- 📌 Injecting Map -->
+        <!-- 👉🏼 Spring provides <map> tag to inject a Java Map using XML. -->
+        <!-- 👉🏼 The <map> tag is used within <property> or <constructor-arg>. -->
+        <!-- 👉🏼 To add values in the Map, the Spring Framework provides <entry> tag which is nested within <map> tag. -->
+        <!-- 👉🏼 The <map> tag creates and passes the java.util.LinkedHashMap object by default. -->
+        <property name="marks">
+            <map>
+                <entry key="Data Science" value="55" />
+                <entry key="Cloud Computing and Web Services" value="61" />
+                <entry key="Wireless and Sensor Networks" value="40" />
+                <entry key="Data Mining and Warehousing" value="59" />
+                <entry key="Cyber Laws and IPR" value="72" />
+            </map>
+        </property>
+    </bean>
+
+</beans>
