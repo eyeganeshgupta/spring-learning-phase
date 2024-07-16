@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 👉🏼 The <map> tag creates and passes the java.util.LinkedHashMap object by default. -->
+    <!-- 👉🏼 If we want to inject some other Map implementation then as usual we have 2 options: -->
+        <!-- 1️⃣ Using a class called SetFactoryBean -->
+        <!-- 2️⃣ Using <util> tag -->
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <property name="studentId" value="12" />
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="21" />
+        <property name="grade" value="T.Y.B.Sc.CS" />
+        <!-- 🔥 Using a <util> tag 🔥 -->
+        <property name="marks">
+            <!--
+            <bean class="org.springframework.beans.factory.config.MapFactoryBean">
+                <property name="targetMapClass">
+                    <value>java.util.TreeMap</value>
+                </property>
+                <property name="sourceMap">
+                    <map>
+                        <entry key="Data Science" value="55" />
+                        <entry key="Cloud Computing and Web Services" value="61" />
+                        <entry key="Wireless and Sensor Networks" value="40" />
+                        <entry key="Data Mining and Warehousing" value="59" />
+                        <entry key="Cyber Laws and IPR" value="72" />
+                    </map>
+                </property>
+            </bean>
+            -->
+            <util:map map-class="java.util.TreeMap">
+                <entry key="Data Science" value="55" />
+                <entry key="Cloud Computing and Web Services" value="61" />
+                <entry key="Wireless and Sensor Networks" value="40" />
+                <entry key="Data Mining and Warehousing" value="59" />
+                <entry key="Cyber Laws and IPR" value="72" />
+            </util:map>
+
+        </property>
+    </bean>
+
+</beans>
