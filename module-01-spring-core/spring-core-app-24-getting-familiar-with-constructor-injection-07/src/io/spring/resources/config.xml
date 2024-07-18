@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="io.spring.beans.Employee" id="employeeObj">
+        <!-- 📌 Using index attribute 📌 -->
+        <!-- Spring provides another attribute called index in <constructor-arg> tag for resolving ambiguities which even type cannot resolve. -->
+        <constructor-arg type="float" index="0" value="60000" />
+        <constructor-arg value="Ganesh" />
+    </bean>
+
+</beans>
