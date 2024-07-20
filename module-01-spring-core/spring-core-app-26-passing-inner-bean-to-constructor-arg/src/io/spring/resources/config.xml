@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Student bean with id "studentObj" -->
+    <bean class="io.spring.beans.Student" id="studentObj">
+        <constructor-arg type="int" value="12" />
+        <constructor-arg value="Ganesh Gupta" />
+        <constructor-arg type="int" value="21" />
+        <constructor-arg value="T.Y.B.Sc.CS" />
+        <constructor-arg value="eyeganeshgupta@gmail.com" />
+        <constructor-arg type="io.spring.beans.Address">
+            <!-- Passing inner bean to constructor-arg -->
+            <bean class="io.spring.beans.Address" id="addressObj">
+                <property name="houseNumber" value="08" />
+                <property name="landmark" value="N.H. Bakery" />
+                <property name="street" value="Valai Pada Road" />
+                <property name="city" value="Nalasopara" />
+                <property name="state" value="Maharashtra" />
+                <property name="country" value="India" />
+                <property name="zipCode" value="401208" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+</beans>
