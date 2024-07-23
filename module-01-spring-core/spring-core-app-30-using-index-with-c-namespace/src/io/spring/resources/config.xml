@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Using c:namespace -->
+    <!-- 👉 It is a shortcut to configure constructor arguments directly in <bean> tag. -->
+    <bean class="io.spring.beans.Student"
+          id="studentObj"
+          c:_0="2030"
+          c:_1="Ganesh Gupta"
+          c:_2="21"
+          c:_3="T.Y.B.Sc.CS"
+          c:_4="eyeganeshgupta@gmail.com"
+    />
+
+</beans>
