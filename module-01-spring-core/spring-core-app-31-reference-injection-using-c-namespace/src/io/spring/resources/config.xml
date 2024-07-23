@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="io.spring.beans.Address"
+          id="addressObj"
+          c:houseNumber="08"
+          c:landmark="N.H. Bakery"
+          c:street="Valai Pada Road"
+          c:city="Vasai-Virar"
+          c:state="Maharashtra"
+          c:country="India"
+          c:zipCode="401209"
+    />
+
+    <!-- 📌 Reference Injection using c:namespace -->
+    <!-- 👉 We can also inject references using c:namespace -->
+    <!-- 👉 To do this we just have to suffix -ref after propName -->
+        <!-- ⭐ <bean class="..." id="..." c:propName-ref="..." /> -->
+    <bean class="io.spring.beans.Student"
+          id="studentObj"
+          c:studentId="1916"
+          c:name="Ganesh Gupta"
+          c:age="21"
+          c:grade="T.Y.B.Sc.CS"
+          c:email="eyeganeshgupta@gmail.com"
+          c:address-ref="addressObj"
+    />
+
+</beans>
