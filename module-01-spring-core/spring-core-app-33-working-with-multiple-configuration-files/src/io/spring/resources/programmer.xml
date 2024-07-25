@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Programmer bean with name "programmerObj01" -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj01">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="age" value="22" />
+        <property name="language" value="Java" />
+        <property name="computer" ref="laptopObj" />
+    </bean>
+
+    <!-- Definition of the Programmer bean with name "programmerObj02" -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj02">
+        <property name="name" value="Virat Gupta" />
+        <property name="age" value="8" />
+        <property name="language" value="JavaScript" />
+        <property name="computer" ref="desktopObj" />
+    </bean>
+
+</beans>
