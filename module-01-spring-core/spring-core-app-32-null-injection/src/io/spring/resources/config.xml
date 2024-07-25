@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="java.util.Date" id="dateOfBirthObj">
+        <property name="date" value="18" />
+        <property name="month" value="1" />
+        <property name="year" value="103" />
+    </bean>
+
+    <bean class="io.spring.beans.Student" id="studentObj01">
+        <constructor-arg value="Ganesh Gupta" />
+        <constructor-arg type="int" value="250724" />
+        <constructor-arg value="eyeganeshgupta@gmail.com" />
+        <constructor-arg ref="dateOfBirthObj" />
+    </bean>
+
+    <!-- 📌 Null Injection 📌 -->
+    <!-- 👉 When we use <constructor-arg> tag we have to compulsorily pass values for all the parameters required by the constructor. -->
+    <!-- 👉 Now if the constructor parameter is of reference/object type and we do not have exact value to be passed then we can pass “null” in its place. -->
+    <!-- 👉 This is called null injection. -->
+    <!-- 👉 For performing null injection we use a special tag called <null>. -->
+    <!-- 👉 We pass this <null> tag as the child tag of <constructor-arg> for the argument where we want to send null as the value. -->
+    <!-- 👉 Syntax: -->
+        <!-- <constructor-arg ...><null/></constructor-arg> -->
+
+    <bean class="io.spring.beans.Student" id="studentObj02">
+        <constructor-arg value="Sangeeta Gupta" />
+        <constructor-arg type="int" value="202124" />
+        <constructor-arg value="emsangeetagupta@gmail.com" />
+        <constructor-arg>
+            <null />
+        </constructor-arg>
+    </bean>
+
+
+</beans>

@@ -1,6 +1,7 @@
 package io.spring.beans;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Student {
     // Properties
@@ -48,6 +49,25 @@ public class Student {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    // Method to display student details
+    public void displayDetails() {
+        System.out.println("******************************");
+        System.out.println("*        Student Details      *");
+        System.out.println("******************************");
+        System.out.println("Name           : " + name);
+        System.out.println("Student ID     : " + studentId);
+        System.out.println("Email          : " + email);
+        if(dateOfBirth != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String formattedDate = dateFormat.format(dateOfBirth);
+            System.out.println("Date of Birth  : " + formattedDate);
+        }
+        else {
+            System.out.println("Date of Birth  : null");
+        }
+        System.out.println("******************************\n");
     }
 
     // toString method for easy printing
