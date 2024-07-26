@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Definition of the Laptop bean with name "laptopObj" -->
+    <bean class="io.spring.beans.Laptop" name="laptopObj">
+        <property name="brand" value="Dell" />
+        <property name="processor" value="Intel i7" />
+        <property name="ramSize" value="16" />
+        <property name="storageSize" value="512" />
+    </bean>
+
+    <!-- Definition of the Desktop bean with name "desktopObj" -->
+    <bean class="io.spring.beans.Desktop" name="desktopObj">
+        <property name="brand" value="HP" />
+        <property name="processor" value="AMD Ryzen 7" />
+        <property name="ramSize" value="32" />
+        <property name="storageSize" value="1024" />
+    </bean>
+
+</beans>
