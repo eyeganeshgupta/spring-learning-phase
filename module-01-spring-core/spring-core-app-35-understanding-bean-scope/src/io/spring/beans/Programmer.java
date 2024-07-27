@@ -10,6 +10,10 @@ public class Programmer {
     private String githubProfile;
 
     // Constructor
+    public Programmer() {
+        System.out.println("Programmer object created!");
+    }
+
     public Programmer(String name, String language, int experience, String favoriteEditor, int projectsCompleted, String githubProfile) {
         this.name = name;
         this.language = language;

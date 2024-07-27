@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Bean Scopes 📌 -->
+    <!-- ⭐ Bean Scope is an important part of the bean creation and it helps the Spring container to decide: -->
+        <!-- 1️⃣ When the object of Bean will be instantiated? -->
+        <!-- 2️⃣ How long that object will live? -->
+        <!-- 3️⃣ How many objects will be created for that bean throughout? -->
+
+    <!-- 📌 Total Bean Scopes 📌 -->
+    <!-- ⭐ Bean Scope Spring allows us to set 8 scopes for our bean object and they are: -->
+        <!-- 1️⃣ singleton -->
+        <!-- 2️⃣ prototype -->
+        <!-- 3️⃣ request -->
+        <!-- 4️⃣ session -->
+        <!-- 5️⃣ global-session -->
+        <!-- 6️⃣ application -->
+        <!-- 7️⃣ websocket -->
+        <!-- 8️⃣ custom -->
+
+
+    <!-- 📌 Singleton Scope 📌 -->
+    <!-- ⚡ When we define a bean with the singleton scope then: -->
+        <!-- 1️⃣ The container creates a single instance of that bean. -->
+        <!-- 2️⃣ It means that all requests for that bean using getBean(...) will return the same object, which is cached. -->
+
+    <!-- 💎 Two more points about singleton bean -->
+        <!-- 1️⃣ This scope is the default value if no other scope is specified. -->
+        <!-- 2️⃣ Any modification to the object will be reflected in all references to the bean. -->
+
+
+    <!-- 🚀 Explicitly specifying singleton 🚀 -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj01" scope="singleton">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="language" value="Java" />
+        <property name="experience" value="3" />
+        <property name="favoriteEditor" value="IntelliJ IDEA" />
+        <property name="projectsCompleted" value="6" />
+        <property name="githubProfile" value="https://github.com/eyeganeshgupta" />
+    </bean>
+
+    <!-- 🚀 Implicit singleton 🚀 -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj02">
+        <property name="name" value="Sheetal Gupta" />
+        <property name="language" value="JavaScript" />
+        <property name="experience" value="0" />
+        <property name="favoriteEditor" value="VS Code" />
+        <property name="projectsCompleted" value="1" />
+        <property name="githubProfile" value="https://github.com/eyesheetalgupta" />
+    </bean>
+
+</beans>
