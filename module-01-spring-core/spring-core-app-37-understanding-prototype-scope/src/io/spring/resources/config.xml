@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Bean Scopes 📌 -->
+    <!-- ⭐ Bean Scope is an important part of the bean creation and it helps the Spring container to decide: -->
+        <!-- 1️⃣ When the object of Bean will be instantiated? -->
+        <!-- 2️⃣ How long that object will live? -->
+        <!-- 3️⃣ How many objects will be created for that bean throughout? -->
+
+    <!-- 📌 Total Bean Scopes 📌 -->
+    <!-- ⭐ Bean Scope Spring allows us to set 8 scopes for our bean object and they are: -->
+        <!-- 1️⃣ singleton -->
+        <!-- 2️⃣ prototype -->
+        <!-- 3️⃣ request -->
+        <!-- 4️⃣ session -->
+        <!-- 5️⃣ global-session -->
+        <!-- 6️⃣ application -->
+        <!-- 7️⃣ websocket -->
+        <!-- 8️⃣ custom -->
+
+
+    <!-- 📌 Prototype Scope 📌 -->
+    <!-- ⚡ When we define a bean with the prototype scope then: -->
+        <!-- 1️⃣ The container creates a new instance of that bean every time a request is made to that bean. -->
+        <!-- 2️⃣ It means that whenever we will call the getBean(...) method or we will inject that bean into another bean the container will create a new object and return it. -->
+
+    <!-- 💎 Two more points about singleton bean -->
+        <!-- 1️⃣ Prototype beans do not share their state with other bean instances. Each instance has its own independent state and any modification to one bean instance will not affect other instances. -->
+        <!-- 2️⃣ Spring does not manage the complete lifecycle of a prototype bean. The container instantiates and configures a prototype bean object and hands it to the client, with no further record of that prototype instance. -->
+
+
+    <!-- 🚀 Specifying prototype scope 🚀 -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj" scope="prototype">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="language" value="Java" />
+        <property name="experience" value="3" />
+        <property name="favoriteEditor" value="IntelliJ IDEA" />
+        <property name="projectsCompleted" value="6" />
+        <property name="githubProfile" value="https://github.com/eyeganeshgupta" />
+    </bean>
+
+</beans>
