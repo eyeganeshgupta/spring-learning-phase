@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="io.spring.beans.Account" id="account">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <!-- Here autowire=“no” is set by default -->
+    <bean class="io.spring.beans.Customer" id="customerObj">
+        <property name="customerId" value="C001" />
+        <property name="name" value="Ganesh" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="89839 71752" />
+        <!-- <property name="account" value="" /> -->
+    </bean>
+
+</beans>

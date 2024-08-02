@@ -7,6 +7,10 @@ public class Account {
     private double balance;
 
     // Constructor
+    public Account() {
+        System.out.println("Account bean created!");
+    }
+
     public Account(String accountNumber, String accountType, double balance) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;

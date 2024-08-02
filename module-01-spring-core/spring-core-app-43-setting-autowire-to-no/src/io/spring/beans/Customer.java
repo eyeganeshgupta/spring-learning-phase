@@ -9,6 +9,10 @@ public class Customer {
     private Account account;
 
     // Constructor
+    public Customer() {
+        System.out.println("Customer bean created!");
+    }
+
     public Customer(String customerId, String name, String email, String phoneNumber, Account account) {
         this.customerId = customerId;
         this.name = name;
@@ -68,7 +72,7 @@ public class Customer {
         String line4 = String.format("%-20s : %s", "Phone Number", phoneNumber);
         String accountHeader = String.format("%-20s : ", "Account Details");
 
-        System.out.println(border);
+        System.out.println("\n" + border);
         System.out.println(header);
         System.out.println(border);
         System.out.println(line1);
