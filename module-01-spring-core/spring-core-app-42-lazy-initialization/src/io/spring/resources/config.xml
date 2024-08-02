@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Lazy Initialization 📌 -->
+        <!-- 👉 Lazy initialization means that a bean is not instantiated and initialized until it is actually needed (i.e., the first time it is requested). -->
+        <!-- 👉 To set up a bean as lazily initialized bean we need to set its lazy-init property to true in XML. -->
+
+    <!-- 🚀 Explicitly specifying singleton 🚀 -->
+    <!-- 💡 This bean will be lazily initialized. -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj" scope="singleton" lazy-init="true">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="language" value="Java" />
+        <property name="experience" value="3" />
+        <property name="favoriteEditor" value="IntelliJ IDEA" />
+        <property name="projectsCompleted" value="6" />
+        <property name="githubProfile" value="https://github.com/eyeganeshgupta" />
+    </bean>
+
+    <!-- 📌 Important Point 📌 -->
+        <!-- ⭐ Whenever a lazy-initialized bean is a dependency of a singleton bean that is not lazy-initialized, the container creates the lazy-initialized bean at startup, because it must satisfy the singleton's dependencies. -->
+
+</beans>
