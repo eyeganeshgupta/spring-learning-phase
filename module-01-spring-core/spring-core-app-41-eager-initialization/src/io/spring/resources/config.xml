@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Eager Initialization 📌 -->
+        <!-- 👉 Eager initialization means that beans are instantiated and initialized as soon as the Spring container is started. -->
+        <!-- 👉 By default, the Spring container uses eager initialization for singleton beans. -->
+
+    <!-- 🚀 Explicitly specifying singleton 🚀 -->
+    <!-- 💡 This bean will be eagerly initialized. -->
+    <bean class="io.spring.beans.Programmer" name="programmerObj" scope="singleton">
+        <property name="name" value="Ganesh Gupta" />
+        <property name="language" value="Java" />
+        <property name="experience" value="3" />
+        <property name="favoriteEditor" value="IntelliJ IDEA" />
+        <property name="projectsCompleted" value="6" />
+        <property name="githubProfile" value="https://github.com/eyeganeshgupta" />
+    </bean>
+
+    <!-- 📌 Important Points About Eager Initialization 📌 -->
+        <!-- 👉 Beans are created at container setup. -->
+        <!-- 👉 Ensures that all dependencies are resolved and beans are ready to use immediately. -->
+        <!-- 👉 Suitable for beans that are critical for application startup or are required to perform initial setup tasks. -->
+
+</beans>
