@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Setting autowire to byName -->
+        <!-- 👉 This mode uses name of the bean for injecting dependencies. -->
+        <!-- 👉 However, it requires that the name of the property in the target bean must be same as bean id in XML configuration file. -->
+        <!-- 👉 It internally invokes the setter method for autowiring. -->
+        <!-- 👉 If no matching bean is found, the property will remain unwired. -->
+
+    <!-- 📢 This id must match with property name in Customer class. -->
+    <bean class="io.spring.beans.Account" id="account">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <!-- Here autowire=“no” is set by default -->
+    <bean class="io.spring.beans.Customer" id="customerObj" autowire="byName">
+        <property name="customerId" value="C001" />
+        <property name="name" value="Ganesh" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="89839 71752" />
+        <!-- <property name="account" value="" /> -->
+    </bean>
+
+</beans>
