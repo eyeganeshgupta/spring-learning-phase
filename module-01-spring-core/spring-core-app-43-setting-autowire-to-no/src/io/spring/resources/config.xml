@@ -4,6 +4,17 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 📌 Autowiring -->
+        <!-- 👉 Autowiring is a mechanism in Spring that allows the framework to automatically detect and inject the dependent beans to the properties of target bean without the need for explicit configuration. -->
+        <!-- 👉 In simple words, when we apply autowiring, then Spring looks for the dependent beans in the container and automatically injects them into the target object. -->
+
+    <!-- Benefit -->
+        <!-- 👉 This can save a lot of time and effort, especially in large-scale applications where there are a large number of dependencies between objects. -->
+
+    <!-- Drawback -->
+        <!-- 👉 No control of the programmer. -->
+        <!-- 👉 It can't be used for primitive and not recommended for String values. -->
+
     <bean class="io.spring.beans.Account" id="account">
         <property name="accountNumber" value="0662104000164641" />
         <property name="accountType" value="Savings" />
