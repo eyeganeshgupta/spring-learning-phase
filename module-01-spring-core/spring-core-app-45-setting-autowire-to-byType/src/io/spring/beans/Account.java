@@ -8,7 +8,7 @@ public class Account {
 
     // Constructor
     public Account() {
-        System.out.println("Account bean created!");
+        System.out.println("\nAccount bean created!");
     }
 
     public Account(String accountNumber, String accountType, double balance) {
