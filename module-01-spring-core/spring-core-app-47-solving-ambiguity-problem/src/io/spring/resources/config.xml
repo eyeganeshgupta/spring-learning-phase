@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 💡 Solving Ambiguity Problem 💡 -->
+        <!-- 👉 To handle this and help Spring select a particular bean to be injected we can set an attribute called autowire-candidate to false for all other beans. -->
+        <!-- 👉 This means that for all the beans where autowire-candidate is set to false, the Spring container will not consider them for autowiring. -->
+        <!-- 🚀 Special note: If we do not specify the autowire-candidate attribute, it defaults to true, meaning the bean will be considered for autowiring. -->
+
+    <bean class="io.spring.beans.Account" id="primaryAccount" autowire-candidate="false">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <bean class="io.spring.beans.Account" id="secondaryAccount">
+        <property name="accountNumber" value="0662103000043205" />
+        <property name="accountType" value="Current" />
+        <property name="balance" value="7175.09" />
+    </bean>
+
+    <bean class="io.spring.beans.Customer" id="customerObj" autowire="byType">
+        <property name="customerId" value="C001" />
+        <property name="name" value="Ganesh" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="89839 71752" />
+        <!-- <property name="primaryAccount" ref="primaryAccount" /> -->
+        <!-- <property name="secondaryAccount" ref="secondaryAccount" /> -->
+    </bean>
+
+</beans>
