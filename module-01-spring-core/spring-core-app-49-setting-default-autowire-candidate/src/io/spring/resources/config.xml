@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       default-autowire-candidates="saving*"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="io.spring.beans.Account" id="dematAccount">
+        <property name="accountNumber" value="107504180000143" />
+        <property name="accountType" value="Demat" />
+        <property name="balance" value="3334.87" />
+    </bean>
+
+    <bean class="io.spring.beans.Account" id="savingAccount">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <bean class="io.spring.beans.Account" id="currentAccount">
+        <property name="accountNumber" value="0662103000043205" />
+        <property name="accountType" value="Current" />
+        <property name="balance" value="7175.09" />
+    </bean>
+
+    <bean class="io.spring.beans.Customer" id="customerObj" autowire="byType">
+        <property name="customerId" value="C001" />
+        <property name="name" value="Ganesh" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="89839 71752" />
+        <!-- <property name="account" ref="" /> -->
+    </bean>
+
+</beans>
