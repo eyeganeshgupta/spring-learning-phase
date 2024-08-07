@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 📌 Setting autowire to constructor -->
+        <!-- 👉 This mode works only for constructor injection. -->
+        <!-- 👉 In this Spring tries to match up the bean first by parameter name defined in the target class constructor's argument list and if it couldn't find a match then by class name of the dependent bean. -->
+        <!-- 👉 In the event of ambiguity, an exception will be thrown. -->
+
+    <!-- 📢 Now this will first match this id with constructor's parameter name. -->
+    <bean class="io.spring.beans.Account" id="account">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <!-- Here autowire=“constructor” -->
+    <bean class="io.spring.beans.Customer" id="customerObj" autowire="constructor">
+        <!-- <constructor-arg type="io.spring.beans.Account" ref="account" /> -->
+        <property name="customerId" value="C001" />
+        <property name="name" value="Ganesh" />
+        <property name="email" value="eyeganeshgupta@gmail.com" />
+        <property name="phoneNumber" value="89839 71752" />
+    </bean>
+</beans>
