@@ -83,20 +83,6 @@ public class Address {
         this.landmark = landmark;
     }
 
-    // Method to format the address as a single string
-    public String formatAddress() {
-        StringBuilder formattedAddress = new StringBuilder();
-        if (apartmentNumber != null && !apartmentNumber.isEmpty()) {
-            formattedAddress.append(apartmentNumber).append(", ");
-        }
-        formattedAddress.append(street).append(", ");
-        if (landmark != null && !landmark.isEmpty()) {
-            formattedAddress.append("near ").append(landmark).append(", ");
-        }
-        formattedAddress.append(city).append(", ").append(state).append(" ").append(postalCode).append(", ").append(country);
-        return formattedAddress.toString();
-    }
-
     // Method to display address details in a decorative manner
     public void displayDetails() {
         String border = "==========================================";
@@ -120,6 +106,20 @@ public class Address {
         System.out.println(line6);
         System.out.println(line7);
         System.out.println(border);
+    }
+
+    // Method to format the address details as a single string
+    public String formatAddress() {
+        StringBuilder formattedAddress = new StringBuilder();
+        if (apartmentNumber != null && !apartmentNumber.isEmpty()) {
+            formattedAddress.append(apartmentNumber).append(", ");
+        }
+        formattedAddress.append(street).append(", ");
+        if (landmark != null && !landmark.isEmpty()) {
+            formattedAddress.append("near ").append(landmark).append(", ");
+        }
+        formattedAddress.append(city).append(", ").append(state).append(" ").append(postalCode).append(", ").append(country);
+        return formattedAddress.toString();
     }
 
     // Override toString method

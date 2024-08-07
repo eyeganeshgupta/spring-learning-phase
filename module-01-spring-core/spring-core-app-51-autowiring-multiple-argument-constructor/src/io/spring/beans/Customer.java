@@ -87,8 +87,8 @@ public class Customer {
         String line2 = String.format("%-20s : %s", "Name", name);
         String line3 = String.format("%-20s : %s", "Email", email);
         String line4 = String.format("%-20s : %s", "Phone Number", phoneNumber);
-        String accountHeader = String.format("%-20s : ", "Account Details");
-        String addressHeader = String.format("%-20s : ", "Address");
+        String accountHeader = String.format("%-20s : ", "\nAccount Details");
+        String addressHeader = String.format("%-20s : ", "\nAddress");
 
         System.out.println("\n" + border);
         System.out.println(header);

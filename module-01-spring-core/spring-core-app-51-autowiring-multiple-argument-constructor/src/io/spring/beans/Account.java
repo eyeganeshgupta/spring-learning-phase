@@ -59,13 +59,16 @@ public class Account {
         System.out.println(border);
     }
 
+    // Method to format account details as a string
+    public String formatAccount() {
+        return "Account Number: " + accountNumber + "\n" +
+                "Account Type: " + accountType + "\n" +
+                "Balance: " + String.format("%.2f", balance);
+    }
+
     // Override toString method
     @Override
     public String toString() {
-        return "Account{" +
-                "accountNumber='" + accountNumber + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", balance=" + balance +
-                '}';
+        return formatAccount();
     }
 }

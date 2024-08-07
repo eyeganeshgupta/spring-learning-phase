@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="io.spring.beans.Account" id="account">
+        <property name="accountNumber" value="0662104000164641" />
+        <property name="accountType" value="Savings" />
+        <property name="balance" value="24802.33" />
+    </bean>
+
+    <bean class="io.spring.beans.Address" id="address">
+        <property name="street" value="Valai Pada Road" />
+        <property name="city" value="Nalasopara" />
+        <property name="state" value="Maharashtra" />
+        <property name="postalCode" value="401209" />
+        <property name="country" value="India" />
+        <property name="apartmentNumber" value="07" />
+        <property name="landmark" value="N.H. Bakery" />
+    </bean>
+
+    <!-- Here autowire=“constructor” -->
+    <bean class="io.spring.beans.Customer" id="customerObj" autowire="constructor">
+        <constructor-arg type="String" value="C001" />
+        <constructor-arg type="String" value="Ganesh" />
+        <constructor-arg type="String" value="eyeganeshgupta@gmail.com" />
+        <constructor-arg type="String" value="89839 71752" />
+        <!-- <constructor-arg type="io.spring.beans.Account" ref="account" /> -->
+        <!-- <constructor-arg type="io.spring.beans.Address" ref="address" /> -->
+    </bean>
+
+</beans>
