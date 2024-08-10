@@ -8,12 +8,17 @@ public class Car {
     private double price;
 
     // Constructor
+    public Car() {
+        System.out.println("Car non-parameterized constructor");
+    }
+
     public Car(String make, String model, int year, String color, double price) {
         this.make = make;
         this.model = model;
         this.year = year;
         this.color = color;
         this.price = price;
+        System.out.println("Car with 5 parameter constructor");
     }
 
     // Setters
