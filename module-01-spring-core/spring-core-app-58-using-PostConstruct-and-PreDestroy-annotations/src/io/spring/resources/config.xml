@@ -4,5 +4,12 @@
        xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
-
+    <context:annotation-config />
+    <bean class="io.spring.beans.Car" id="carObj">
+        <constructor-arg index="0" value="Toyota" />
+        <constructor-arg index="1" value="Camry" />
+        <constructor-arg index="2" value="2023" />
+        <constructor-arg index="3" value="Blue" />
+        <constructor-arg index="4" value="25000.00" />
+    </bean>
 </beans>
