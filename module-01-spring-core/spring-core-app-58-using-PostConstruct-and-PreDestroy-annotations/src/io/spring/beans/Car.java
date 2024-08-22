@@ -1,5 +1,8 @@
 package io.spring.beans;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class Car {
     private String make;
     private String model;
@@ -43,6 +46,7 @@ public class Car {
     }
 
     // Action: Start the car
+    @PostConstruct
     public void start() {
         System.out.println("The car is now starting.");
     }
@@ -63,6 +67,7 @@ public class Car {
     }
 
     // Action: Stop the car
+    @PreDestroy
     public void stop() {
         System.out.println("The car has stopped.");
     }
