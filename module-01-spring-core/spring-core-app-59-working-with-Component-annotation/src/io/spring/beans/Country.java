@@ -11,6 +11,10 @@ public class Country {
     private String currency;
 
     // Constructor
+    public Country() {
+        System.out.println("==== Country bean created! ====");
+    }
+
     public Country(String name, String capital, long population, double area, String currency) {
         this.name = name;
         this.capital = capital;
