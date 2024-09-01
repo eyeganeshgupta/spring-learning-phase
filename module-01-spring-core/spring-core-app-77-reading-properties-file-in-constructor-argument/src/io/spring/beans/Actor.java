@@ -13,7 +13,7 @@ public class Actor {
     private int numberOfAwards;
 
     // Constructor
-    public Actor(@Value("Vijay") String firstName, @Value("Thalapathy") String lastName, @Value("50") int age, @Value("Male") String gender, @Value("Indian") String nationality, @Value("14") int numberOfAwards) {
+    public Actor(@Value("${actor.firstName}") String firstName, @Value("${actor.lastName}") String lastName, @Value("${actor.age}") int age, @Value("${actor.gender}") String gender, @Value("${actor.nationality}") String nationality, @Value("${actor.numberOfAwards}") int numberOfAwards) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
