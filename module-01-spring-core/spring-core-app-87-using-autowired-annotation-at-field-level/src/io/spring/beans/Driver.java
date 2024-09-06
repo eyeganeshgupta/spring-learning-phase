@@ -76,7 +76,7 @@ public class Driver {
         System.out.println(line2);
         System.out.println(line3);
 
-        System.out.println("\nLicense Information:");
+        System.out.println("License Information:");
         license.displayLicenseDetails(); // Display the license details of the driver
         System.out.println(border);
     }

@@ -3,13 +3,14 @@ package io.spring.beans;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
 public class License {
     @Value("DL-1234567890")
     private String licenseNumber;
-    @Value("#{new java.util.Date(120, 0, 1)}")
+    @Value("#{new java.util.Date(124, 8, 6)}")
     private Date issueDate;
     @Value("#{new java.util.Date(130, 0, 1)}")
     private Date expiryDate;
@@ -72,11 +73,18 @@ public class License {
     public void displayLicenseDetails() {
         String border = "------------------------------------------";
         String header = "              License Details             ";
+
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+
+        // Format the issue and expiry dates
+        String formattedIssueDate = dateFormat.format(issueDate);
+        String formattedExpiryDate = dateFormat.format(expiryDate);
+
         String line1 = String.format("%-20s : %s", "License Number", licenseNumber);
-        String line2 = String.format("%-20s : %s", "Issue Date", issueDate);
-        String line3 = String.format("%-20s : %s", "Expiry Date", expiryDate);
+        String line2 = String.format("%-20s : %s", "Issue Date", formattedIssueDate);
+        String line3 = String.format("%-20s : %s", "Expiry Date", formattedExpiryDate);
         String line4 = String.format("%-20s : %s", "License Type", licenseType);
-        String line5 = String.format("%-20s : %s", "License Status", (isValid() ? "Valid" : "Expired"));
 
         System.out.println(border);
         System.out.println(header);
@@ -85,7 +93,6 @@ public class License {
         System.out.println(line2);
         System.out.println(line3);
         System.out.println(line4);
-        System.out.println(line5);
         System.out.println(border);
     }
 }
