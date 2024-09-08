@@ -1,7 +1,9 @@
 package io.spring.beans;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DevelopmentEnvironment {
     @Value("Ubuntu")
     private String operatingSystem;
