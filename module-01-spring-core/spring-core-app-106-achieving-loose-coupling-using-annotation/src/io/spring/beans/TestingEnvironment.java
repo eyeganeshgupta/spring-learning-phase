@@ -12,10 +12,6 @@ public class TestingEnvironment implements Environment {
     private int numberOfTestSuites;
 
     // Constructor
-    public TestingEnvironment() {
-        System.out.println("==== TestingEnvironment bean created! ====");
-    }
-
     public TestingEnvironment(@Value("85.5") double testCoveragePercentage, @Value("http://localhost:9090") String baseURL, @Value("jdbc:testdb://localhost:3306/testdb") String databaseConnectionString,
                               @Value("JUnit v5") String testFrameworkVersion, @Value("25") int numberOfTestSuites) {
         this.testCoveragePercentage = testCoveragePercentage;

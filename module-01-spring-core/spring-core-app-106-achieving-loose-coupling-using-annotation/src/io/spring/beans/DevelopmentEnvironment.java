@@ -14,10 +14,6 @@ public class DevelopmentEnvironment implements Environment {
     private boolean autoReloadEnabled;
 
     // Constructor
-    public DevelopmentEnvironment() {
-        System.out.println("==== DevelopmentEnvironment bean created! ====");
-    }
-
     public DevelopmentEnvironment(@Value("true") boolean isDebugMode, @Value("http://localhost:8080") String baseURL, @Value("jdbc:devdb://localhost:3306/devdb") String databaseConnectionString,
                                   @Value("v1.2.3") String developerToolsVersion, @Value("true") boolean autoReloadEnabled) {
         this.isDebugMode = isDebugMode;
