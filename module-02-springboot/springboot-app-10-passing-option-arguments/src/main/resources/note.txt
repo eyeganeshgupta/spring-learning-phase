@@ -1,0 +1,5 @@
+⭐ Methods to Handle Option Arguments
+    👉 We can access these option arguments using methods provided by ApplicationArguments class.
+        1️⃣ Set<String> getOptionNames(): Returns the names of all option arguments as a Set.
+        2️⃣ List<String> getOptionValues(String name): Returns the collection of values associated with the given name.
+        3️⃣ boolean containsOption(String name): Checks if a specific option (key) is present and returns true if the option exists, false otherwise.
