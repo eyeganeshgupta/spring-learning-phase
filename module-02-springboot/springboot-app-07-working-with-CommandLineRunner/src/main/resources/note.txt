@@ -1,0 +1,18 @@
+🌟 Understanding Runners in Spring Boot 🌟
+    👉 Runners in Spring Boot are classes that are executed after the Spring Application Context has been loaded and refreshed. They provide a convenient way to perform initialization tasks or other actions that need to happen after the application is fully started.
+
+
+🤔 Two Key Interfaces for Creating Runners:
+
+    1️⃣ CommandLineRunner 📝
+        👉 Provides a method called run() which we can override and write code that needs to be executed right after the Spring application context is fully initialized.
+        👉 Accepts command-line arguments, if any are provided when the application starts.
+
+    2️⃣ ApplicationRunner 📊
+        👉 Similar to CommandLineRunner, it also provides a method called run(), but instead of receiving raw command-line arguments, it uses an ApplicationArguments object to access them more conveniently.
+
+
+👀 Key Benefits of Using Runners:
+    ⪼ Perform initialization tasks after the application context is fully loaded
+    ⪼ Access command-line arguments in a convenient way
+    ⪼ Execute code after the application is fully started
