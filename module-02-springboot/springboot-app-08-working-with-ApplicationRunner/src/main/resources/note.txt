@@ -1,0 +1,1 @@
+ApplicationRunner also has run() method but instead of receiving raw strings as command-line arguments, it works with an ApplicationArguments object, which provides more features.
