@@ -1,5 +1,23 @@
-⭐ Methods to Handle Option Arguments
-    👉 We can access these option arguments using methods provided by ApplicationArguments class.
-        1️⃣ Set<String> getOptionNames(): Returns the names of all option arguments as a Set.
-        2️⃣ List<String> getOptionValues(String name): Returns the collection of values associated with the given name.
-        3️⃣ boolean containsOption(String name): Checks if a specific option (key) is present and returns true if the option exists, false otherwise.
+### ⭐ Methods to Handle Option Arguments in Spring Boot
+
+Access **option arguments** easily using the powerful methods provided by the **`ApplicationArguments`** class:
+
+---
+
+#### 1️⃣ **`Set<String> getOptionNames()`**
+- **What it does**: Returns the **names** of all option arguments as a **Set**.
+- **Use case**: When you want to retrieve **all option keys** at once.
+
+---
+
+#### 2️⃣ **`List<String> getOptionValues(String name)`**
+- **What it does**: Returns the **collection of values** associated with the given option **name**.
+- **Use case**: Ideal for fetching the **values** corresponding to a specific **option key**.
+
+---
+
+#### 3️⃣ **`boolean containsOption(String name)`**
+- **What it does**: Checks if a specific **option (key)** is present.
+- **Use case**: Returns `**true**` if the option exists, and `**false**` otherwise.
+
+---
