@@ -1,0 +1,16 @@
+CREATE TABLE Students (
+                          student_id INT PRIMARY KEY,
+                          first_name VARCHAR(50) NOT NULL,
+                          last_name VARCHAR(50) NOT NULL,
+                          email VARCHAR(100) UNIQUE NOT NULL,
+                          gender VARCHAR(10),
+                          gpa DECIMAL(3,2),
+                          credits_earned INT,
+                          address VARCHAR(200),
+                          city VARCHAR(50),
+                          state VARCHAR(50),
+                          zip_code VARCHAR(10),
+                          country VARCHAR(50),
+                          phone_number VARCHAR(20),
+                          emergency_contact_phone VARCHAR(20),
+);
