@@ -19,6 +19,11 @@ public class Student {
     private String phoneNumber;
     private String emergencyContactPhone;
 
+    public Student() {
+        System.out.println("Student model created");
+    }
+
+    /*
     public Student(int studentId, String firstName, String lastName, String email, String gender,
                    double gpa, int creditsEarned, String address, String city, String state,
                    String zipCode, String country, String phoneNumber, String emergencyContactPhone) {
@@ -37,6 +42,7 @@ public class Student {
         this.phoneNumber = phoneNumber;
         this.emergencyContactPhone = emergencyContactPhone;
     }
+    */
 
     public int getStudentId() {
         return studentId;
@@ -152,21 +158,34 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "studentId=" + studentId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", gpa=" + gpa +
-                ", creditsEarned=" + creditsEarned +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", country='" + country + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", emergencyContactPhone='" + emergencyContactPhone + '\'' +
-                '}';
+        return String.format(
+                "Student Profile\n" +
+                        "================\n" +
+                        "ID: %d\n" +
+                        "Name: %s %s\n" +
+                        "Email: %s\n" +
+                        "Gender: %s\n" +
+                        "GPA: %.2f\n" +
+                        "Credits Earned: %d\n" +
+                        "\n" +
+                        "Contact Information\n" +
+                        "--------------------\n" +
+                        "Address: %s\n" +
+                        "         %s, %s %s\n" +
+                        "         %s\n" +
+                        "Phone: %s\n" +
+                        "Emergency Contact: %s",
+                studentId,
+                firstName, lastName,
+                email,
+                gender,
+                gpa,
+                creditsEarned,
+                address,
+                city, state, zipCode,
+                country,
+                phoneNumber,
+                emergencyContactPhone
+        );
     }
 }
