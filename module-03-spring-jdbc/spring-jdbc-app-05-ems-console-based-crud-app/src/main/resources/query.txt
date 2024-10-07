@@ -1,3 +1,6 @@
+# Employee Management SQL Commands
+
+## Create Table: Employees
 CREATE TABLE employees (
     employee_id INT NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -16,3 +19,58 @@ CREATE TABLE employees (
     employment_status ENUM('Full-time', 'Part-time', 'Contract', 'Intern') NOT NULL,
     PRIMARY KEY (employee_id)
 );
+
+
+## Insert Employee
+INSERT INTO employees (
+    first_name,
+    last_name,
+    email,
+    phone_number,
+    job_title,
+    department,
+    salary,
+    gender,
+    address,
+    city,
+    country,
+    postal_code,
+    emergency_contact_phone,
+    employment_status
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+
+## Select Employee by ID
+SELECT *
+FROM employees
+WHERE employee_id = ?;
+
+
+## Update Employee
+UPDATE employees
+SET
+    first_name = ?,
+    last_name = ?,
+    email = ?,
+    phone_number = ?,
+    job_title = ?,
+    department = ?,
+    salary = ?,
+    gender = ?,
+    address = ?,
+    city = ?,
+    country = ?,
+    postal_code = ?,
+    emergency_contact_phone = ?,
+    employment_status = ?
+WHERE employee_id = ?;
+
+
+## Delete Employee
+DELETE FROM employees
+WHERE employee_id = ?;
+
+
+## Select All Employees
+SELECT *
+FROM employees;
