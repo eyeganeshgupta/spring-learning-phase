@@ -1,0 +1,18 @@
+CREATE TABLE employees (
+    employee_id INT NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(20) DEFAULT NULL,
+    job_title VARCHAR(100) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    salary DECIMAL(10, 2) NOT NULL,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(20) NOT NULL,
+    emergency_contact_phone VARCHAR(20) DEFAULT NULL,
+    employment_status ENUM('Full-time', 'Part-time', 'Contract', 'Intern') NOT NULL,
+    PRIMARY KEY (employee_id)
+);
