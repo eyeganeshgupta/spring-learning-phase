@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringJdbcApp05EmsConsoleBasedCrudAppApplication {
+public class EmployeeManagementCLI {
     public static void main(String[] args) {
-        SpringApplication.run(SpringJdbcApp05EmsConsoleBasedCrudAppApplication.class, args);
+        SpringApplication.run(EmployeeManagementCLI.class, args);
     }
 }

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ems</groupId>
-    <artifactId>spring-jdbc-app-05-ems-console-based-crud-app</artifactId>
+    <artifactId>spring-jdbc-app-07-ems-console-based-crud-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-jdbc-app-05-ems-console-based-crud-app</name>
     <description>spring-jdbc-app-05-ems-console-based-crud-app</description>
