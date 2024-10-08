@@ -31,9 +31,9 @@ public class EmployeeRepository {
 
     public void save(Employee employee) {
         jdbcTemplate.update(INSERT_EMPLOYEE, employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber(),
-                employee.getJobTitle(), employee.getDepartment(), employee.getSalary(), employee.getGender().name(),
+                employee.getJobTitle(), employee.getDepartment(), employee.getSalary(), employee.getGender(),
                 employee.getAddress(), employee.getCity(), employee.getCountry(), employee.getPostalCode(),
-                employee.getEmergencyContactPhone(), employee.getEmploymentStatus().name());
+                employee.getEmergencyContactPhone(), employee.getEmploymentStatus());
     }
 
     public Employee findById(int employeeId) {
@@ -42,9 +42,9 @@ public class EmployeeRepository {
 
     public void update(Employee employee) {
         jdbcTemplate.update(UPDATE_EMPLOYEE, employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber(),
-                employee.getJobTitle(), employee.getDepartment(), employee.getSalary(), employee.getGender().name(),
+                employee.getJobTitle(), employee.getDepartment(), employee.getSalary(), employee.getGender(),
                 employee.getAddress(), employee.getCity(), employee.getCountry(), employee.getPostalCode(),
-                employee.getEmergencyContactPhone(), employee.getEmploymentStatus().name(), employee.getEmployeeId());
+                employee.getEmergencyContactPhone(), employee.getEmploymentStatus(), employee.getEmployeeId());
     }
 
     public void deleteById(int employeeId) {

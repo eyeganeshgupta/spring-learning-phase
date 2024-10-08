@@ -1,7 +1,5 @@
 package com.ems.repository.rowmapper;
 
-import com.ems.enums.EmploymentStatus;
-import com.ems.enums.Gender;
 import com.ems.model.Employee;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -20,13 +18,19 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
         employee.setJobTitle(rs.getString("job_title"));
         employee.setDepartment(rs.getString("department"));
         employee.setSalary(rs.getDouble("salary"));
-        employee.setGender(Gender.valueOf(rs.getString("gender")));
+
+        String genderString = rs.getString("gender");
+        employee.setGender(genderString);
+
         employee.setAddress(rs.getString("address"));
         employee.setCity(rs.getString("city"));
         employee.setCountry(rs.getString("country"));
         employee.setPostalCode(rs.getString("postal_code"));
         employee.setEmergencyContactPhone(rs.getString("emergency_contact_phone"));
-        employee.setEmploymentStatus(EmploymentStatus.valueOf(rs.getString("employment_status")));
+
+        String employmentStatusString = rs.getString("employment_status");
+        employee.setEmploymentStatus(employmentStatusString);
+
         return employee;
     }
 }

@@ -1,8 +1,5 @@
 package com.ems.model;
 
-import com.ems.enums.EmploymentStatus;
-import com.ems.enums.Gender;
-
 public class Employee {
     private int employeeId;
     private String firstName;
@@ -12,13 +9,13 @@ public class Employee {
     private String jobTitle;
     private String department;
     private double salary;
-    private Gender gender;
+    private String gender;
     private String address;
     private String city;
     private String country;
     private String postalCode;
     private String emergencyContactPhone;
-    private EmploymentStatus employmentStatus;
+    private String employmentStatus;
 
     public Employee() {
 
@@ -88,11 +85,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -136,11 +133,11 @@ public class Employee {
         this.emergencyContactPhone = emergencyContactPhone;
     }
 
-    public EmploymentStatus getEmploymentStatus() {
+    public String getEmploymentStatus() {
         return employmentStatus;
     }
 
-    public void setEmploymentStatus(EmploymentStatus employmentStatus) {
+    public void setEmploymentStatus(String employmentStatus) {
         this.employmentStatus = employmentStatus;
     }
 

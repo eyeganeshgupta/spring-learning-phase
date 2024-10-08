@@ -73,4 +73,5 @@ WHERE employee_id = ?;
 
 ## Select All Employees
 SELECT *
-FROM employees;
+FROM employees
+ORDER BY employee_id ASC;
