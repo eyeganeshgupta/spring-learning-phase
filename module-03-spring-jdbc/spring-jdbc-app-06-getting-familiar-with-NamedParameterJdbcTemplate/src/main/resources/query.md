@@ -1,0 +1,80 @@
+# Laptop Management SQL Commands
+
+## Create Table: Laptops
+CREATE TABLE laptops (
+    laptop_id INT UNSIGNED PRIMARY KEY,
+    brand VARCHAR(50) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    processor_brand ENUM('Intel', 'AMD', 'Apple', 'Other') NOT NULL,
+    processor_model VARCHAR(100),
+    ram_gb INT UNSIGNED,
+    storage_type ENUM('SSD', 'HDD', 'Hybrid', 'eMMC') DEFAULT 'SSD',
+    storage_capacity_gb INT UNSIGNED,
+    screen_size_inches DECIMAL(3,1),
+    resolution VARCHAR(20),
+    graphics_type ENUM('Integrated', 'Dedicated', 'Hybrid') NOT NULL,
+    graphics_card VARCHAR(100),
+    operating_system VARCHAR(50),
+    weight_kg DECIMAL(4,2),
+    price_rupees DECIMAL(12,2),
+    battery_life_hours INT UNSIGNED,
+    in_stock BOOLEAN DEFAULT TRUE,
+    stock_quantity INT UNSIGNED DEFAULT 0,
+    warranty_months INT UNSIGNED
+);
+
+
+## Insert Laptop
+INSERT INTO laptops (
+    brand,
+    model,
+    processor_brand,
+    processor_model, ram_gb,
+    storage_type,
+    storage_capacity_gb,
+    screen_size_inches,
+    resolution,
+    graphics_type,
+    graphics_card,
+    operating_system,
+    weight_kg,
+    price_rupees,
+    battery_life_hours,
+    in_stock,
+    stock_quantity,
+    warranty_months)
+    VALUES (
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+    ?, ?, ?, ?, ?, ?, ?, ?
+);
+
+
+## Select All Laptops
+SELECT * FROM laptops;
+
+
+## Get All Laptop Product Info
+SELECT
+    laptop_id,
+    brand,
+    model,
+    CONCAT(processor_brand, ' ', processor_model) AS processor,
+    CONCAT(ram_gb, 'GB RAM') AS memory,
+    CONCAT(storage_capacity_gb, 'GB ', storage_type) AS storage,
+    CONCAT(
+        screen_size_inches, '" ',
+        CASE
+            WHEN graphics_type = 'Integrated' THEN 'Integrated Graphics'
+            ELSE 'Dedicated Graphics'
+        END
+    ) AS display,
+    operating_system,
+    price_rupees,
+    CASE
+        WHEN in_stock = TRUE AND stock_quantity > 0 THEN 'In Stock'
+        ELSE 'Out of Stock'
+    END AS availability
+    FROM
+        laptops
+    ORDER BY
+        brand, price_rupees;
