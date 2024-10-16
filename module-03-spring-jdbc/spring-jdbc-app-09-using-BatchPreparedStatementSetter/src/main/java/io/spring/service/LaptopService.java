@@ -18,8 +18,8 @@ public class LaptopService {
         this.laptopRepository = laptopRepository;
     }
 
-    public void addLaptop() {
-        laptopRepository.insertLaptop();
+    public int[] addLaptop(List<Laptop> laptopList) {
+        return laptopRepository.save(laptopList);
     }
 
     public List<Laptop> getAllLaptops() {

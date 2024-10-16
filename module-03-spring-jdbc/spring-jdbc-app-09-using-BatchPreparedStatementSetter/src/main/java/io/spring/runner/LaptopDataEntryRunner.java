@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -139,9 +140,82 @@ public class LaptopDataEntryRunner implements CommandLineRunner {
         }
         */
 
+        // Creating the first Laptop object
+        Laptop laptop1 = new Laptop();
+        laptop1.setLaptopId(1);
+        laptop1.setBrand("Dell");
+        laptop1.setModel("XPS 13");
+        laptop1.setProcessorBrand(ProcessorBrand.Intel);
+        laptop1.setProcessorModel("i7-1165G7");
+        laptop1.setRamGb(16);
+        laptop1.setStorageType(StorageType.SSD);
+        laptop1.setStorageCapacityGb(512);
+        laptop1.setScreenSizeInches(13.3);
+        laptop1.setResolution("1920x1080");
+        laptop1.setGraphicsType(GraphicsType.Integrated);
+        laptop1.setGraphicsCard("Intel Iris Xe");
+        laptop1.setOperatingSystem("Windows 10");
+        laptop1.setWeightKg(1.2);
+        laptop1.setPriceRupees(99990);
+        laptop1.setBatteryLifeHours(12);
+        laptop1.setInStock(true);
+        laptop1.setStockQuantity(50);
+        laptop1.setWarrantyMonths(24);
+
+        // Creating the second Laptop object
+        Laptop laptop2 = new Laptop();
+        laptop2.setLaptopId(2);
+        laptop2.setBrand("Apple");
+        laptop2.setModel("MacBook Air");
+        laptop2.setProcessorBrand(ProcessorBrand.Apple);
+        laptop2.setProcessorModel("M1");
+        laptop2.setRamGb(8);
+        laptop2.setStorageType(StorageType.SSD);
+        laptop2.setStorageCapacityGb(256);
+        laptop2.setScreenSizeInches(13.3);
+        laptop2.setResolution("2560x1600");
+        laptop2.setGraphicsType(GraphicsType.Integrated);
+        laptop2.setGraphicsCard("Apple M1");
+        laptop2.setOperatingSystem("macOS");
+        laptop2.setWeightKg(1.29);
+        laptop2.setPriceRupees(92900);
+        laptop2.setBatteryLifeHours(15);
+        laptop2.setInStock(true);
+        laptop2.setStockQuantity(30);
+        laptop2.setWarrantyMonths(12);
+
+        // Creating the third Laptop object
+        Laptop laptop3 = new Laptop();
+        laptop3.setLaptopId(3);
+        laptop3.setBrand("HP");
+        laptop3.setModel("Pavilion x360");
+        laptop3.setProcessorBrand(ProcessorBrand.Intel);
+        laptop3.setProcessorModel("i5-1135G7");
+        laptop3.setRamGb(8);
+        laptop3.setStorageType(StorageType.HDD);
+        laptop3.setStorageCapacityGb(1000);
+        laptop3.setScreenSizeInches(14);
+        laptop3.setResolution("1920x1080");
+        laptop3.setGraphicsType(GraphicsType.Integrated);
+        laptop3.setGraphicsCard("Intel Iris Xe");
+        laptop3.setOperatingSystem("Windows 10");
+        laptop3.setWeightKg(1.5);
+        laptop3.setPriceRupees(54990);
+        laptop3.setBatteryLifeHours(8);
+        laptop3.setInStock(true);
+        laptop3.setStockQuantity(20);
+        laptop3.setWarrantyMonths(24);
+
+        List<Laptop> laptopList = new ArrayList<>();
+        laptopList.add(laptop1);
+        laptopList.add(laptop2);
+        laptopList.add(laptop3);
+
         try {
-            laptopService.addLaptop();
-            System.out.println("Batch Laptop's inserted successfully!");
+            int[] acknowledge = laptopService.addLaptop(laptopList);
+            for (int row: acknowledge) {
+                System.out.println(row);
+            }
         } catch (Exception e) {
             System.out.println("Error inserting laptop: " + e.getMessage());
         }
