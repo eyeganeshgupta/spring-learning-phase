@@ -141,7 +141,6 @@ public class LaptopDataEntryRunner implements CommandLineRunner {
         */
 
         Laptop laptop1 = new Laptop();
-        laptop1.setLaptopId(1);
         laptop1.setBrand("HP");
         laptop1.setModel("Pavilion 15");
         laptop1.setProcessorBrand(ProcessorBrand.Intel);
@@ -162,7 +161,6 @@ public class LaptopDataEntryRunner implements CommandLineRunner {
         laptop1.setWarrantyMonths(24);
 
         Laptop laptop2 = new Laptop();
-        laptop2.setLaptopId(2);
         laptop2.setBrand("Dell");
         laptop2.setModel("Inspiron 14");
         laptop2.setProcessorBrand(ProcessorBrand.AMD);
@@ -183,7 +181,6 @@ public class LaptopDataEntryRunner implements CommandLineRunner {
         laptop2.setWarrantyMonths(12);
 
         Laptop laptop3 = new Laptop();
-        laptop3.setLaptopId(3);
         laptop3.setBrand("Apple");
         laptop3.setModel("MacBook Pro");
         laptop3.setProcessorBrand(ProcessorBrand.Apple);
@@ -204,7 +201,6 @@ public class LaptopDataEntryRunner implements CommandLineRunner {
         laptop3.setWarrantyMonths(12);
 
         Laptop laptop4 = new Laptop();
-        laptop4.setLaptopId(4);
         laptop4.setBrand("Asus");
         laptop4.setModel("ROG Strix");
         laptop4.setProcessorBrand(ProcessorBrand.Intel);
