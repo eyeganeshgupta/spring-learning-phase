@@ -3,7 +3,9 @@ package io.spring.repository;
 import io.spring.entity.Product;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductRepository {
     private final EntityManager entityManager;
 
