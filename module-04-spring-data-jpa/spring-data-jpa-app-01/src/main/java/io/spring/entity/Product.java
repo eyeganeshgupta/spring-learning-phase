@@ -5,10 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "products")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private int productId;
 
     @Column(name = "product_name", nullable = false, length = 100)
     private String productName;
@@ -25,10 +21,10 @@ public class Product {
     @Column(name = "category_id")
     private int categoryId;
 
-    // Default constructor
-    public Product() {}
+    public Product() {
 
-    // Parameterized constructor
+    }
+
     public Product(String productName, String description, double price, int quantity, int categoryId) {
         this.productName = productName;
         this.description = description;
@@ -37,7 +33,6 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    // Getters and Setters
     public String getProductName() {
         return productName;
     }
@@ -78,7 +73,6 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    // toString method for better readability
     @Override
     public String toString() {
         return "Product{" +
