@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "products")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private int productId;
 
     @Column(name = "product_name", nullable = false, length = 100)
     private String productName;
@@ -33,6 +37,7 @@ public class Product {
         this.categoryId = categoryId;
     }
 
+    // Getters and Setters
     public String getProductName() {
         return productName;
     }
