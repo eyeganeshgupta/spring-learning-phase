@@ -18,66 +18,32 @@ public class ProductRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.println("Choose an action: 'add', 'fetch', 'update', 'delete', or 'exit' to quit:");
-                String caseType = scanner.nextLine().trim().toLowerCase();
+                String action = scanner.nextLine().trim().toLowerCase();
 
-                if ("exit".equals(caseType)) {
+                if ("exit".equals(action)) {
                     System.out.println("Exiting the program.");
                     break;
                 }
 
-                switch (caseType) {
+                switch (action) {
                     case "add":
-                        System.out.println("Enter product name:");
-                        String name = scanner.nextLine();
-                        System.out.println("Enter product description:");
-                        String description = scanner.nextLine();
-                        System.out.println("Enter product price:");
-                        double price = scanner.nextDouble();
-                        System.out.println("Enter product quantity:");
-                        int quantity = scanner.nextInt();
-                        System.out.println("Enter category ID:");
-                        int categoryId = scanner.nextInt();
-                        scanner.nextLine();
-
-                        Product newProduct = new Product(name, description, price, quantity, categoryId);
-                        productService.save(newProduct);
-                        System.out.println("-> Saved new product: " + newProduct);
+                        addProduct(scanner);
                         break;
 
                     case "fetch":
-                        System.out.println("Enter product ID to fetch:");
-                        int fetchId = scanner.nextInt();
-                        scanner.nextLine();
-                        Product fetchedProduct = productService.getProductById(fetchId);
-                        System.out.println("-> Product with ID " + fetchId + ": " + fetchedProduct);
+                        fetchProduct(scanner);
                         break;
 
                     case "update":
-                        System.out.println("Enter product ID to update:");
-                        int updateId = scanner.nextInt();
-                        scanner.nextLine();
-                        Product existingProduct = productService.getProductById(updateId);
-                        if (existingProduct != null) {
-                            System.out.println("Enter new price for the product:");
-                            double newPrice = scanner.nextDouble();
-                            existingProduct.setPrice(newPrice);
-                            Product updatedProduct = productService.updateProduct(existingProduct);
-                            System.out.println("-> Updated product: " + updatedProduct);
-                        } else {
-                            System.out.println("-> No product found with ID " + updateId);
-                        }
+                        updateProduct(scanner);
                         break;
 
                     case "delete":
-                        System.out.println("Enter product ID to delete:");
-                        int deleteId = scanner.nextInt();
-                        scanner.nextLine();
-                        productService.deleteProductById(deleteId);
-                        System.out.println("-> Deleted product with ID " + deleteId);
+                        deleteProduct(scanner);
                         break;
 
                     default:
@@ -85,6 +51,62 @@ public class ProductRunner implements CommandLineRunner {
                         break;
                 }
             }
+        }
+    }
+
+    private void addProduct(Scanner scanner) {
+        System.out.println("Enter product name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter product description:");
+        String description = scanner.nextLine();
+        System.out.println("Enter product price:");
+        double price = Double.parseDouble(scanner.nextLine());
+        System.out.println("Enter product quantity:");
+        int quantity = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter category ID:");
+        int categoryId = Integer.parseInt(scanner.nextLine());
+
+        Product newProduct = new Product(name, description, price, quantity, categoryId);
+        productService.create(newProduct);
+        System.out.println("-> Saved new product: " + newProduct);
+    }
+
+    private void fetchProduct(Scanner scanner) {
+        System.out.println("Enter product ID to fetch:");
+        int fetchId = Integer.parseInt(scanner.nextLine());
+        Product fetchedProduct = productService.read(fetchId);
+
+        if (fetchedProduct != null) {
+            System.out.println("-> Product with ID " + fetchId + ": " + fetchedProduct);
+        } else {
+            System.out.println("-> No product found with ID " + fetchId);
+        }
+    }
+
+    private void updateProduct(Scanner scanner) {
+        System.out.println("Enter product ID to update:");
+        int updateId = Integer.parseInt(scanner.nextLine());
+        Product existingProduct = productService.read(updateId);
+
+        if (existingProduct != null) {
+            System.out.println("Enter new price for the product:");
+            double newPrice = Double.parseDouble(scanner.nextLine());
+            existingProduct.setPrice(newPrice);
+            Product updatedProduct = productService.update(existingProduct);
+            System.out.println("-> Updated product: " + updatedProduct);
+        } else {
+            System.out.println("-> No product found with ID " + updateId);
+        }
+    }
+
+    private void deleteProduct(Scanner scanner) {
+        System.out.println("Enter product ID to delete:");
+        int deleteId = Integer.parseInt(scanner.nextLine());
+        boolean isDeleted = productService.delete(deleteId);
+        if (isDeleted) {
+            System.out.println("-> Deleted product with ID " + deleteId);
+        } else {
+            System.out.println("-> No product found with ID " + deleteId + " to delete.");
         }
     }
 }

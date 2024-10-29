@@ -10,11 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductRepository {
     @PersistenceContext
-    private final EntityManager entityManager;
-
-    public ProductRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    private EntityManager entityManager;
 
     public void save(Product product) {
         entityManager.persist(product);
@@ -24,14 +20,16 @@ public class ProductRepository {
         return entityManager.find(Product.class, productId);
     }
 
-    public Product updateProduct(Product product) {
+    public Product update(Product product) {
         return entityManager.merge(product);
     }
 
-    public void deleteProductById(Integer productId) {
+    public boolean deleteById(Integer productId) {
         Product product = findById(productId);
         if (product != null) {
             entityManager.remove(product);
+            return true;
         }
+        return false;
     }
 }

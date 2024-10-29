@@ -14,19 +14,19 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void save(Product product) {
+    public void create(Product product) {
         productRepository.save(product);
     }
 
-    public Product getProductById(int productId) {
+    public Product read(int productId) {
         return productRepository.findById(productId);
     }
 
-    public Product updateProduct(Product product) {
-        return productRepository.updateProduct(product);
+    public Product update(Product product) {
+        return productRepository.update(product);
     }
 
-    public void deleteProductById(int productId) {
-        productRepository.deleteProductById(productId);
+    public boolean delete(int productId) {
+        return productRepository.deleteById(productId);
     }
 }
