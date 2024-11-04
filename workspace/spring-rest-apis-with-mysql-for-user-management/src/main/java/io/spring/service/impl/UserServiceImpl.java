@@ -1,6 +1,7 @@
 package io.spring.service.impl;
 
 import io.spring.entity.User;
+import io.spring.exception.DuplicateEmailException;
 import io.spring.exception.ResourceNotFoundException;
 import io.spring.repository.UserRepository;
 import io.spring.service.UserService;
@@ -20,14 +21,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(User user) throws DuplicateEmailException {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new DuplicateEmailException("Email already exists");
+        }
         return userRepository.save(user);
     }
 
     @Override
     public User getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
     @Override
@@ -37,11 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long id, User user) {
-        // Fetch existing user from database
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        User existingUser = getUserById(id); // Throws ResourceNotFound if user is not found
 
-        // Update only necessary fields using Optional.ofNullable for cleaner null checks
+        // Update fields only if they are present
         Optional.ofNullable(user.getName()).ifPresent(existingUser::setName);
         Optional.ofNullable(user.getEmail()).ifPresent(existingUser::setEmail);
         Optional.ofNullable(user.getPhoneNumber()).ifPresent(existingUser::setPhoneNumber);
@@ -50,12 +52,14 @@ public class UserServiceImpl implements UserService {
         Optional.ofNullable(user.getRole()).ifPresent(existingUser::setRole);
         Optional.ofNullable(user.getStatus()).ifPresent(existingUser::setStatus);
 
-        // Save updated user back into database
         return userRepository.save(existingUser);
     }
 
     @Override
     public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found with id: " + id);
+        }
         userRepository.deleteById(id);
     }
 }

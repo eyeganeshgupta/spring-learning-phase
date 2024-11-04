@@ -1,8 +1,8 @@
 package io.spring.controller;
 
 import io.spring.entity.User;
-import io.spring.exception.ResourceNotFoundException;
-import io.spring.service.impl.UserServiceImpl;
+import io.spring.response.ApiResponse;
+import io.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,49 +10,62 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserServiceImpl userService;
+
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<ApiResponse<User>> createUser(@RequestBody User user) {
+        user.setRole("USER");
+        user.setStatus("ACTIVE");
+
         User savedUser = userService.createUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+
+        ApiResponse<User> response = new ApiResponse<>(true, "User created successfully", savedUser);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    // http://localhost:9090/api/users/1
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        ApiResponse<User> response = new ApiResponse<>(true, "User fetched successfully", user);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+
+        ApiResponse<List<User>> response = new ApiResponse<>(true, "All users fetched successfully", users);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // http://localhost:9090/api/users/1
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        try {
-            User updatedUser = userService.updateUser(id, user);
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            // Return 404 if the user is not found
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<ApiResponse<User>> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+
+        ApiResponse<User> response = new ApiResponse<>(true, "User updated successfully", updatedUser);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>("User deleted", HttpStatus.OK);
+
+        ApiResponse<String> response = new ApiResponse<>(true, "User deleted successfully", "Deleted");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

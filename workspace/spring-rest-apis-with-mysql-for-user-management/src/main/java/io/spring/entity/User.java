@@ -44,7 +44,7 @@ public class User {
     private String address;
 
     // Role and Status
-    @Column(name = "role", length = 20, nullable = false, columnDefinition = "varchar(20) default 'USER'")
+    @Column(name = "role", length = 20, columnDefinition = "varchar(20) default 'USER'")
     private String role;
 
     @Column(name = "status", columnDefinition = "varchar(20) default 'ACTIVE'")
@@ -65,8 +65,12 @@ public class User {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.gender = gender;
+        this.gender = gender.toLowerCase(); // Ensure gender is stored in lowercase
         this.address = address;
+    }
+
+    public void setGender(String gender) {
+        this.gender = (gender != null) ? gender.toLowerCase() : null;
     }
 
     public void setRole(String role) {
