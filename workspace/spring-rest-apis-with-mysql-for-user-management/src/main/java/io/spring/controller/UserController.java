@@ -26,7 +26,7 @@ public class UserController {
     }
 
     // http://localhost:9090/api/users/1
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -48,5 +48,11 @@ public class UserController {
             // Return 404 if the user is not found
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>("User deleted", HttpStatus.OK);
     }
 }
