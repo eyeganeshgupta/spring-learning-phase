@@ -1,6 +1,6 @@
 package io.spring.controller;
 
-import io.spring.entity.User;
+import io.spring.dto.UserDTO;
 import io.spring.response.ApiResponse;
 import io.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,47 +21,58 @@ public class UserController {
         this.userService = userService;
     }
 
+    // Create a new user using UserDTO
     @PostMapping
-    public ResponseEntity<ApiResponse<User>> createUser(@RequestBody User user) {
+    public ResponseEntity<ApiResponse<UserDTO>> createUser(@RequestBody UserDTO user) {
+        // Set default role and status for new users
         user.setRole("USER");
         user.setStatus("ACTIVE");
 
-        User savedUser = userService.createUser(user);
+        // Call service to create user and return saved UserDTO
+        UserDTO savedUser = userService.createUser(user);
 
-        ApiResponse<User> response = new ApiResponse<>(true, "User created successfully", savedUser);
+        ApiResponse<UserDTO> response = new ApiResponse<>(true, "User created successfully", savedUser);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // Get a user by ID, returning a UserDTO
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
+    public ResponseEntity<ApiResponse<UserDTO>> getUserById(@PathVariable Long id) {
+        // Call service to fetch user by ID and convert to UserDTO
+        UserDTO user = userService.getUserById(id);
 
-        ApiResponse<User> response = new ApiResponse<>(true, "User fetched successfully", user);
+        ApiResponse<UserDTO> response = new ApiResponse<>(true, "User fetched successfully", user);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // Get all users, returning a list of UserDTOs
     @GetMapping
-    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {
+        // Call service to fetch all users and convert them to DTOs
+        List<UserDTO> users = userService.getAllUsers();
 
-        ApiResponse<List<User>> response = new ApiResponse<>(true, "All users fetched successfully", users);
+        ApiResponse<List<UserDTO>> response = new ApiResponse<>(true, "All users fetched successfully", users);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // Update a user by ID using UserDTO for both input and output
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<User>> updateUser(@PathVariable Long id, @RequestBody User user) {
-        User updatedUser = userService.updateUser(id, user);
+    public ResponseEntity<ApiResponse<UserDTO>> updateUser(@PathVariable Long id, @RequestBody UserDTO user) {
+        // Call service to update the user and return updated UserDTO
+        UserDTO updatedUser = userService.updateUser(id, user);
 
-        ApiResponse<User> response = new ApiResponse<>(true, "User updated successfully", updatedUser);
+        ApiResponse<UserDTO> response = new ApiResponse<>(true, "User updated successfully", updatedUser);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // Delete a user by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable Long id) {
+        // Call service to delete the user by ID
         userService.deleteUser(id);
 
         ApiResponse<String> response = new ApiResponse<>(true, "User deleted successfully", "Deleted");
