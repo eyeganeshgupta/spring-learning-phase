@@ -36,33 +36,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(Long id, User user) {
         // Fetch existing user from database
-        User existingUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + user.getId()));
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
-        // Update only necessary fields
-        if (user.getName() != null) {
-            existingUser.setName(user.getName());
-        }
-        if (user.getEmail() != null) {
-            existingUser.setEmail(user.getEmail());
-        }
-        if (user.getPhoneNumber() != null) {
-            existingUser.setPhoneNumber(user.getPhoneNumber());
-        }
-        if (user.getGender() != null) {
-            existingUser.setGender(user.getGender());
-        }
-        if (user.getAddress() != null) {
-            existingUser.setAddress(user.getAddress());
-        }
-        if (user.getRole() != null) {
-            existingUser.setRole(user.getRole());
-        }
-        if (user.getStatus() != null) {
-            existingUser.setStatus(user.getStatus());
-        }
+        // Update only necessary fields using Optional.ofNullable for cleaner null checks
+        Optional.ofNullable(user.getName()).ifPresent(existingUser::setName);
+        Optional.ofNullable(user.getEmail()).ifPresent(existingUser::setEmail);
+        Optional.ofNullable(user.getPhoneNumber()).ifPresent(existingUser::setPhoneNumber);
+        Optional.ofNullable(user.getGender()).ifPresent(existingUser::setGender);
+        Optional.ofNullable(user.getAddress()).ifPresent(existingUser::setAddress);
+        Optional.ofNullable(user.getRole()).ifPresent(existingUser::setRole);
+        Optional.ofNullable(user.getStatus()).ifPresent(existingUser::setStatus);
 
         // Save updated user back into database
         return userRepository.save(existingUser);

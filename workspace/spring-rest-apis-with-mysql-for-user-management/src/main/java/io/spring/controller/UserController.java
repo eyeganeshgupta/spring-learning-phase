@@ -1,6 +1,7 @@
 package io.spring.controller;
 
 import io.spring.entity.User;
+import io.spring.exception.ResourceNotFoundException;
 import io.spring.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,13 +39,13 @@ public class UserController {
     }
 
     // http://localhost:9090/api/users/1
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
-        User savedUser = userService.updateUser(user);
-        if (savedUser != null) {
-            return new ResponseEntity<>(savedUser, HttpStatus.OK);
-        } else {
+        try {
+            User updatedUser = userService.updateUser(id, user);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            // Return 404 if the user is not found
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
