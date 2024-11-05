@@ -3,6 +3,7 @@ package io.spring.controller;
 import io.spring.dto.UserDTO;
 import io.spring.response.ApiResponse;
 import io.spring.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController {
 
     // Create a new user using UserDTO
     @PostMapping
-    public ResponseEntity<ApiResponse<UserDTO>> createUser(@RequestBody UserDTO user) {
+    public ResponseEntity<ApiResponse<UserDTO>> createUser(@Valid @RequestBody UserDTO user) {
         // Set default role and status for new users
         user.setRole("USER");
         user.setStatus("ACTIVE");
@@ -60,7 +61,7 @@ public class UserController {
 
     // Update a user by ID using UserDTO for both input and output
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserDTO>> updateUser(@PathVariable Long id, @RequestBody UserDTO user) {
+    public ResponseEntity<ApiResponse<UserDTO>> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO user) {
         // Call service to update the user and return updated UserDTO
         UserDTO updatedUser = userService.updateUser(id, user);
 
