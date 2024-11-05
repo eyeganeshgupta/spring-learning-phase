@@ -11,20 +11,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
     private Long id;
-    @NotEmpty
+
+    @NotEmpty(message = "Please provide your name.")
     private String name;
 
-    @NotEmpty
-    @Email
+    @NotEmpty(message = "Email address is required.")
+    @Email(message = "Please enter a valid email address.")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Phone number cannot be left blank.")
     private String phoneNumber;
 
-    @NotEmpty
+    @NotEmpty(message = "Gender must be specified.")
     private String gender;
 
-    @NotEmpty
+    @NotEmpty(message = "Address details are necessary.")
     private String address;
 
     private String role;
