@@ -3,6 +3,8 @@ package io.spring.controller;
 import io.spring.dto.UserDTO;
 import io.spring.response.ApiResponse;
 import io.spring.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(
+        name = "User Management APIs",
+        description = "APIs for managing user resources including creation, retrieval, updating, and deletion."
+)
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -23,13 +29,19 @@ public class UserController {
     }
 
     // Create a new user using UserDTO
+    @Operation(
+            summary = "Create a New User",
+            description = "This endpoint allows for the creation of a new user in the database."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "201",
+            description = "User successfully created."
+    )
     @PostMapping
     public ResponseEntity<ApiResponse<UserDTO>> createUser(@Valid @RequestBody UserDTO user) {
-        // Set default role and status for new users
         user.setRole("USER");
         user.setStatus("ACTIVE");
 
-        // Call service to create user and return saved UserDTO
         UserDTO savedUser = userService.createUser(user);
 
         ApiResponse<UserDTO> response = new ApiResponse<>(true, "User created successfully", savedUser);
@@ -37,10 +49,21 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    // Get a user by ID, returning a UserDTO
+    // Get a user by ID
+    @Operation(
+            summary = "Retrieve User by ID",
+            description = "Fetches a user from the database using the provided user ID."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "User successfully retrieved."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "404",
+            description = "User not found."
+    )
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDTO>> getUserById(@PathVariable Long id) {
-        // Call service to fetch user by ID and convert to UserDTO
         UserDTO user = userService.getUserById(id);
 
         ApiResponse<UserDTO> response = new ApiResponse<>(true, "User fetched successfully", user);
@@ -48,10 +71,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // Get all users, returning a list of UserDTOs
+    // Get all users
+    @Operation(
+            summary = "Retrieve All Users",
+            description = "Fetches a list of all users in the database."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "All users successfully retrieved."
+    )
     @GetMapping
     public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {
-        // Call service to fetch all users and convert them to DTOs
         List<UserDTO> users = userService.getAllUsers();
 
         ApiResponse<List<UserDTO>> response = new ApiResponse<>(true, "All users fetched successfully", users);
@@ -59,10 +89,21 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // Update a user by ID using UserDTO for both input and output
+    // Update a user by ID
+    @Operation(
+            summary = "Update User by ID",
+            description = "Allows for the updating of user information using the provided user ID."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "User successfully updated."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "404",
+            description = "User not found."
+    )
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDTO>> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO user) {
-        // Call service to update the user and return updated UserDTO
         UserDTO updatedUser = userService.updateUser(id, user);
 
         ApiResponse<UserDTO> response = new ApiResponse<>(true, "User updated successfully", updatedUser);
@@ -71,9 +112,20 @@ public class UserController {
     }
 
     // Delete a user by ID
+    @Operation(
+            summary = "Delete User by ID",
+            description = "Removes a user from the database using the provided user ID."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "User successfully deleted."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "404",
+            description = "User not found."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable Long id) {
-        // Call service to delete the user by ID
         userService.deleteUser(id);
 
         ApiResponse<String> response = new ApiResponse<>(true, "User deleted successfully", "Deleted");
