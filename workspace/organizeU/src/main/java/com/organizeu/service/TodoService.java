@@ -4,4 +4,5 @@ import com.organizeu.dto.TodoDTO;
 
 public interface TodoService {
     TodoDTO addTodo(TodoDTO todoDTO);
+    TodoDTO getTodo(Long id);
 }
