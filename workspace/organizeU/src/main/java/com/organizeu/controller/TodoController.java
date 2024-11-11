@@ -24,7 +24,7 @@ public class TodoController {
         TodoDTO savedTodo = todoService.addTodo(todoDTO);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo item has been created successfully.",
+                "🎉 Success! Your Todo item has been created and is now ready for action! 🎉",
                 savedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -35,7 +35,7 @@ public class TodoController {
         TodoDTO todoDTO = todoService.getTodo(id);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo item retrieved successfully.",
+                "🔍 Here it is! Your requested Todo item has been retrieved successfully. Feel free to view or edit the details! 🔍",
                 todoDTO
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -46,8 +46,19 @@ public class TodoController {
         List<TodoDTO> todos = todoService.getAllTodos();
         CustomResponse<List<TodoDTO>> response = new CustomResponse<>(
                 true,
-                "Retrieved all Todo items successfully.",
+                "📜 All Set! We've successfully gathered all your Todo items. Check out your complete list below! 📜",
                 todos
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomResponse<TodoDTO>> updateTodo(@RequestBody TodoDTO todoDTO, @PathVariable Long id) {
+        TodoDTO updatedTodo = todoService.updateTodo(todoDTO, id);
+        CustomResponse<TodoDTO> response = new CustomResponse<>(
+                true,
+                "✏️ Updated! Your Todo item has been successfully modified. Review the changes made! ✏️",
+                updatedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

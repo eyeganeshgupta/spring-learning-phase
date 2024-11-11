@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +39,19 @@ public class TodoServiceImpl implements TodoService {
     public List<TodoDTO> getAllTodos() {
         List<Todo> todos = todoRepository.findAll();
         return todos.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public TodoDTO updateTodo(TodoDTO todoDTO, Long id) {
+        Todo existingTodo = todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Todo not found with id: " + id));
+
+        Optional.ofNullable(todoDTO.getTitle()).ifPresent(existingTodo::setTitle);
+        Optional.ofNullable(todoDTO.getDescription()).ifPresent(existingTodo::setDescription);
+        Optional.of(todoDTO.isCompleted()).ifPresent(existingTodo::setCompleted);
+
+        Todo updatedTodo = todoRepository.save(existingTodo);
+
+        return modelMapper.map(updatedTodo, TodoDTO.class);
     }
 
     private TodoDTO convertToDTO(Todo todo) {
