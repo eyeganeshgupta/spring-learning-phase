@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
@@ -19,15 +22,29 @@ public class TodoServiceImpl implements TodoService {
     @Override
     @Transactional
     public TodoDTO addTodo(TodoDTO todoDTO) {
-        Todo todo = modelMapper.map(todoDTO, Todo.class);
+        Todo todo = convertToEntity(todoDTO);
         Todo savedTodo = todoRepository.save(todo);
-        return modelMapper.map(savedTodo, TodoDTO.class);
+        return convertToDTO(savedTodo);
     }
 
     @Override
     public TodoDTO getTodo(Long id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not found with id: " + id));
+        return convertToDTO(todo);
+    }
+
+    @Override
+    public List<TodoDTO> getAllTodos() {
+        List<Todo> todos = todoRepository.findAll();
+        return todos.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    private TodoDTO convertToDTO(Todo todo) {
         return modelMapper.map(todo, TodoDTO.class);
+    }
+
+    private Todo convertToEntity(TodoDTO todoDTO) {
+        return modelMapper.map(todoDTO, Todo.class);
     }
 }

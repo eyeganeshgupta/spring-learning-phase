@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/todos")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class TodoController {
         TodoDTO savedTodo = todoService.addTodo(todoDTO);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo item created successfully",
+                "Todo item has been created successfully.",
                 savedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -33,8 +35,19 @@ public class TodoController {
         TodoDTO todoDTO = todoService.getTodo(id);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo item retrieved successfully!",
+                "Todo item retrieved successfully.",
                 todoDTO
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<CustomResponse<List<TodoDTO>>> getAllTodos() {
+        List<TodoDTO> todos = todoService.getAllTodos();
+        CustomResponse<List<TodoDTO>> response = new CustomResponse<>(
+                true,
+                "Retrieved all Todo items successfully.",
+                todos
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
