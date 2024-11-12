@@ -63,12 +63,24 @@ public class TodoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse<String>> deleteTodo(@PathVariable Long id) {
         todoService.deleteTodo(id);
         CustomResponse<String> response = new CustomResponse<>(
                 true,
                 "Deleted! Your Todo item has been successfully deleted.",
                 "Deleted!"
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<CustomResponse<TodoDTO>> completeTodo(@PathVariable Long id) {
+        TodoDTO updatedTodo = todoService.completeTodo(id);
+        CustomResponse<TodoDTO> response = new CustomResponse<>(
+                true,
+                "Todo marked as completed.",
+                updatedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
