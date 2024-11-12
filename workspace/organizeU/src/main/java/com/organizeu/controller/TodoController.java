@@ -62,4 +62,14 @@ public class TodoController {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    public ResponseEntity<CustomResponse<String>> deleteTodo(@PathVariable Long id) {
+        todoService.deleteTodo(id);
+        CustomResponse<String> response = new CustomResponse<>(
+                true,
+                "Deleted! Your Todo item has been successfully deleted.",
+                "Deleted!"
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
