@@ -17,26 +17,27 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class TodoController {
+
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<CustomResponse<TodoDTO>> addTodo(@Valid @RequestBody TodoDTO todoDTO) {
-        TodoDTO savedTodo = todoService.addTodo(todoDTO);
+    public ResponseEntity<CustomResponse<TodoDTO>> createTodo(@Valid @RequestBody TodoDTO todoDTO) {
+        TodoDTO savedTodo = todoService.createTodo(todoDTO);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "🎉 Success! Your Todo item has been created and is now ready for action! 🎉",
+                "To-Do item created successfully.",
                 savedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<TodoDTO>> getTodo(@PathVariable Long id) {
-        TodoDTO todoDTO = todoService.getTodo(id);
+    public ResponseEntity<CustomResponse<TodoDTO>> getTodoById(@PathVariable Long id) {
+        TodoDTO todo = todoService.getTodoById(id);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "🔍 Here it is! Your requested Todo item has been retrieved successfully. Feel free to view or edit the details! 🔍",
-                todoDTO
+                "To-Do item retrieved successfully.",
+                todo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -46,51 +47,51 @@ public class TodoController {
         List<TodoDTO> todos = todoService.getAllTodos();
         CustomResponse<List<TodoDTO>> response = new CustomResponse<>(
                 true,
-                "📜 All Set! We've successfully gathered all your Todo items. Check out your complete list below! 📜",
+                "All To-Do items retrieved successfully.",
                 todos
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomResponse<TodoDTO>> updateTodo(@RequestBody TodoDTO todoDTO, @PathVariable Long id) {
-        TodoDTO updatedTodo = todoService.updateTodo(todoDTO, id);
+    public ResponseEntity<CustomResponse<TodoDTO>> updateTodoById(@PathVariable Long id, @RequestBody TodoDTO todoDTO) {
+        TodoDTO updatedTodo = todoService.updateTodoById(id, todoDTO);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "✏️ Updated! Your Todo item has been successfully modified. Review the changes made! ✏️",
+                "To-Do item updated successfully.",
                 updatedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomResponse<String>> deleteTodo(@PathVariable Long id) {
-        todoService.deleteTodo(id);
+    public ResponseEntity<CustomResponse<String>> deleteTodoById(@PathVariable Long id) {
+        todoService.deleteTodoById(id);
         CustomResponse<String> response = new CustomResponse<>(
                 true,
-                "Deleted! Your Todo item has been successfully deleted.",
-                "Deleted!"
+                "To-Do item deleted successfully.",
+                "Deleted"
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}/complete")
-    public ResponseEntity<CustomResponse<TodoDTO>> completeTodo(@PathVariable Long id) {
-        TodoDTO updatedTodo = todoService.completeTodo(id);
+    public ResponseEntity<CustomResponse<TodoDTO>> markAsComplete(@PathVariable Long id) {
+        TodoDTO updatedTodo = todoService.markTodoAsComplete(id);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo marked as completed.",
+                "To-Do item marked as complete.",
                 updatedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/in-complete")
-    public ResponseEntity<CustomResponse<TodoDTO>> inCompleteTodo(Long id) {
-        TodoDTO updatedTodo = todoService.inCompleteTodo(id);
+    @PatchMapping("/{id}/incomplete")
+    public ResponseEntity<CustomResponse<TodoDTO>> markAsIncomplete(@PathVariable Long id) {
+        TodoDTO updatedTodo = todoService.markTodoAsIncomplete(id);
         CustomResponse<TodoDTO> response = new CustomResponse<>(
                 true,
-                "Todo marked as in-complete",
+                "To-Do item marked as incomplete.",
                 updatedTodo
         );
         return new ResponseEntity<>(response, HttpStatus.OK);

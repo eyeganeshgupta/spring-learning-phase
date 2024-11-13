@@ -5,11 +5,11 @@ import com.organizeu.dto.TodoDTO;
 import java.util.List;
 
 public interface TodoService {
-    TodoDTO addTodo(TodoDTO todoDTO);
-    TodoDTO getTodo(Long id);
+    TodoDTO createTodo(TodoDTO todoDTO);
+    TodoDTO getTodoById(Long id);
     List<TodoDTO> getAllTodos();
-    TodoDTO updateTodo(TodoDTO todoDTO, Long id);
-    void deleteTodo(Long id);
-    TodoDTO completeTodo(Long id);
-    TodoDTO inCompleteTodo(Long id);
+    TodoDTO updateTodoById(Long id, TodoDTO todoDTO);
+    void deleteTodoById(Long id);
+    TodoDTO markTodoAsComplete(Long id);
+    TodoDTO markTodoAsIncomplete(Long id);
 }
