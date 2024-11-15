@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = User.TABLE_NAME)
 public class User {
-    public static final String TABLE_NAME = "users";
+    public static final String TABLE_NAME = "organizeu_users";
     public static final String CREATED_AT_COLUMN = "created_at";
     public static final String UPDATED_AT_COLUMN = "updated_at";
 
