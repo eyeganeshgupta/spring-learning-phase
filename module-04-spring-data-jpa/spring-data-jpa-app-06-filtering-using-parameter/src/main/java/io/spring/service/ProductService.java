@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService {
@@ -23,5 +24,9 @@ public class ProductService {
 
     public Product getProductByName(String productName) {
         return productRepository.findByName(productName);
+    }
+
+    public Map<String, Object> getProductDetails(String productName) {
+        return productRepository.findProductDetailsByName(productName);
     }
 }
