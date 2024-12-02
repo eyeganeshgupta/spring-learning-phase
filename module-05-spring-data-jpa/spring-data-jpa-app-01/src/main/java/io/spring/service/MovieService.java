@@ -37,6 +37,12 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
+    public List<MovieDTO> getAllMovies() {
+        return movieRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());

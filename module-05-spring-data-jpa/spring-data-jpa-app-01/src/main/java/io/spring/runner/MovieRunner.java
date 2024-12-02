@@ -144,5 +144,9 @@ public class MovieRunner implements CommandLineRunner {
 
         System.out.println("Saved Movies: ");
         savedMovies.forEach(System.out::println);
+
+        // Retrieve all movies as DTOs
+        List<MovieDTO> movies = movieService.getAllMovies();
+        movies.forEach(System.out::println);
     }
 }
