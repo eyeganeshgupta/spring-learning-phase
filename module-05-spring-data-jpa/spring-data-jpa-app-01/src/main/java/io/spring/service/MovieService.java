@@ -25,6 +25,18 @@ public class MovieService {
         return convertToDTO(savedMovie);
     }
 
+    public List<MovieDTO> saveAllMovies(List<MovieDTO> movieDTOs) {
+        List<Movie> movies = movieDTOs.stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toList());
+
+        List<Movie> savedMovies = movieRepository.saveAll(movies);
+
+        return savedMovies.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());

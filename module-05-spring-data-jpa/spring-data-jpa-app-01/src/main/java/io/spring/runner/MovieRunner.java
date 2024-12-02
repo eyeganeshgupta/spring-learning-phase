@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,37 +24,125 @@ public class MovieRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        MovieDTO newMovie = new MovieDTO();
-        newMovie.setTitle("The Dark Knight");
-        newMovie.setYearReleased(2008);
-        newMovie.setDirectorName("Christopher Nolan");
-        newMovie.setGenre("Action, Crime, Drama");
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        newMovie.setReleaseDate(dateFormat.parse("2008-07-18"));
 
-        newMovie.setRating(new BigDecimal("9.0"));
-        newMovie.setDurationMinutes(152);
-        newMovie.setLanguage("English");
-        newMovie.setCountry("USA");
-        newMovie.setBudget(new BigDecimal("185000000.00"));
-        newMovie.setBoxOffice(new BigDecimal("1004558444.00"));
-        newMovie.setSynopsis("When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.");
-        newMovie.setPosterUrl("https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg");
-        newMovie.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
-        newMovie.setScreenplayWriter("Jonathan Nolan, Christopher Nolan");
-        newMovie.setMusicComposer("Hans Zimmer, James Newton Howard");
-        newMovie.setCinematographer("Wally Pfister");
-        newMovie.setEditor("Lee Smith");
-        newMovie.setAwards("Won 2 Oscars. Another 157 wins & 163 nominations.");
-        newMovie.setStreamingPlatforms("HBO Max, Amazon Prime Video");
-        newMovie.setCast("Christian Bale, Heath Ledger, Aaron Eckhart");
-        newMovie.setImdbId("tt0468569");
-        newMovie.setMpaaRating("PG-13");
-        newMovie.setFilmingLocations("Chicago, Illinois, USA");
+        MovieDTO titanic = new MovieDTO();
+        titanic.setTitle("Titanic");
+        titanic.setYearReleased(1997);
+        titanic.setDirectorName("James Cameron");
+        titanic.setGenre("Drama, Romance");
+        titanic.setReleaseDate(dateFormat.parse("1997-12-19"));
+        titanic.setRating(new BigDecimal("7.9"));
+        titanic.setDurationMinutes(195);
+        titanic.setLanguage("English");
+        titanic.setCountry("USA");
+        titanic.setBudget(new BigDecimal("200000000"));
+        titanic.setBoxOffice(new BigDecimal("2201647264"));
+        titanic.setSynopsis ("A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious ill-fated R.M.S. Titanic.");
+        titanic.setPosterUrl ("https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_.jpg");
+        titanic.setProductionCompany ("20th Century Fox, Paramount Pictures, Lightstorm Entertainment");
+        titanic.setScreenplayWriter ("James Cameron");
+        titanic.setMusicComposer ("James Horner");
+        titanic.setCinematographer ("Russell Carpenter");
+        titanic.setEditor ("Conrad Buff IV, James Cameron, Richard A. Harris");
+        titanic.setAwards ("Won 11 Oscars.");
+        titanic.setStreamingPlatforms ("Disney+, Amazon Prime Video");
+        titanic.setCast ("Leonardo DiCaprio, Kate Winslet");
+        titanic.setImdbId ("tt0120338");
+        titanic.setMpaaRating ("PG-13");
+        titanic.setFilmingLocations ("Nova Scotia, Canada");
 
         // Save the movie DTO
-        MovieDTO savedMovie = movieService.saveMovie(newMovie);
+        MovieDTO savedMovie = movieService.saveMovie(titanic);
         System.out.println("Saved Movie: " + savedMovie);
+
+
+        // Movie 1: Batman Begins
+        MovieDTO batmanBegins = new MovieDTO();
+        batmanBegins.setTitle("Batman Begins");
+        batmanBegins.setYearReleased(2005);
+        batmanBegins.setDirectorName("Christopher Nolan");
+        batmanBegins.setGenre("Action, Adventure");
+        batmanBegins.setReleaseDate(dateFormat.parse("2005-06-15"));
+        batmanBegins.setRating(new BigDecimal("8.2"));
+        batmanBegins.setDurationMinutes(140);
+        batmanBegins.setLanguage("English");
+        batmanBegins.setCountry("USA");
+        batmanBegins.setBudget(new BigDecimal("150000000"));
+        batmanBegins.setBoxOffice(new BigDecimal("373710015"));
+        batmanBegins.setSynopsis("After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.");
+        batmanBegins.setPosterUrl("https://example.com/batmanbegins.jpg");
+        batmanBegins.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
+        batmanBegins.setScreenplayWriter("Christopher Nolan, David S. Goyer");
+        batmanBegins.setMusicComposer("Hans Zimmer, James Newton Howard");
+        batmanBegins.setCinematographer("Wally Pfister");
+        batmanBegins.setEditor("Lee Smith");
+        batmanBegins.setAwards("Nominated for 1 Oscar.");
+        batmanBegins.setStreamingPlatforms("HBO Max, Amazon Prime Video");
+        batmanBegins.setCast("Christian Bale, Michael Caine, Liam Neeson");
+        batmanBegins.setImdbId("tt0372784");
+        batmanBegins.setMpaaRating("PG-13");
+        batmanBegins.setFilmingLocations("Chicago, Illinois, USA");
+
+        // Movie 2: The Dark Knight
+        MovieDTO darkKnight = new MovieDTO();
+        darkKnight.setTitle("The Dark Knight");
+        darkKnight.setYearReleased(2008);
+        darkKnight.setDirectorName("Christopher Nolan");
+        darkKnight.setGenre("Action, Crime, Drama");
+        darkKnight.setReleaseDate(dateFormat.parse("2008-07-18"));
+        darkKnight.setRating(new BigDecimal("9.0"));
+        darkKnight.setDurationMinutes(152);
+        darkKnight.setLanguage("English");
+        darkKnight.setCountry("USA");
+        darkKnight.setBudget(new BigDecimal("185000000 "));
+        darkKnight.setBoxOffice(new BigDecimal("1004558444 "));
+        darkKnight.setSynopsis("When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.");
+        darkKnight.setPosterUrl("https://example.com/thedarkknight.jpg ");
+        darkKnight.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
+        darkKnight.setScreenplayWriter("Jonathan Nolan, Christopher Nolan");
+        darkKnight.setMusicComposer("Hans Zimmer, James Newton Howard");
+        darkKnight.setCinematographer("Wally Pfister");
+        darkKnight.setEditor("Lee Smith");
+        darkKnight.setAwards("Won 2 Oscars.");
+        darkKnight.setStreamingPlatforms("HBO Max, Amazon Prime Video");
+        darkKnight.setCast("Christian Bale, Heath Ledger, Aaron Eckhart");
+        darkKnight.setImdbId("tt0468569");
+        darkKnight.setMpaaRating("PG-13");
+        darkKnight.setFilmingLocations("Chicago, Illinois, USA");
+
+        // Movie 3: The Dark Knight Rises
+        MovieDTO darkKnightRises= new MovieDTO();
+        darkKnightRises.setTitle("The Dark Knight Rises");
+        darkKnightRises.setYearReleased(2012);
+        darkKnightRises.setDirectorName("Christopher Nolan");
+        darkKnightRises.setGenre("Action, Adventure");
+        darkKnightRises.setReleaseDate(dateFormat.parse("2012-07-20"));
+        darkKnightRises.setRating(new BigDecimal("8.4"));
+        darkKnightRises.setDurationMinutes(164);
+        darkKnightRises.setLanguage("English");
+        darkKnightRises.setCountry("USA");
+        darkKnightRises.setBudget(new BigDecimal("250000000"));
+        darkKnightRises.setBoxOffice(new BigDecimal("1081041287"));
+        darkKnightRises.setSynopsis ("Eight years after the Joker's reign of anarchy, Batman is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane.");
+        darkKnightRises.setPosterUrl ("https://example.com/thedarkknightrises.jpg");
+        darkKnightRises.setProductionCompany ("Warner Bros., Legendary Entertainment, Syncopy");
+        darkKnightRises.setScreenplayWriter ("Jonathan Nolan, Christopher Nolan");
+        darkKnightRises.setMusicComposer ("Hans Zimmer");
+        darkKnightRises.setCinematographer ("Wally Pfister");
+        darkKnightRises.setEditor("Lee Smith");
+        darkKnightRises.setAwards("Nominated for 1 Oscar.");
+        darkKnightRises.setStreamingPlatforms("HBO Max");
+        darkKnightRises.setCast("Christian Bale, Tom Hardy, Anne Hathaway");
+        darkKnightRises.setImdbId("tt1345836");
+        darkKnightRises.setMpaaRating("PG-13");
+        darkKnightRises.setFilmingLocations("Pittsburgh, Pennsylvania, USA");
+
+        List<MovieDTO> darkKnightTrilogy = Arrays.asList(batmanBegins, darkKnight, darkKnightRises);
+
+        List<MovieDTO> savedMovies = movieService.saveAllMovies(darkKnightTrilogy);
+
+        System.out.println("Saved Movies: ");
+        savedMovies.forEach(System.out::println);
     }
 }
