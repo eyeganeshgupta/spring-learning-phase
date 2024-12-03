@@ -6,6 +6,7 @@ import io.spring.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class MovieService {
                 .map(this::convertToEntity)
                 .collect(Collectors.toList());
 
-        List<Movie> savedMovies = movieRepository.saveAll(movies);
+        List<Movie> savedMovies = (List<Movie>) movieRepository.saveAll(movies);
 
         return savedMovies.stream()
                 .map(this::convertToDTO)
@@ -38,7 +39,15 @@ public class MovieService {
     }
 
     public List<MovieDTO> getAllMovies() {
-        return movieRepository.findAll().stream()
+        List<Movie> movies = (List<Movie>) movieRepository.findAll();
+
+        // Check for empty result
+        if (movies.isEmpty()) {
+            return Collections.emptyList(); // Return an empty list if no movies found
+        }
+
+        // Convert each Movie entity to a MovieDTO
+        return movies.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

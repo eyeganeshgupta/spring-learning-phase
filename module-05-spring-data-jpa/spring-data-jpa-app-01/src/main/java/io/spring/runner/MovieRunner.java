@@ -71,7 +71,7 @@ public class MovieRunner implements CommandLineRunner {
         batmanBegins.setBudget(new BigDecimal("150000000"));
         batmanBegins.setBoxOffice(new BigDecimal("373710015"));
         batmanBegins.setSynopsis("After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.");
-        batmanBegins.setPosterUrl("https://example.com/batmanbegins.jpg");
+        batmanBegins.setPosterUrl("https://m.media-amazon.com/images/M/MV5BNDU2MzkyMzMtMDdkMy00Y2MzLTliMGYtMjQxYTcyNTIzMGY2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg");
         batmanBegins.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
         batmanBegins.setScreenplayWriter("Christopher Nolan, David S. Goyer");
         batmanBegins.setMusicComposer("Hans Zimmer, James Newton Howard");
@@ -98,7 +98,7 @@ public class MovieRunner implements CommandLineRunner {
         darkKnight.setBudget(new BigDecimal("185000000 "));
         darkKnight.setBoxOffice(new BigDecimal("1004558444 "));
         darkKnight.setSynopsis("When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.");
-        darkKnight.setPosterUrl("https://example.com/thedarkknight.jpg ");
+        darkKnight.setPosterUrl("https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg");
         darkKnight.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
         darkKnight.setScreenplayWriter("Jonathan Nolan, Christopher Nolan");
         darkKnight.setMusicComposer("Hans Zimmer, James Newton Howard");
@@ -124,12 +124,12 @@ public class MovieRunner implements CommandLineRunner {
         darkKnightRises.setCountry("USA");
         darkKnightRises.setBudget(new BigDecimal("250000000"));
         darkKnightRises.setBoxOffice(new BigDecimal("1081041287"));
-        darkKnightRises.setSynopsis ("Eight years after the Joker's reign of anarchy, Batman is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane.");
-        darkKnightRises.setPosterUrl ("https://example.com/thedarkknightrises.jpg");
-        darkKnightRises.setProductionCompany ("Warner Bros., Legendary Entertainment, Syncopy");
-        darkKnightRises.setScreenplayWriter ("Jonathan Nolan, Christopher Nolan");
-        darkKnightRises.setMusicComposer ("Hans Zimmer");
-        darkKnightRises.setCinematographer ("Wally Pfister");
+        darkKnightRises.setSynopsis("Eight years after the Joker's reign of anarchy, Batman is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane.");
+        darkKnightRises.setPosterUrl("https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_FMjpg_UX1000_.jpg");
+        darkKnightRises.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
+        darkKnightRises.setScreenplayWriter("Jonathan Nolan, Christopher Nolan");
+        darkKnightRises.setMusicComposer("Hans Zimmer");
+        darkKnightRises.setCinematographer("Wally Pfister");
         darkKnightRises.setEditor("Lee Smith");
         darkKnightRises.setAwards("Nominated for 1 Oscar.");
         darkKnightRises.setStreamingPlatforms("HBO Max");
