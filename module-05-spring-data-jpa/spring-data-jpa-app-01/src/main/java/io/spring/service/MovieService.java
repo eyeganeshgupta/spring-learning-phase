@@ -64,6 +64,12 @@ public class MovieService {
         return false;
     }
 
+    public void deleteAllMovies() {
+        System.out.println("Deleting all movies from the repository...");
+        movieRepository.deleteAll();
+        System.out.println("All movies deleted successfully.");
+    }
+
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());

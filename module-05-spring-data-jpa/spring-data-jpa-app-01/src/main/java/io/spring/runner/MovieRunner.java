@@ -95,8 +95,8 @@ public class MovieRunner implements CommandLineRunner {
         darkKnight.setDurationMinutes(152);
         darkKnight.setLanguage("English");
         darkKnight.setCountry("USA");
-        darkKnight.setBudget(new BigDecimal("185000000 "));
-        darkKnight.setBoxOffice(new BigDecimal("1004558444 "));
+        darkKnight.setBudget(new BigDecimal("185000000"));
+        darkKnight.setBoxOffice(new BigDecimal("1004558444"));
         darkKnight.setSynopsis("When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.");
         darkKnight.setPosterUrl("https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg");
         darkKnight.setProductionCompany("Warner Bros., Legendary Entertainment, Syncopy");
@@ -167,5 +167,9 @@ public class MovieRunner implements CommandLineRunner {
         } else {
             System.out.println("Movie with ID " + movieIdToRetrieve + " could not be deleted.");
         }
+
+        // Delete all movies
+        // NOTE: Delete all movies is as good as Truncate command in MySQL.
+        movieService.deleteAllMovies();
     }
 }
