@@ -147,7 +147,7 @@ public class MovieRunner implements CommandLineRunner {
 
         // Retrieve all movies as DTOs
         List<MovieDTO> movies = movieService.getAllMovies();
-        // movies.forEach(System.out::println);
+        /* movies.forEach(System.out::println); */
         movies.forEach(movie -> System.out.println(movie));
 
         Integer movieIdToRetrieve = 1;
@@ -158,6 +158,14 @@ public class MovieRunner implements CommandLineRunner {
             System.out.println(movie);
         } else {
             System.out.println("Movie with ID " + movieIdToRetrieve + " not found.");
+        }
+
+        // Delete the movie by ID
+        boolean isDeleted = movieService.deleteMovieById(movieIdToRetrieve);
+        if (isDeleted) {
+            System.out.println("Movie with ID " + movieIdToRetrieve + " successfully deleted.");
+        } else {
+            System.out.println("Movie with ID " + movieIdToRetrieve + " could not be deleted.");
         }
     }
 }

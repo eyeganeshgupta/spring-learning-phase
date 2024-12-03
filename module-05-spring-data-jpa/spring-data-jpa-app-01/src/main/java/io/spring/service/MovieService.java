@@ -56,6 +56,14 @@ public class MovieService {
         return movieRepository.findById(id).map(movie -> convertToDTO(movie));
     }
 
+    public boolean deleteMovieById(Integer id) {
+        if (movieRepository.existsById(id)) {
+            movieRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());
