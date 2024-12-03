@@ -52,6 +52,10 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<MovieDTO> getMovieById(Integer id) {
+        return movieRepository.findById(id).map(movie -> convertToDTO(movie));
+    }
+
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());

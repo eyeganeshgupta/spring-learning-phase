@@ -229,4 +229,63 @@ public class MovieDTO {
     public void setFilmingLocations(String filmingLocations) {
         this.filmingLocations= filmingLocations;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "*****************************\n" +
+                        "* Movie Details             *\n" +
+                        "*****************************\n" +
+                        "ID: %d\n" +
+                        "Title: %s\n" +
+                        "Year Released: %d\n" +
+                        "Director: %s\n" +
+                        "Genre: %s\n" +
+                        "Release Date: %s\n" +
+                        "Rating: %.1f\n" +
+                        "Duration: %d minutes\n" +
+                        "Language: %s\n" +
+                        "Country: %s\n" +
+                        "Budget: $%,.2f\n" +
+                        "Box Office: $%,.2f\n" +
+                        "Synopsis: %s\n" +
+                        "Poster URL: %s\n" +
+                        "Production Company: %s\n" +
+                        "Screenplay Writer: %s\n" +
+                        "Music Composer: %s\n" +
+                        "Cinematographer: %s\n" +
+                        "Editor: %s\n" +
+                        "Awards: %s\n" +
+                        "Streaming Platforms: %s\n" +
+                        "Cast: %s\n" +
+                        "IMDB ID: %s\n" +
+                        "MPAA Rating: %s\n" +
+                        "Filming Locations: %s\n",
+                movieId,
+                title,
+                yearReleased,
+                directorName,
+                genre,
+                releaseDate != null ? releaseDate.toString() : "N/A",
+                rating != null ? rating : BigDecimal.ZERO,
+                durationMinutes,
+                language,
+                country,
+                budget != null ? budget : BigDecimal.ZERO,
+                boxOffice != null ? boxOffice : BigDecimal.ZERO,
+                synopsis,
+                posterUrl,
+                productionCompany,
+                screenplayWriter,
+                musicComposer,
+                cinematographer,
+                editor,
+                awards,
+                streamingPlatforms,
+                cast,
+                imdbId,
+                mpaaRating,
+                filmingLocations
+        );
+    }
 }

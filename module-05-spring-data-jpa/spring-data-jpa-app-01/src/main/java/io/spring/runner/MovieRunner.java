@@ -147,6 +147,17 @@ public class MovieRunner implements CommandLineRunner {
 
         // Retrieve all movies as DTOs
         List<MovieDTO> movies = movieService.getAllMovies();
-        movies.forEach(System.out::println);
+        // movies.forEach(System.out::println);
+        movies.forEach(movie -> System.out.println(movie));
+
+        Integer movieIdToRetrieve = 1;
+        // Using the getMovieById method to retrieve the movie
+        Optional<MovieDTO> retrievedMovie = movieService.getMovieById(movieIdToRetrieve);
+        if (retrievedMovie.isPresent()) {
+            MovieDTO movie = retrievedMovie.get();
+            System.out.println(movie);
+        } else {
+            System.out.println("Movie with ID " + movieIdToRetrieve + " not found.");
+        }
     }
 }
