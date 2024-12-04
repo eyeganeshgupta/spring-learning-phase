@@ -24,8 +24,47 @@ public class MovieRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Initialize date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        // Count initial number of movies
+        long initialCount = movieService.countMovies();
+        System.out.println("Initial number of movies: " + initialCount);
+
+        // Create and save Titanic movie
+        MovieDTO titanic = createTitanicMovie(dateFormat);
+        MovieDTO savedMovie = movieService.saveMovie(titanic);
+        System.out.println("Saved Movie: " + savedMovie);
+
+        // Create and save Dark Knight Trilogy movies
+        List<MovieDTO> darkKnightTrilogy = createDarkKnightTrilogy(dateFormat);
+        List<MovieDTO> savedMovies = movieService.saveAllMovies(darkKnightTrilogy);
+        System.out.println("Saved Movies: ");
+        savedMovies.forEach(System.out::println);
+
+        // Retrieve and print all movies
+        List<MovieDTO> movies = movieService.getAllMovies();
+        movies.forEach(System.out::println);
+
+        // Retrieve a specific movie by ID
+        retrieveAndPrintMovieById(1);
+
+        // Delete a specific movie by ID
+        deleteMovieById(1);
+
+        // Delete multiple movies by IDs
+        List<Integer> idsToDelete = Arrays.asList(2, 3, 4);
+        movieService.deleteMoviesByIds(idsToDelete);
+
+        // Delete all movies
+        movieService.deleteAllMovies();
+
+        // Count final number of movies after deletion
+        long finalCount = movieService.countMovies();
+        System.out.println("Number of movies after deletion: " + finalCount);
+    }
+
+    private MovieDTO createTitanicMovie(SimpleDateFormat dateFormat) throws Exception {
         MovieDTO titanic = new MovieDTO();
         titanic.setTitle("Titanic");
         titanic.setYearReleased(1997);
@@ -38,26 +77,24 @@ public class MovieRunner implements CommandLineRunner {
         titanic.setCountry("USA");
         titanic.setBudget(new BigDecimal("200000000"));
         titanic.setBoxOffice(new BigDecimal("2201647264"));
-        titanic.setSynopsis ("A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious ill-fated R.M.S. Titanic.");
-        titanic.setPosterUrl ("https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_.jpg");
-        titanic.setProductionCompany ("20th Century Fox, Paramount Pictures, Lightstorm Entertainment");
-        titanic.setScreenplayWriter ("James Cameron");
-        titanic.setMusicComposer ("James Horner");
-        titanic.setCinematographer ("Russell Carpenter");
-        titanic.setEditor ("Conrad Buff IV, James Cameron, Richard A. Harris");
-        titanic.setAwards ("Won 11 Oscars.");
-        titanic.setStreamingPlatforms ("Disney+, Amazon Prime Video");
-        titanic.setCast ("Leonardo DiCaprio, Kate Winslet");
-        titanic.setImdbId ("tt0120338");
-        titanic.setMpaaRating ("PG-13");
-        titanic.setFilmingLocations ("Nova Scotia, Canada");
+        titanic.setSynopsis("A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious ill-fated R.M.S. Titanic.");
+        titanic.setPosterUrl("https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_.jpg");
+        titanic.setProductionCompany("20th Century Fox, Paramount Pictures, Lightstorm Entertainment");
+        titanic.setScreenplayWriter("James Cameron");
+        titanic.setMusicComposer("James Horner");
+        titanic.setCinematographer("Russell Carpenter");
+        titanic.setEditor("Conrad Buff IV, James Cameron, Richard A. Harris");
+        titanic.setAwards("Won 11 Oscars.");
+        titanic.setStreamingPlatforms("Disney+, Amazon Prime Video");
+        titanic.setCast("Leonardo DiCaprio, Kate Winslet");
+        titanic.setImdbId("tt0120338");
+        titanic.setMpaaRating("PG-13");
+        titanic.setFilmingLocations("Nova Scotia, Canada");
 
-        // Save the movie DTO
-        MovieDTO savedMovie = movieService.saveMovie(titanic);
-        System.out.println("Saved Movie: " + savedMovie);
+        return titanic;
+    }
 
-
-        // Movie 1: Batman Begins
+    private List<MovieDTO> createDarkKnightTrilogy(SimpleDateFormat dateFormat) throws Exception {
         MovieDTO batmanBegins = new MovieDTO();
         batmanBegins.setTitle("Batman Begins");
         batmanBegins.setYearReleased(2005);
@@ -84,7 +121,6 @@ public class MovieRunner implements CommandLineRunner {
         batmanBegins.setMpaaRating("PG-13");
         batmanBegins.setFilmingLocations("Chicago, Illinois, USA");
 
-        // Movie 2: The Dark Knight
         MovieDTO darkKnight = new MovieDTO();
         darkKnight.setTitle("The Dark Knight");
         darkKnight.setYearReleased(2008);
@@ -111,8 +147,7 @@ public class MovieRunner implements CommandLineRunner {
         darkKnight.setMpaaRating("PG-13");
         darkKnight.setFilmingLocations("Chicago, Illinois, USA");
 
-        // Movie 3: The Dark Knight Rises
-        MovieDTO darkKnightRises= new MovieDTO();
+        MovieDTO darkKnightRises = new MovieDTO();
         darkKnightRises.setTitle("The Dark Knight Rises");
         darkKnightRises.setYearReleased(2012);
         darkKnightRises.setDirectorName("Christopher Nolan");
@@ -138,38 +173,24 @@ public class MovieRunner implements CommandLineRunner {
         darkKnightRises.setMpaaRating("PG-13");
         darkKnightRises.setFilmingLocations("Pittsburgh, Pennsylvania, USA");
 
-        List<MovieDTO> darkKnightTrilogy = Arrays.asList(batmanBegins, darkKnight, darkKnightRises);
+        return Arrays.asList(batmanBegins, darkKnight, darkKnightRises);
+    }
 
-        List<MovieDTO> savedMovies = movieService.saveAllMovies(darkKnightTrilogy);
-
-        System.out.println("Saved Movies: ");
-        savedMovies.forEach(System.out::println);
-
-        // Retrieve all movies as DTOs
-        List<MovieDTO> movies = movieService.getAllMovies();
-        /* movies.forEach(System.out::println); */
-        movies.forEach(movie -> System.out.println(movie));
-
-        Integer movieIdToRetrieve = 1;
-        // Using the getMovieById method to retrieve the movie
-        Optional<MovieDTO> retrievedMovie = movieService.getMovieById(movieIdToRetrieve);
+    private void retrieveAndPrintMovieById(Integer id) {
+        Optional<MovieDTO> retrievedMovie = movieService.getMovieById(id);
         if (retrievedMovie.isPresent()) {
-            MovieDTO movie = retrievedMovie.get();
-            System.out.println(movie);
+            System.out.println(retrievedMovie.get());
         } else {
-            System.out.println("Movie with ID " + movieIdToRetrieve + " not found.");
+            System.out.println("Movie with ID " + id + " not found.");
         }
+    }
 
-        // Delete the movie by ID
-        boolean isDeleted = movieService.deleteMovieById(movieIdToRetrieve);
+    private void deleteMovieById(Integer id) {
+        boolean isDeleted = movieService.deleteMovieById(id);
         if (isDeleted) {
-            System.out.println("Movie with ID " + movieIdToRetrieve + " successfully deleted.");
+            System.out.println("Movie with ID " + id + " successfully deleted.");
         } else {
-            System.out.println("Movie with ID " + movieIdToRetrieve + " could not be deleted.");
+            System.out.println("Movie with ID " + id + " could not be deleted.");
         }
-
-        // Delete all movies
-        // NOTE: Delete all movies is as good as Truncate command in MySQL.
-        movieService.deleteAllMovies();
     }
 }

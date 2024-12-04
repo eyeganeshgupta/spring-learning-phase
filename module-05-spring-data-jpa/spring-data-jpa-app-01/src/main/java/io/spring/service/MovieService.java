@@ -64,10 +64,20 @@ public class MovieService {
         return false;
     }
 
+    public void deleteMoviesByIds(List<Integer> ids) {
+        System.out.println("Deleting movies with IDs: " + ids);
+        movieRepository.deleteAllById(ids);
+        System.out.println("Movies deleted successfully.");
+    }
+
     public void deleteAllMovies() {
         System.out.println("Deleting all movies from the repository...");
         movieRepository.deleteAll();
         System.out.println("All movies deleted successfully.");
+    }
+
+    public long countMovies() {
+        return movieRepository.count();
     }
 
     private MovieDTO convertToDTO(Movie movie) {
