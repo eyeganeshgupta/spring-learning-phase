@@ -30,8 +30,7 @@ public class MovieRunner implements CommandLineRunner {
 
     private void performMovieOperations() {
         findMovieByTitle("Inception");
-        countMoviesByGenre("Action");
-        /*
+        countMoviesByGenre("Science Fiction");
         findMoviesByDirector("Christopher Nolan");
         findMoviesByGenre("Drama");
         findMoviesReleasedInYear(2008);
@@ -42,7 +41,6 @@ public class MovieRunner implements CommandLineRunner {
         findMoviesInLanguage("English");
         findAwardWinningMovies("Oscar");
         findRecentMovies(LocalDate.of(2010, 1, 1));
-         */
     }
 
     private void findMovieByTitle(String title) {
