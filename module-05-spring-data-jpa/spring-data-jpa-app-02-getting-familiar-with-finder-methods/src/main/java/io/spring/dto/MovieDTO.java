@@ -232,60 +232,36 @@ public class MovieDTO {
 
     @Override
     public String toString() {
-        return String.format(
-                "*****************************\n" +
-                        "* Movie Details             *\n" +
-                        "*****************************\n" +
-                        "ID: %d\n" +
-                        "Title: %s\n" +
-                        "Year Released: %d\n" +
-                        "Director: %s\n" +
-                        "Genre: %s\n" +
-                        "Release Date: %s\n" +
-                        "Rating: %.1f\n" +
-                        "Duration: %d minutes\n" +
-                        "Language: %s\n" +
-                        "Country: %s\n" +
-                        "Budget: $%,.2f\n" +
-                        "Box Office: $%,.2f\n" +
-                        "Synopsis: %s\n" +
-                        "Poster URL: %s\n" +
-                        "Production Company: %s\n" +
-                        "Screenplay Writer: %s\n" +
-                        "Music Composer: %s\n" +
-                        "Cinematographer: %s\n" +
-                        "Editor: %s\n" +
-                        "Awards: %s\n" +
-                        "Streaming Platforms: %s\n" +
-                        "Cast: %s\n" +
-                        "IMDB ID: %s\n" +
-                        "MPAA Rating: %s\n" +
-                        "Filming Locations: %s\n",
-                movieId,
-                title,
-                yearReleased,
-                directorName,
-                genre,
-                releaseDate != null ? releaseDate.toString() : "N/A",
-                rating != null ? rating : BigDecimal.ZERO,
-                durationMinutes,
-                language,
-                country,
-                budget != null ? budget : BigDecimal.ZERO,
-                boxOffice != null ? boxOffice : BigDecimal.ZERO,
-                synopsis,
-                posterUrl,
-                productionCompany,
-                screenplayWriter,
-                musicComposer,
-                cinematographer,
-                editor,
-                awards,
-                streamingPlatforms,
-                cast,
-                imdbId,
-                mpaaRating,
-                filmingLocations
-        );
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n*****************************\n")
+                .append("* Movie Details             *\n")
+                .append("*****************************\n")
+                .append("ID: ").append(movieId != null ? movieId : "N/A").append("\n")
+                .append("Title: ").append(title != null ? title : "N/A").append("\n")
+                .append("Year Released: ").append(yearReleased != null ? yearReleased : "N/A").append("\n")
+                .append("Director: ").append(directorName != null ? directorName : "N/A").append("\n")
+                .append("Genre: ").append(genre != null ? genre : "N/A").append("\n")
+                .append("Release Date: ").append(releaseDate != null ? releaseDate.toString() : "N/A").append("\n")
+                .append("Rating: ").append(rating != null ? String.format("%.1f", rating) : "N/A").append("\n")
+                .append("Duration: ").append(durationMinutes != null ? durationMinutes + " minutes" : "N/A").append("\n")
+                .append("Language: ").append(language != null ? language : "N/A").append("\n")
+                .append("Country: ").append(country != null ? country : "N/A").append("\n")
+                .append("Budget: ").append(budget != null ? String.format("$%,.2f", budget) : "N/A").append("\n")
+                .append("Box Office: ").append(boxOffice != null ? String.format("$%,.2f", boxOffice) : "N/A").append("\n")
+                .append("Synopsis: ").append(synopsis != null ? synopsis : "N/A").append("\n")
+                .append("Poster URL: ").append(posterUrl != null ? posterUrl : "N/A").append("\n")
+                .append("Production Company: ").append(productionCompany != null ? productionCompany : "N/A").append("\n")
+                .append("Screenplay Writer: ").append(screenplayWriter != null ? screenplayWriter : "N/A").append("\n")
+                .append("Music Composer: ").append(musicComposer != null ? musicComposer : "N/A").append("\n")
+                .append("Cinematographer: ").append(cinematographer != null ? cinematographer : "N/A").append("\n")
+                .append("Editor: ").append(editor != null ? editor : "N/A").append("\n")
+                .append("Awards: ").append(awards != null ? awards : "N/A").append("\n")
+                .append("Streaming Platforms: ").append(streamingPlatforms != null ? streamingPlatforms : "N/A").append("\n")
+                .append("Cast: ").append(cast != null ? cast : "N/A").append("\n")
+                .append("IMDB ID: ").append(imdbId != null ? imdbId : "N/A").append("\n")
+                .append("MPAA Rating: ").append(mpaaRating != null ? mpaaRating : "N/A").append("\n")
+                .append("Filming Locations: ").append(filmingLocations != null ? filmingLocations : "N/A").append("\n");
+
+        return builder.toString();
     }
 }
