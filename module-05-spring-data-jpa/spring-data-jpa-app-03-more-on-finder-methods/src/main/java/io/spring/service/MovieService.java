@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
-
     private final MovieRepository movieRepository;
 
     @Autowired
