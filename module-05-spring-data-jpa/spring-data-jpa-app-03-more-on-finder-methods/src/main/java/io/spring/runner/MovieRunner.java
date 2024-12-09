@@ -70,10 +70,18 @@ public class MovieRunner implements CommandLineRunner {
 
         // Find the first movie in a genre by release date
         MovieDTO firstMovieInGenre = movieService.findFirstMovieInGenre("Comedy");
-        System.out.println("First movie in genre: " + firstMovieInGenre);
+        if (firstMovieInGenre != null) {
+            System.out.println("First movie in genre: " + firstMovieInGenre);
+        } else {
+            System.out.println("No movies found in the specified genre.");
+        }
 
         // Find the latest movie in a specific language
         MovieDTO latestMovieInLanguage = movieService.findLatestMovieInLanguage("English");
-        System.out.println("Latest movie in language: " + latestMovieInLanguage);
+        if (latestMovieInLanguage != null) {
+            System.out.println("Latest movie in language: " + latestMovieInLanguage);
+        } else {
+            System.out.println("No movies found in the specified language.");
+        }
     }
 }

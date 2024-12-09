@@ -174,11 +174,11 @@ public class MovieService {
 
     // Find the first movie in a genre by release date
     public MovieDTO findFirstMovieInGenre(String genre) {
-        return convertToDTO(movieRepository.findFirstByGenreOrderByReleaseDateAsc());
+        return convertToDTO(movieRepository.findFirstByGenreOrderByReleaseDateAsc(genre));
     }
 
     // Find the latest movie in a specific language
     public MovieDTO findLatestMovieInLanguage(String language) {
-        return convertToDTO(movieRepository.findTopByLanguageOrderByReleaseDateDesc());
+        return convertToDTO(movieRepository.findTopByLanguageOrderByReleaseDateDesc(language));
     }
 }
