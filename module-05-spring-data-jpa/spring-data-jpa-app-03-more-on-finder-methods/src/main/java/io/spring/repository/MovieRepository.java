@@ -10,7 +10,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
     // Find movies by director and genre
     List<Movie> findByDirectorNameAndGenre(String directorName, String genre);
 
-    // Find movies by release year and rating greater than a specific value
+    // Find movies by release year and rating greater than or equal to a specific value
     List<Movie> findByYearReleasedAndRatingGreaterThanEqual(int yearReleased, double rating);
 
     // Find movies by genre or language
@@ -44,8 +44,8 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
     boolean existsByImdbId(String imdbId);
 
     // Find the first movie (by release date) in a specific genre
-    Movie findFirstByGenreOrderByReleaseDateAsc();
+    Movie findFirstByGenreOrderByReleaseDateAsc(String genre);
 
     // Find the latest movie (by release date) in a specific language
-    Movie findTopByLanguageOrderByReleaseDateDesc();
+    Movie findTopByLanguageOrderByReleaseDateDesc(String language);
 }
