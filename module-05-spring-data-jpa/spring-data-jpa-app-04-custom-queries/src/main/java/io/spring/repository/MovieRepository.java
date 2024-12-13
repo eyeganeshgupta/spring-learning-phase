@@ -59,7 +59,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
     List<Movie> findLongestMoviesByGenre(@Param("genre") String genre, Pageable pageable);
 
     // 13. Find award-winning movies sorted by rating and release date
-    @Query("SELECT m FROM Movie m WHERE LOWER(m.awards) LIKE LOWER(CONCAT('%', :keyword, '%')) ORDER BY m.rating DESC, m.releaseDate ASC")
+    @Query("SELECT m FROM Movie m WHERE LOWER(CAST(m.awards AS string)) LIKE LOWER(CONCAT('%', :keyword, '%')) ORDER BY m.rating DESC, m.releaseDate ASC")
     List<Movie> findAwardWinningMoviesSorted(@Param("keyword") String keyword);
 
     // 14. Find movies by director name, genre, and release year range
