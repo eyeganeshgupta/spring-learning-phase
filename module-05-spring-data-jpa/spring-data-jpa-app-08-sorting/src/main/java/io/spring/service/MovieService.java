@@ -19,11 +19,6 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    /**
-     * Retrieves all movies sorted by title and converts them to MovieDTO.
-     *
-     * @return List of MovieDTO objects sorted by title.
-     */
     public List<MovieDTO> getAllMoviesSortedByTitle() {
         Sort sort = Sort.by("title");
         List<Movie> movies = movieRepository.findAll(sort);
@@ -32,12 +27,6 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Converts a Movie entity to a MovieDTO.
-     *
-     * @param movie The Movie entity to convert.
-     * @return The corresponding MovieDTO object.
-     */
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());
