@@ -20,7 +20,7 @@ public class MovieService {
     }
 
     public List<MovieDTO> getAllMoviesSortedByTitle() {
-        Sort sort = Sort.by(Sort.Order.asc("rating"), Sort.Order.asc("title"));
+        Sort sort = Sort.by(Sort.Order.desc("rating"), Sort.Order.asc("title"));
         List<Movie> movies = movieRepository.findAll(sort);
         return movies.stream()
                 .map(this::convertToDTO)
