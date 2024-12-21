@@ -1,13 +1,11 @@
-package io.spring;
+package io.spring.runner;
 
-import io.spring.projection.BasicMovieDetail;
+import io.spring.dto.MovieDTO;
 import io.spring.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -21,36 +19,12 @@ public class MovieRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Defining a minimum rating and sorting criteria
-        BigDecimal minRating = new BigDecimal("7.5");
-        /* Sort sortV1 = Sort.by(Sort.Direction.DESC, "title", "yearReleased"); */
-        Sort sortV2 = Sort.by(Sort.Order.desc("title"), Sort.Order.asc("yearReleased"));
+        String directorName = "Nolan"; // Example input
+        List<MovieDTO> movies = movieService.getMoviesByDirectorName(directorName);
 
-        // Fetching movies with a rating greater than 7.5, sorted by title (desc) and year (asc)
-        List<BasicMovieDetail> movies = movieService.getMoviesByRating(minRating, sortV2);
-
-        // Printing the results
-        System.out.println("\n==============================");
-        System.out.println("🎥 Movies with Rating > " + minRating);
-        System.out.println("==============================\n");
-
-        if (movies.isEmpty()) {
-            System.out.println("No movies found matching the criteria.\n");
-        } else {
-            int count = 1;
-            for (BasicMovieDetail movie : movies) {
-                System.out.printf(
-                        "%d. 🎬 **%s** (%d)\n" +
-                                "   - Genre: %s\n" +
-                                "   - Rating: ⭐ %.1f\n" +
-                                "------------------------------\n",
-                        count++,
-                        movie.getTitle(),
-                        movie.getYearReleased(),
-                        movie.getGenre(),
-                        movie.getRating()
-                );
-            }
+        System.out.println("Movies directed by " + directorName + ":");
+        for (MovieDTO movie : movies) {
+            System.out.println(movie);
         }
     }
 }
