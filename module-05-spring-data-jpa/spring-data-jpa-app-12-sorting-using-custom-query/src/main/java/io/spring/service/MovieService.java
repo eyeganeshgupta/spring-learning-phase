@@ -4,6 +4,7 @@ import io.spring.dto.MovieDTO;
 import io.spring.entity.Movie;
 import io.spring.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class MovieService {
 
     public List<MovieDTO> getMoviesByDirectorName(String directorName) {
         List<Movie> movies = movieRepository.findByDirectorNameContainingOrderByYearReleased(directorName);
+        return movies.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    public List<MovieDTO> getMoviesByDirectorNameSorted(String directorName, Sort sort) {
+        List<Movie> movies = movieRepository.findByDirectorNameContaining(directorName, sort);
         return movies.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
