@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -34,12 +35,11 @@ public class MovieService {
      * @return A list of MovieDTO objects.
      */
     public List<MovieDTO> findMoviesByCriteria(BigDecimal minRating, String language, BigDecimal minBudget, BigDecimal maxBudget, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("rating"));
         Page<Movie> moviePage = movieRepository.findMoviesByRatingAndLanguageAndBudget(minRating, language, minBudget, maxBudget, pageable);
         return moviePage.getContent().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    // Utility method to convert Movie entity to MovieDTO
     private MovieDTO convertToDTO(Movie movie) {
         MovieDTO dto = new MovieDTO();
         dto.setMovieId(movie.getMovieId());
