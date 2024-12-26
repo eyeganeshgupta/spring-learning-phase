@@ -20,35 +20,61 @@ public class ApplicationRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        UserProfileDTO profile = new UserProfileDTO();
-        profile.setFirstName("Ganesh");
-        profile.setLastName("Gupta");
-        profile.setBirthDate(LocalDate.of(2003, 2, 18));
+        // Create and save a new User with Profile
+        System.out.println("Creating and saving a new user...");
 
-        UserDTO user = new UserDTO();
-        user.setUsername("eyeganeshgupta");
-        user.setEmail("eyeganeshgupta@gmail.com");
-        user.setProfile(profile);
+        UserProfileDTO profile1 = new UserProfileDTO();
+        profile1.setFirstName("Ganesh");
+        profile1.setLastName("Gupta");
+        profile1.setBirthDate(LocalDate.of(2003, 2, 18));
 
-        // Saving the User
-        System.out.println("Saving the following user:");
-        System.out.println(user);
+        UserDTO user1 = new UserDTO();
+        user1.setUsername("eyeganeshgupta");
+        user1.setEmail("eyeganeshgupta@gmail.com");
+        user1.setProfile(profile1);
 
-        UserDTO savedUser = userService.saveUser(user);
+        // Save the first User
+        UserDTO savedUser1 = userService.saveUser(user1);
 
         System.out.println("Saved successfully! Retrieved details:");
-        System.out.println(savedUser);
+        System.out.println(savedUser1);
 
-        // Retrieving the saved user by ID
-        Long savedUserId = savedUser.getId();
+        // Fetch all Users
+        System.out.println("\nFetching all users...");
 
-        System.out.println("\nFetching saved user by ID: " + savedUserId);
+        var allUsers = userService.getAllUsers();
 
-        var retrievedUser = userService.getUserById(savedUserId);
+        allUsers.forEach(System.out::println);
 
-        retrievedUser.ifPresentOrElse(
-                System.out::println,
-                () -> System.out.println("No user found with ID: " + savedUserId)
+        // Update the first user's email and username
+        System.out.println("\nUpdating the first user's email and username...");
+
+        savedUser1.setEmail("updated_ganesh@example.com");
+        savedUser1.setUsername("updated_eyeganeshgupta");
+
+        var updatedUser1 = userService.updateUser(savedUser1.getId(), savedUser1);
+
+        updatedUser1.ifPresentOrElse(
+                u -> System.out.println("Updated successfully! Details:\n" + u),
+                () -> System.out.println("Failed to update the user's details.")
         );
+
+        // Delete the first user
+        System.out.println("\nDeleting the first user...");
+
+        boolean isDeleted = userService.deleteUser(savedUser1.getId());
+
+        if (isDeleted) {
+            System.out.println("Deleted successfully!");
+
+            System.out.println("\nFetching all users after deletion...");
+
+            var remainingUsers = userService.getAllUsers();
+
+            remainingUsers.forEach(System.out::println);
+
+        } else {
+            System.out.println("Failed to delete the user's details.");
+        }
     }
 }

@@ -8,7 +8,9 @@ import io.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,15 +21,59 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Save a new User
     public UserDTO saveUser(UserDTO userDTO) {
         User user = convertToEntity(userDTO);
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
 
+    // Find a User by ID
     public Optional<UserDTO> getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.map(this::convertToDTO);
+    }
+
+    // Update an existing User
+    public Optional<UserDTO> updateUser(Long id, UserDTO updatedUserDTO) {
+        Optional<User> existingUserOptional = userRepository.findById(id);
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            existingUser.setUsername(updatedUserDTO.getUsername());
+            existingUser.setEmail(updatedUserDTO.getEmail());
+
+            if (updatedUserDTO.getProfile() != null) {
+                UserProfile profile = existingUser.getProfile();
+                if (profile == null) {
+                    profile = new UserProfile();
+                    existingUser.setProfile(profile);
+                }
+                profile.setFirstName(updatedUserDTO.getProfile().getFirstName());
+                profile.setLastName(updatedUserDTO.getProfile().getLastName());
+                profile.setBirthDate(updatedUserDTO.getProfile().getBirthDate());
+            }
+
+            User updatedUser = userRepository.save(existingUser);
+            return Optional.of(convertToDTO(updatedUser));
+        }
+
+        return Optional.empty();
+    }
+
+    // Delete a User by ID
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    // Retrieve all Users
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     private UserDTO convertToDTO(User user) {
