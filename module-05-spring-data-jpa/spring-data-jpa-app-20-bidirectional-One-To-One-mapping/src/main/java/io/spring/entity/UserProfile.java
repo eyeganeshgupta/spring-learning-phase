@@ -21,6 +21,19 @@ public class UserProfile {
     @OneToOne(mappedBy = "profile") // Inverse side of the relationship
     private User user;
 
+    // Default Constructor (Required by JPA)
+    public UserProfile() {
+
+    }
+
+    // Parameterized Constructor
+    public UserProfile(String firstName, String lastName, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -58,7 +71,8 @@ public class UserProfile {
     }
 
     public void setUser(User user) {
-        this.user = user; // Maintain bi-directional consistency
+        this.user = user;
+        // Maintaining bi-directional consistency
         if (user != null && user.getProfile() != this) {
             user.setProfile(this);
         }
@@ -68,7 +82,7 @@ public class UserProfile {
     public String toString() {
         return "🆔 Profile ID   : " + id + "\n" +
                 "📝 First Name   : " + firstName + "\n" +
-                "📝 Last Name    : " + lastName + "\n" +
+                "📝 Last Name   : " + lastName + "\n" +
                 "🎂 Birth Date   : " + birthDate + "\n";
     }
 }

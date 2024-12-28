@@ -19,6 +19,23 @@ public class User {
     @JoinColumn(name = "profile_id", unique = true)
     private UserProfile profile;
 
+    // Default Constructor (Required by JPA)
+    public User() {
+
+    }
+
+    // Parameterized Constructor
+    public User(String username, String email, UserProfile profile) {
+        this.username = username;
+        this.email = email;
+        this.profile = profile;
+        if (profile != null) {
+            // Maintaining bi-directional consistency
+            profile.setUser(this);
+        }
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -49,7 +66,8 @@ public class User {
 
     public void setProfile(UserProfile profile) {
         this.profile = profile;
-        if (profile != null) { // Maintain bi-directional consistency
+        if (profile != null) {
+            // Maintaining bi-directional consistency
             profile.setUser(this);
         }
     }
