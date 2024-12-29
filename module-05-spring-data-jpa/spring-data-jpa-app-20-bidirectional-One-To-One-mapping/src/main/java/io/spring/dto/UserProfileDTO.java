@@ -73,6 +73,9 @@ public class UserProfileDTO {
         return "🆔 Profile ID   : " + id + "\n" +
                 "📝 First Name   : " + firstName + "\n" +
                 "📝 Last Name   : " + lastName + "\n" +
-                "🎂 Birth Date   : " + birthDate + "\n";
+                "🎂 Birth Date   : " + birthDate + "\n" +
+                "-----------------------------------------------------\n" +
+                (user != null ? "👤 Associated User: \n" + user.basicInfo() : "👤 Associated User: None ❌") +
+                "\n=====================================================\n";
     }
 }

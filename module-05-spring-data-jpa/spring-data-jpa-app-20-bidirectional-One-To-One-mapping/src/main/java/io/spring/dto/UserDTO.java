@@ -72,4 +72,11 @@ public class UserDTO {
                 (profile != null ? profile.toString() : "📝 Profile       : No Profile Assigned ❌") +
                 "\n=====================================================\n";
     }
+
+    // Helper Method for Basic Info (Avoid Recursive Calls)
+    public String basicInfo() {
+        return "🆔 User ID       : " + id + "\n" +
+                "👤 Username      : " + username + "\n" +
+                "📧 Email         : " + email + "\n";
+    }
 }
