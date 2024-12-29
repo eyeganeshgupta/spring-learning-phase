@@ -1,5 +1,6 @@
 package io.spring.service;
 
+import io.spring.dto.UserDTO;
 import io.spring.dto.UserProfileDTO;
 import io.spring.entity.UserProfile;
 import io.spring.repository.UserProfileRepository;
@@ -17,26 +18,34 @@ public class UserProfileService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    // Retrieve a Profile by ID
-    public Optional<UserProfileDTO> getUserProfileById(Long id) {
-        Optional<UserProfile> profile = userProfileRepository.findById(id);
+    public Optional<UserProfileDTO> getUserProfileById(Long profileId) {
+        Optional<UserProfile> profile = userProfileRepository.findById(profileId);
         return profile.map(this::convertToDto);
     }
 
-    // Convert Profile Entity to DTO
     private UserProfileDTO convertToDto(UserProfile profile) {
         if (profile == null) return null;
 
-        UserProfileDTO dto = new UserProfileDTO();
-        dto.setId(profile.getId());
-        dto.setFirstName(profile.getFirstName());
-        dto.setLastName(profile.getLastName());
-        dto.setBirthDate(profile.getBirthDate());
+        UserProfileDTO profileDTO = new UserProfileDTO();
 
+        profileDTO.setId(profile.getId());
+        profileDTO.setFirstName(profile.getFirstName());
+        profileDTO.setLastName(profile.getLastName());
+        profileDTO.setBirthDate(profile.getBirthDate());
+
+        // Map associated User (if exists)
         if (profile.getUser() != null) {
-            dto.setUser(null); // Avoid recursion by not including full `user`
+            UserDTO userDTO = new UserDTO();
+
+            userDTO.setId(profile.getUser().getId());
+            userDTO.setUsername(profile.getUser().getUsername());
+            userDTO.setEmail(profile.getUser().getEmail());
+
+            // Set bi-directional relationship in DTO
+            profileDTO.setUser(userDTO);
+            userDTO.setProfile(profileDTO);
         }
 
-        return dto;
+        return profileDTO;
     }
 }
