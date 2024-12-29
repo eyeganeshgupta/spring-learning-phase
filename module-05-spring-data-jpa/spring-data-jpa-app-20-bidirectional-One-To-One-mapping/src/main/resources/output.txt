@@ -1,0 +1,59 @@
+Creating and saving a new user with profile...
+Hibernate:
+    insert
+    into
+        user_profile
+        (birth_date, first_name, last_name)
+    values
+        (?, ?, ?)
+Hibernate:
+    insert
+    into
+        users
+        (email, profile_id, username)
+    values
+        (?, ?, ?)
+
+Saved Successfully:
+
+✨ ==================== USER DTO ==================== ✨
+🆔 User ID       : 4
+👤 Username      : beingSalman
+📧 Email         : beingSalman@gmail.com
+-----------------------------------------------------
+📝 Profile Info  :
+🆔 Profile ID   : 4
+📝 First Name   : Salman
+📝 Last Name   : Khan
+
+=====================================================
+
+
+Retrieving Profile by ID...
+Hibernate:
+    select
+        up1_0.id,
+        up1_0.birth_date,
+        up1_0.first_name,
+        up1_0.last_name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username
+    from
+        user_profile up1_0
+    left join
+        users u1_0
+            on up1_0.id=u1_0.profile_id
+    where
+        up1_0.id=?
+🆔 Profile ID   : 4
+📝 First Name   : Salman
+📝 Last Name   : Khan
+🎂 Birth Date   : 1965-12-26
+-----------------------------------------------------
+👤 Associated User:
+🆔 User ID       : 4
+👤 Username      : beingSalman
+📧 Email         : beingSalman@gmail.com
+
+=====================================================

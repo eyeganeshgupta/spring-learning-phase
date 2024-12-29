@@ -78,4 +78,11 @@ public class UserProfileDTO {
                 (user != null ? "👤 Associated User: \n" + user.basicInfo() : "👤 Associated User: None ❌") +
                 "\n=====================================================\n";
     }
+
+    // Helper Method for Basic Info (Avoid Recursive Calls)
+    public String basicInfo() {
+        return "🆔 Profile ID   : " + id + "\n" +
+                "📝 First Name   : " + firstName + "\n" +
+                "📝 Last Name   : " + lastName + "\n";
+    }
 }

@@ -69,7 +69,7 @@ public class UserDTO {
                 "👤 Username      : " + username + "\n" +
                 "📧 Email         : " + email + "\n" +
                 "-----------------------------------------------------\n" +
-                (profile != null ? profile.toString() : "📝 Profile       : No Profile Assigned ❌") +
+                (profile != null ? "📝 Profile Info  : \n" + profile.basicInfo() : "📝 Profile       : No Profile Assigned ❌") +
                 "\n=====================================================\n";
     }
 

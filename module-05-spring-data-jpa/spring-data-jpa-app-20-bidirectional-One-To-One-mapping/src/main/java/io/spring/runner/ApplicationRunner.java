@@ -24,13 +24,13 @@ public class ApplicationRunner implements CommandLineRunner {
         // Create and Save a New User with Profile
         System.out.println("Creating and saving a new user with profile...");
         UserProfileDTO profile = new UserProfileDTO();
-        profile.setFirstName("Hrithik");
-        profile.setLastName("Roshan");
-        profile.setBirthDate(java.time.LocalDate.of(1974, 1, 10));
+        profile.setFirstName("Salman");
+        profile.setLastName("Khan");
+        profile.setBirthDate(java.time.LocalDate.of(1965, 12, 26));
 
         UserDTO user = new UserDTO();
-        user.setUsername("iHrithik");
-        user.setEmail("iHrithik@gmail.com");
+        user.setUsername("beingSalman");
+        user.setEmail("beingSalman@gmail.com");
         user.setProfile(profile);
 
         // Save the user
