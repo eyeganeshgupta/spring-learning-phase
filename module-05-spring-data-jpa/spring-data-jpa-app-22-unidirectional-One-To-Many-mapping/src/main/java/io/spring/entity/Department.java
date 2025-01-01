@@ -18,6 +18,18 @@ public class Department {
     @JoinColumn(name = "department_id") // Foreign key column in Employee table
     private List<Employee> employees = new ArrayList<>();
 
+    // Default constructor (required by JPA)
+    public Department() {
+
+    }
+
+    public Department(Long id, String name, String location, List<Employee> employees) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.employees = employees;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

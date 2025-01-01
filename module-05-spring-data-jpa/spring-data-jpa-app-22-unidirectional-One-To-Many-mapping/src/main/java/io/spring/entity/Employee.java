@@ -20,6 +20,22 @@ public class Employee {
 
     private String role;
 
+    // Default constructor (required by JPA)
+    public Employee() {
+
+    }
+
+    public Employee(Long id, String name, String email, String phone, String gender, Double salary, String role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.gender = gender;
+        this.salary = salary;
+        this.role = role;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
