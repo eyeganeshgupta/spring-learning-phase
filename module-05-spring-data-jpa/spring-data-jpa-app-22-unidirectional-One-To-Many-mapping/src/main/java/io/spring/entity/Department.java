@@ -14,7 +14,7 @@ public class Department {
 
     private String location;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id") // Foreign key column in Employee table
     private List<Employee> employees = new ArrayList<>();
 
