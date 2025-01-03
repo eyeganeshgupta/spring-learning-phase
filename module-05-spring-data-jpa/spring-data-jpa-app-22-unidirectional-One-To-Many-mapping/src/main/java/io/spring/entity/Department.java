@@ -2,6 +2,7 @@ package io.spring.entity;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -81,15 +82,18 @@ public class Department {
     // Method to remove an employee from the employees list by Employee ID
     public boolean removeEmployeeById(Long employeeId) {
         if (employeeId != null) {
-            for (Employee emp : employees) {
+            Iterator<Employee> iterator = employees.iterator();
+            while (iterator.hasNext()) {
+                Employee emp = iterator.next();
                 if (emp.getId().equals(employeeId)) { // Match employee by ID
-                    employees.remove(emp);
-                    return true; // Successfully removed
+                    iterator.remove(); // Safely remove the employee
+                    return true;
                 }
             }
         }
         return false; // Returning false if no matching employee is found
     }
+
 
     @Override
     public String toString() {

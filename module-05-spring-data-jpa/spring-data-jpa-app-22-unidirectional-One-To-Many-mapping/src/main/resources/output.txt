@@ -1,0 +1,399 @@
+Hibernate:
+    create table department (
+        id bigint not null auto_increment,
+        location varchar(255),
+        name varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+Hibernate:
+    create table employee (
+        id bigint not null auto_increment,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        phone varchar(255),
+        role varchar(255),
+        salary float(53),
+        department_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate:
+    alter table employee
+       add constraint FKbejtwvg9bxus2mffsm3swj3u9
+       foreign key (department_id)
+       references department (id)
+2025-01-03T23:03:23.025+05:30  INFO 17600 --- [spring-data-jpa-app-22-unidirectional-One-To-Many-mapping] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T23:03:23.415+05:30  INFO 17600 --- [spring-data-jpa-app-22-unidirectional-One-To-Many-mapping] [           main] nidirectionalOneToManyMappingApplication : Started SpringDataJpaApp22UnidirectionalOneToManyMappingApplication in 4.296 seconds (process running for 4.811)
+Creating a new Department...
+Hibernate:
+    insert
+    into
+        department
+        (location, name)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        employee
+        (email, gender, name, phone, role, salary)
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        employee
+        (email, gender, name, phone, role, salary)
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate:
+    update
+        employee
+    set
+        department_id=?
+    where
+        id=?
+Hibernate:
+    update
+        employee
+    set
+        department_id=?
+    where
+        id=?
+Created:
+
+=============================================
+               DEPARTMENT DTO
+=============================================
+| ID              : 1
+| Name            : Technology
+| Location        : Bangalore
+---------------------------------------------
+Employees:
+| ID    | Name                 | Role       |
+---------------------------------------------
+| 1     | Ganesh Gupta         | Software Engineer |
+| 2     | Ryan Reynolds        | Team Lead  |
+=============================================
+
+
+Retrieving all Departments...
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name
+    from
+        department d1_0
+Hibernate:
+    select
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        employee e1_0
+    where
+        e1_0.department_id=?
+
+=============================================
+               DEPARTMENT DTO
+=============================================
+| ID              : 1
+| Name            : Technology
+| Location        : Bangalore
+---------------------------------------------
+Employees:
+| ID    | Name                 | Role       |
+---------------------------------------------
+| 1     | Ganesh Gupta         | Software Engineer |
+| 2     | Ryan Reynolds        | Team Lead  |
+=============================================
+
+
+Updating the name of the Technology Department...
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    update
+        department
+    set
+        location=?,
+        name=?
+    where
+        id=?
+Updated:
+
+=============================================
+               DEPARTMENT DTO
+=============================================
+| ID              : 1
+| Name            : Information Technology
+| Location        : Bangalore
+---------------------------------------------
+Employees:
+| ID    | Name                 | Role       |
+---------------------------------------------
+| 1     | Ganesh Gupta         | Software Engineer |
+| 2     | Ryan Reynolds        | Team Lead  |
+=============================================
+
+
+Adding a new Employee to the Information Technology Department...
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    insert
+    into
+        employee
+        (email, gender, name, phone, role, salary)
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate:
+    update
+        employee
+    set
+        department_id=?
+    where
+        id=?
+After Adding Employee:
+
+=============================================
+               DEPARTMENT DTO
+=============================================
+| ID              : 1
+| Name            : Information Technology
+| Location        : Bangalore
+---------------------------------------------
+Employees:
+| ID    | Name                 | Role       |
+---------------------------------------------
+| 1     | Ganesh Gupta         | Software Engineer |
+| 2     | Ryan Reynolds        | Team Lead  |
+| 3     | Ravi Kumar           | Analyst    |
+=============================================
+
+
+Removing an Employee from the IT Department...
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    update
+        employee
+    set
+        department_id=null
+    where
+        department_id=?
+        and id=?
+After Removing Employee:
+
+=============================================
+               DEPARTMENT DTO
+=============================================
+| ID              : 1
+| Name            : Information Technology
+| Location        : Bangalore
+---------------------------------------------
+Employees:
+| ID    | Name                 | Role       |
+---------------------------------------------
+| 1     | Ganesh Gupta         | Software Engineer |
+| 2     | Ryan Reynolds        | Team Lead  |
+=============================================
+
+
+Deleting the IT Department...
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name,
+        e1_0.department_id,
+        e1_0.id,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.name,
+        e1_0.phone,
+        e1_0.role,
+        e1_0.salary
+    from
+        department d1_0
+    left join
+        employee e1_0
+            on d1_0.id=e1_0.department_id
+    where
+        d1_0.id=?
+Hibernate:
+    update
+        employee
+    set
+        department_id=null
+    where
+        department_id=?
+Hibernate:
+    delete
+    from
+        employee
+    where
+        id=?
+Hibernate:
+    delete
+    from
+        employee
+    where
+        id=?
+Hibernate:
+    delete
+    from
+        department
+    where
+        id=?
+Deleted the IT Department.
+
+Final List of Departments:
+Hibernate:
+    select
+        d1_0.id,
+        d1_0.location,
+        d1_0.name
+    from
+        department d1_0
+Size of departments: 0

@@ -81,7 +81,7 @@ public class ApplicationRunner implements CommandLineRunner {
         // 5. Removing an Employee from the IT Department
         System.out.println("\nRemoving an Employee from the IT Department...");
 
-        dept1 = departmentService.removeEmployeeFromDepartment(dept1.getId(), emp2.getId());
+        dept1 = departmentService.removeEmployeeFromDepartment(dept1.getId(), 3L);
 
         System.out.println("After Removing Employee: \n" + dept1);
 
@@ -95,6 +95,8 @@ public class ApplicationRunner implements CommandLineRunner {
         System.out.println("\nFinal List of Departments:");
 
         departments = departmentService.getAllDepartments();
+
+        System.out.println("Size of departments: " + departments.size());
 
         departments.forEach(System.out::println);
     }

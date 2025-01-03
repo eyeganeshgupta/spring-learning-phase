@@ -69,6 +69,7 @@ public class DepartmentService {
         if (optionalDepartment.isPresent()) {
             Department department = optionalDepartment.get();
             boolean removed = department.removeEmployeeById(employeeId);
+
             if (removed) {
                 Department updatedDepartment = departmentRepository.save(department);
                 return convertToDto(updatedDepartment);
@@ -92,27 +93,65 @@ public class DepartmentService {
 
     // Utility: Converting Entity to DTO
     private DepartmentDTO convertToDto(Department department) {
+        DepartmentDTO dto = new DepartmentDTO();
+
+        dto.setId(department.getId());
+        dto.setName(department.getName());
+        dto.setLocation(department.getLocation());
+
         List<EmployeeDTO> employeeDtos = department.getEmployees().stream()
-                .map(emp -> new EmployeeDTO(emp.getId(), emp.getName(), emp.getEmail(), emp.getPhone(),
-                        emp.getGender(), emp.getSalary(), emp.getRole()))
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
 
-        return new DepartmentDTO(department.getId(), department.getName(), department.getLocation(), employeeDtos);
+        dto.setEmployees(employeeDtos);
+
+        return dto;
     }
 
     // Utility: Converting DTO to Entity
     private Department convertToEntity(DepartmentDTO dto) {
+        Department entity = new Department();
+
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setLocation(dto.getLocation());
+
         List<Employee> employees = dto.getEmployees().stream()
-                .map(empDto -> new Employee(empDto.getId(), empDto.getName(), empDto.getEmail(),
-                        empDto.getPhone(), empDto.getGender(), empDto.getSalary(), empDto.getRole()))
+                .map(this::convertToEntity)
                 .collect(Collectors.toList());
 
-        return new Department(dto.getId(), dto.getName(), dto.getLocation(), employees);
+        entity.setEmployees(employees);
+
+        return entity;
+    }
+
+    // Utility: Converting Employee Entity to DTO
+    private EmployeeDTO convertToDto(Employee employee) {
+        EmployeeDTO dto = new EmployeeDTO();
+
+        dto.setId(employee.getId());
+        dto.setName(employee.getName());
+        dto.setEmail(employee.getEmail());
+        dto.setPhone(employee.getPhone());
+        dto.setGender(employee.getGender());
+        dto.setSalary(employee.getSalary());
+        dto.setRole(employee.getRole());
+
+        return dto;
     }
 
     // Utility: Converting Employee DTO to Entity
     private Employee convertToEntity(EmployeeDTO dto) {
-        return new Employee(dto.getId(), dto.getName(), dto.getEmail(), dto.getPhone(),
-                dto.getGender(), dto.getSalary(), dto.getRole());
+        Employee entity = new Employee();
+
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
+        entity.setGender(dto.getGender());
+        entity.setSalary(dto.getSalary());
+        entity.setRole(dto.getRole());
+
+        return entity;
     }
 }
