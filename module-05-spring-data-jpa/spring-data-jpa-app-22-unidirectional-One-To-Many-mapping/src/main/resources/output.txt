@@ -397,3 +397,34 @@ Hibernate:
     from
         department d1_0
 Size of departments: 0
+
+
+
+⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘
+Understanding Ownership and Parent-Child Relationships
+⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘
+
+1. JPA Ownership and Inverse Class
+    In JPA, the concepts of owning side and inverse side are determined by how the relationship is mapped in the annotations.
+    Owning Side:
+        The owning side is the entity that contains the foreign key in the database table.
+        In this example, the Employee entity is the owning side because it contains the foreign key (department_id) that establishes the relationship with the Department.
+    Inverse Side:
+        The inverse side refers to the entity that uses the mappedBy attribute to indicate that it does not own the relationship.
+        In this example, the Department entity is the inverse side because it uses @OneToMany(mappedBy = "department") (if it were bidirectional) or simply references employees without directly owning the foreign key.
+    Key Rule:
+        For a @OneToMany and @ManyToOne relationship:
+            The @ManyToOne side is always the owning side.
+            The @OneToMany side is always the inverse side.
+
+2. SQL Parent and Child Classes
+    In SQL, the terms parent and child are based on primary key (PK) and foreign key (FK) relationships:
+    Parent Class:
+        The parent table is the one that provides its primary key (PK) to another table.
+        In this case, Department is the parent because its primary key (id) is referenced as a foreign key (department_id) in the Employee table.
+    Child Class:
+        The child table is the one that contains a foreign key (FK) pointing to the primary key of another table.
+        In this case, Employee is the child because it contains a foreign key (department_id) referencing Department.
+    Key Rule:
+        The parent table holds the primary key.
+        The child table holds a foreign key referencing the parent.
