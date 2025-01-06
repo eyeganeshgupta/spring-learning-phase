@@ -13,7 +13,7 @@ import java.util.Scanner;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final DepartmentService departmentService;
-
+    
     @Autowired
     public ApplicationRunner(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -85,6 +85,47 @@ public class ApplicationRunner implements CommandLineRunner {
             DepartmentDTO savedDept = departmentService.createDepartment(deptDto);
             System.out.println("\nDepartment created successfully!");
             System.out.println(savedDept);
+        } catch (Exception e) {
+            System.err.println("\nError: " + e.getMessage());
+        }
+    }
+
+    private void addEmployeeToDepartment(Scanner scanner) {
+        System.out.print("\nEnter Department ID: ");
+        Long departmentId = scanner.nextLong();
+        scanner.nextLine(); //Consume newline
+
+        System.out.print("Enter Employee Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Employee Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Employee Phone: ");
+        String phone = scanner.nextLine();
+
+        System.out.print("Enter Employee Gender: ");
+        String gender = scanner.nextLine();
+
+        System.out.print("Enter Employee Salary: ");
+        Double salary = scanner.nextDouble();
+        scanner.nextLine(); //Consume newline
+
+        System.out.print("Enter Employee Role: ");
+        String role = scanner.nextLine();
+
+        EmployeeDTO empDto = new EmployeeDTO();
+        empDto.setName(name);
+        empDto.setEmail(email);
+        empDto.setPhone(phone);
+        empDto.setGender(gender);
+        empDto.setSalary(salary);
+        empDto.setRole(role);
+
+        try {
+            EmployeeDTO savedEmp = departmentService.addEmployeeToDepartment(departmentId, empDto);
+            System.out.println("\nEmployee added successfully!");
+            System.out.println(savedEmp);
         } catch (Exception e) {
             System.err.println("\nError: " + e.getMessage());
         }

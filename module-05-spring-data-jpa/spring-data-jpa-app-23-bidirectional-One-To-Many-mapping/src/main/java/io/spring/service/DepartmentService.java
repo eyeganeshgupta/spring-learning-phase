@@ -31,6 +31,21 @@ public class DepartmentService {
         return convertToDto(savedDepartment);
     }
 
+    // 2. Add an Employee to a Department
+    public EmployeeDTO addEmployeeToDepartment(Long departmentId, EmployeeDTO employeeDTO) {
+        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        if (optionalDepartment.isPresent()) {
+            Department department = optionalDepartment.get();
+            Employee employee = convertToEntity(employeeDTO);
+            department.addEmployee(employee); // Add employee to the department
+            employee.setDepartment(department); // Set bidirectional relationship
+            Employee savedEmployee = employeeRepository.save(employee); // Save the employee
+            return convertToDto(savedEmployee);
+        } else {
+            throw new RuntimeException("Department not found with ID: " + departmentId);
+        }
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
