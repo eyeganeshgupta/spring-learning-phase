@@ -13,7 +13,6 @@ import java.util.Scanner;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final DepartmentService departmentService;
-
     @Autowired
     public ApplicationRunner(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -141,6 +140,23 @@ public class ApplicationRunner implements CommandLineRunner {
                     department.printSummary();
                 }
             }
+        } catch (Exception e) {
+            System.err.println("\nError: " + e.getMessage());
+        }
+    }
+
+    private void updateEmployeeName(Scanner scanner) {
+        System.out.print("\nEnter Employee ID: ");
+        Long employeeId = scanner.nextLong();
+        scanner.nextLine(); //Consume newline
+
+        System.out.print("Enter New Name for the Employee: ");
+        String newName = scanner.nextLine();
+
+        try {
+            EmployeeDTO updatedEmp = departmentService.updateEmployeeName(employeeId, newName);
+            System.out.println("\nEmployee updated successfully!");
+            System.out.println(updatedEmp);
         } catch (Exception e) {
             System.err.println("\nError: " + e.getMessage());
         }

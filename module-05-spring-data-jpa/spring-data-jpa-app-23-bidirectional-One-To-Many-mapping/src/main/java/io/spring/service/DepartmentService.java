@@ -54,6 +54,19 @@ public class DepartmentService {
                 .collect(Collectors.toList());
     }
 
+    // 4. Update the name of an Employee
+    public EmployeeDTO updateEmployeeName(Long employeeId, String newName) {
+        Optional < Employee > optionalEmployee = employeeRepository.findById(employeeId);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            employee.setName(newName);
+            Employee updatedEmployee = employeeRepository.save(employee);
+            return convertToDto(updatedEmployee);
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + employeeId);
+        }
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
