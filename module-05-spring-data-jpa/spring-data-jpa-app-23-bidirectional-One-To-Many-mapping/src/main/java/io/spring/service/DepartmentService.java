@@ -46,6 +46,14 @@ public class DepartmentService {
         }
     }
 
+    // 3. Retrieve all Departments along with their Employees
+    public List < DepartmentDTO > getAllDepartments() {
+        List < Department > departments = departmentRepository.findAll();
+        return departments.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();

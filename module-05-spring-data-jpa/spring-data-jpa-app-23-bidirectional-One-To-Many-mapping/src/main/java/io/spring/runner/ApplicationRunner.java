@@ -13,7 +13,7 @@ import java.util.Scanner;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final DepartmentService departmentService;
-    
+
     @Autowired
     public ApplicationRunner(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -126,6 +126,21 @@ public class ApplicationRunner implements CommandLineRunner {
             EmployeeDTO savedEmp = departmentService.addEmployeeToDepartment(departmentId, empDto);
             System.out.println("\nEmployee added successfully!");
             System.out.println(savedEmp);
+        } catch (Exception e) {
+            System.err.println("\nError: " + e.getMessage());
+        }
+    }
+
+    private void retrieveAllDepartments() {
+        try {
+            List < DepartmentDTO > departments = departmentService.getAllDepartments();
+            if (departments.isEmpty()) {
+                System.out.println("\nNo departments found.");
+            } else {
+                for (DepartmentDTO department: departments) {
+                    department.printSummary();
+                }
+            }
         } catch (Exception e) {
             System.err.println("\nError: " + e.getMessage());
         }
