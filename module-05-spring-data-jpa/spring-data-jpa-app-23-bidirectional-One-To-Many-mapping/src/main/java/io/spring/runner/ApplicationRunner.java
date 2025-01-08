@@ -161,4 +161,21 @@ public class ApplicationRunner implements CommandLineRunner {
             System.err.println("\nError: " + e.getMessage());
         }
     }
+
+    private void updateDepartmentName(Scanner scanner) {
+        System.out.print("\nEnter Department ID: ");
+        Long departmentId = scanner.nextLong();
+        scanner.nextLine(); //Consume newline
+
+        System.out.print("Enter New Name for the Department: ");
+        String newName = scanner.nextLine();
+
+        try {
+            DepartmentDTO updatedDept = departmentService.updateDepartmentName(departmentId, newName);
+            System.out.println("\nDepartment updated successfully!");
+            System.out.println(updatedDept);
+        } catch (Exception e) {
+            System.err.println("\nError: " + e.getMessage());
+        }
+    }
 }

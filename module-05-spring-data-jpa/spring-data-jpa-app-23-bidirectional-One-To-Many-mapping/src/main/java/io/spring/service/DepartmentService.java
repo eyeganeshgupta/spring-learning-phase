@@ -67,6 +67,19 @@ public class DepartmentService {
         }
     }
 
+    // 5. Update the name of a Department
+    public DepartmentDTO updateDepartmentName(Long departmentId, String newName) {
+        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        if (optionalDepartment.isPresent()) {
+            Department department = optionalDepartment.get();
+            department.setName(newName);
+            Department updatedDepartment = departmentRepository.save(department);
+            return convertToDto(updatedDepartment);
+        } else {
+            throw new RuntimeException("Department not found with ID: " + departmentId);
+        }
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
