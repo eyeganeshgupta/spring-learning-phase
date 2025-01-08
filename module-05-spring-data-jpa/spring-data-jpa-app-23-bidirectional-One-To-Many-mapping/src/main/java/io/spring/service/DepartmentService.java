@@ -80,6 +80,24 @@ public class DepartmentService {
         }
     }
 
+    // 6. Remove an Employee from a Department
+    public void removeEmployeeFromDepartment(Long employeeId) {
+        Optional < Employee > optionalEmployee = employeeRepository.findById(employeeId);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            Department department = employee.getDepartment();
+            if (department != null) {
+                department.removeEmployee(employee); // Remove from department's list
+                employee.setDepartment(null); // Break bidirectional relationship
+                employeeRepository.delete(employee); // Delete the employee record
+            } else {
+                throw new RuntimeException("The specified employee does not belong to any department.");
+            }
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + employeeId);
+        }
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();

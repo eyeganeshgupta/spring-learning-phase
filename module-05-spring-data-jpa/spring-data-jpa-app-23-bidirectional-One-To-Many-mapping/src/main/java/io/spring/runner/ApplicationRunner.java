@@ -178,4 +178,16 @@ public class ApplicationRunner implements CommandLineRunner {
             System.err.println("\nError: " + e.getMessage());
         }
     }
+
+    private void removeEmployeeFromDepartment(Scanner scanner) {
+        System.out.print("\nEnter Employee ID to Remove: ");
+        Long employeeId = scanner.nextLong();
+
+        try {
+            departmentService.removeEmployeeFromDepartment(employeeId);
+            System.out.println("\nEmployee removed successfully!");
+        } catch (Exception e) {
+            System.err.println("\nError:" + e.getMessage());
+        }
+    }
 }
