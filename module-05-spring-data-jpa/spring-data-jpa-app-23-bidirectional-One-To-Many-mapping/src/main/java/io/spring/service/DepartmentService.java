@@ -98,6 +98,16 @@ public class DepartmentService {
         }
     }
 
+    // 7. Delete a Department along with all its Employees
+    public void deleteDepartment(Long departmentId) {
+        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        if (optionalDepartment.isPresent()) {
+            departmentRepository.delete(optionalDepartment.get()); // Cascade deletes employees as well
+        } else {
+            throw new RuntimeException("Department not found with ID: " + departmentId);
+        }
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();

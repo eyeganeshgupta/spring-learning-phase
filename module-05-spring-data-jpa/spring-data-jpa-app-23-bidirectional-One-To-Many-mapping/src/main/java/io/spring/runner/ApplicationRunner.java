@@ -190,4 +190,16 @@ public class ApplicationRunner implements CommandLineRunner {
             System.err.println("\nError:" + e.getMessage());
         }
     }
+
+    private void deleteDepartment(Scanner scanner) {
+        System.out.print("\nEnter Department ID to Delete: ");
+        Long departmentId = scanner.nextLong();
+
+        try {
+            departmentService.deleteDepartment(departmentId);
+            System.out.println("\nDepartment deleted successfully!");
+        } catch (Exception e) {
+            System.err.println("\nError:" + e.getMessage());
+        }
+    }
 }
