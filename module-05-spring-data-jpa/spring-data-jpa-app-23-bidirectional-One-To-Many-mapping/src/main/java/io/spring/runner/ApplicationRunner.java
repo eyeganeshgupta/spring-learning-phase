@@ -132,7 +132,7 @@ public class ApplicationRunner implements CommandLineRunner {
 
     private void retrieveAllDepartments() {
         try {
-            List < DepartmentDTO > departments = departmentService.getAllDepartments();
+            List <DepartmentDTO> departments = departmentService.getAllDepartments();
             if (departments.isEmpty()) {
                 System.out.println("\nNo departments found.");
             } else {

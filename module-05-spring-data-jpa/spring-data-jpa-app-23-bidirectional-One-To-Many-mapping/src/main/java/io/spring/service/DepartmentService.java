@@ -33,22 +33,25 @@ public class DepartmentService {
 
     // 2. Add an Employee to a Department
     public EmployeeDTO addEmployeeToDepartment(Long departmentId, EmployeeDTO employeeDTO) {
-        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        Optional <Department> optionalDepartment = departmentRepository.findById(departmentId);
         if (optionalDepartment.isPresent()) {
             Department department = optionalDepartment.get();
             Employee employee = convertToEntity(employeeDTO);
+
             department.addEmployee(employee); // Add employee to the department
             employee.setDepartment(department); // Set bidirectional relationship
-            Employee savedEmployee = employeeRepository.save(employee); // Save the employee
-            return convertToDto(savedEmployee);
+
+            departmentRepository.save(department); // Saving department (cascades to Employee)
+
+            return convertToDto(employee);
         } else {
             throw new RuntimeException("Department not found with ID: " + departmentId);
         }
     }
 
     // 3. Retrieve all Departments along with their Employees
-    public List < DepartmentDTO > getAllDepartments() {
-        List < Department > departments = departmentRepository.findAll();
+    public List <DepartmentDTO> getAllDepartments() {
+        List <Department> departments = departmentRepository.findAll();
         return departments.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -56,7 +59,7 @@ public class DepartmentService {
 
     // 4. Update the name of an Employee
     public EmployeeDTO updateEmployeeName(Long employeeId, String newName) {
-        Optional < Employee > optionalEmployee = employeeRepository.findById(employeeId);
+        Optional <Employee> optionalEmployee = employeeRepository.findById(employeeId);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
             employee.setName(newName);
@@ -69,7 +72,7 @@ public class DepartmentService {
 
     // 5. Update the name of a Department
     public DepartmentDTO updateDepartmentName(Long departmentId, String newName) {
-        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        Optional <Department> optionalDepartment = departmentRepository.findById(departmentId);
         if (optionalDepartment.isPresent()) {
             Department department = optionalDepartment.get();
             department.setName(newName);
@@ -82,13 +85,17 @@ public class DepartmentService {
 
     // 6. Remove an Employee from a Department
     public void removeEmployeeFromDepartment(Long employeeId) {
-        Optional < Employee > optionalEmployee = employeeRepository.findById(employeeId);
+        Optional <Employee> optionalEmployee = employeeRepository.findById(employeeId);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
             Department department = employee.getDepartment();
             if (department != null) {
                 department.removeEmployee(employee); // Remove from department's list
                 employee.setDepartment(null); // Break bidirectional relationship
+
+                // For consistency amongst JPA and SQL
+                departmentRepository.save(department);
+
                 employeeRepository.delete(employee); // Delete the employee record
             } else {
                 throw new RuntimeException("The specified employee does not belong to any department.");
@@ -100,7 +107,7 @@ public class DepartmentService {
 
     // 7. Delete a Department along with all its Employees
     public void deleteDepartment(Long departmentId) {
-        Optional < Department > optionalDepartment = departmentRepository.findById(departmentId);
+        Optional <Department> optionalDepartment = departmentRepository.findById(departmentId);
         if (optionalDepartment.isPresent()) {
             departmentRepository.delete(optionalDepartment.get()); // Cascade deletes employees as well
         } else {
@@ -115,7 +122,7 @@ public class DepartmentService {
         dto.setName(department.getName());
         dto.setLocation(department.getLocation());
 
-        List < EmployeeDTO > employees = department.getEmployees().stream()
+        List <EmployeeDTO> employees = department.getEmployees().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
 
@@ -146,7 +153,7 @@ public class DepartmentService {
         department.setLocation(dto.getLocation());
 
         if (dto.getEmployees() != null) {
-            List < Employee > employees = dto.getEmployees().stream()
+            List <Employee> employees = dto.getEmployees().stream()
                     .map(this::convertToEntity)
                     .collect(Collectors.toList());
             department.setEmployees(employees);
@@ -167,7 +174,7 @@ public class DepartmentService {
         employee.setRole(dto.getRole());
 
         if (dto.getDepartmentId() != null) {
-            Optional < Department > optionalDepartment = departmentRepository.findById(dto.getDepartmentId());
+            Optional <Department> optionalDepartment = departmentRepository.findById(dto.getDepartmentId());
             optionalDepartment.ifPresent(employee::setDepartment);
         }
 
