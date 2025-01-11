@@ -115,6 +115,41 @@ public class DepartmentService {
         }
     }
 
+    // 8. Change an Employee's Department
+    public EmployeeDTO changeEmployeeDepartment(Long employeeId, Long newDepartmentId) {
+        // Check if the employee exists
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+        if (!optionalEmployee.isPresent()) {
+            throw new RuntimeException("Employee not found with ID: " + employeeId);
+        }
+
+        // Check if the target department exists
+        Optional<Department> optionalNewDepartment = departmentRepository.findById(newDepartmentId);
+        if (!optionalNewDepartment.isPresent()) {
+            throw new RuntimeException("Department not found with ID: " + newDepartmentId);
+        }
+
+        Employee employee = optionalEmployee.get();
+        Department currentDepartment = employee.getDepartment();
+        Department newDepartment = optionalNewDepartment.get();
+
+        // Remove the employee from their current department (if any)
+        if (currentDepartment != null) {
+            currentDepartment.removeEmployee(employee);
+            departmentRepository.save(currentDepartment); // Save changes to current department
+        }
+
+        // Add the employee to the new department
+        newDepartment.addEmployee(employee);
+        employee.setDepartment(newDepartment); // Update bidirectional relationship
+
+        // Save changes to both entities
+        departmentRepository.save(newDepartment); // Save changes to new department
+        Employee updatedEmployee = employeeRepository.save(employee); // Save updated employee
+
+        return convertToDto(updatedEmployee);
+    }
+
     // Utility: Convert Entity to DTO (for Department)
     private DepartmentDTO convertToDto(Department department) {
         DepartmentDTO dto = new DepartmentDTO();

@@ -33,7 +33,8 @@ public class ApplicationRunner implements CommandLineRunner {
             System.out.println("5. Update the name of a Department");
             System.out.println("6. Remove an Employee from a Department");
             System.out.println("7. Delete a Department with all its Employees");
-            System.out.println("8. Exit");
+            System.out.println("8. Change an Employee's Department");
+            System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -62,6 +63,9 @@ public class ApplicationRunner implements CommandLineRunner {
                     deleteDepartment(scanner);
                     break;
                 case 8:
+                    changeEmployeeDepartment(scanner);
+                    break;
+                case 9:
                     System.exit(0);
                 default:
                     System.out.println("\nInvalid choice! Please try again.");
@@ -200,6 +204,22 @@ public class ApplicationRunner implements CommandLineRunner {
             System.out.println("\nDepartment deleted successfully!");
         } catch (Exception e) {
             System.err.println("\nError:" + e.getMessage());
+        }
+    }
+
+    private void changeEmployeeDepartment(Scanner scanner) {
+        System.out.print("\nEnter Employee ID: ");
+        Long employeeId = scanner.nextLong();
+
+        System.out.print("Enter New Department ID: ");
+        Long newDepartmentId = scanner.nextLong();
+
+        try {
+            EmployeeDTO updatedEmp = departmentService.changeEmployeeDepartment(employeeId, newDepartmentId);
+            System.out.println("\nEmployee's Department changed successfully!");
+            System.out.println(updatedEmp);
+        } catch (Exception e) {
+            System.err.println("\nError: " + e.getMessage());
         }
     }
 }
