@@ -1,0 +1,337 @@
+Hibernate:
+    create table course (
+        id bigint not null auto_increment,
+        course_code varchar(10) not null,
+        is_active BOOLEAN DEFAULT TRUE,
+        course_name varchar(100) not null,
+        start_date date,
+        primary key (id)
+    ) engine=InnoDB
+
+Hibernate:
+    create table student (
+        id bigint not null auto_increment,
+        date_of_birth date,
+        email varchar(255) not null,
+        enrollment_date date,
+        first_name varchar(50) not null,
+        is_active BOOLEAN DEFAULT TRUE,
+        last_name varchar(50) not null,
+        phone_number varchar(15),
+        primary key (id)
+    ) engine=InnoDB
+
+Hibernate:
+    create table student_course (
+        student_id bigint not null,
+        course_id bigint not null,
+        primary key (student_id, course_id)
+    ) engine=InnoDB
+
+Hibernate:
+    alter table course
+       drop index UKpbtxfti950chth4yw1wafaf9f
+Hibernate:
+    alter table course
+       add constraint UKpbtxfti950chth4yw1wafaf9f unique (course_code)
+
+Hibernate:
+    alter table student
+       drop index UKfe0i52si7ybu0wjedj6motiim
+Hibernate:
+    alter table student
+       add constraint UKfe0i52si7ybu0wjedj6motiim unique (email)
+
+Hibernate:
+    alter table student_course
+       add constraint FKejrkh4gv8iqgmspsanaji90ws
+       foreign key (course_id)
+       references course (id)
+Hibernate:
+    alter table student_course
+       add constraint FKq7yw2wg9wlt2cnj480hcdn6dq
+       foreign key (student_id)
+       references student (id)
+
+2025-01-13T09:36:44.295+05:30  INFO 18080 --- [spring-data-jpa-app-24-unidirectional-Many-To-Many-mapping] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-13T09:36:44.802+05:30  INFO 18080 --- [spring-data-jpa-app-24-unidirectional-Many-To-Many-mapping] [           main] idirectionalManyToManyMappingApplication : Started SpringDataJpaApp24UnidirectionalManyToManyMappingApplication in 4.888 seconds (process running for 5.457)
+Hibernate:
+    insert
+    into
+        course
+        (course_code, is_active, course_name, start_date)
+    values
+        (?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        course
+        (course_code, is_active, course_name, start_date)
+    values
+        (?, ?, ?, ?)
+
+✅ Added Courses!
+
+
+
+Hibernate:
+    insert
+    into
+        student
+        (date_of_birth, email, enrollment_date, first_name, is_active, last_name, phone_number)
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate:
+    insert
+    into
+        student
+        (date_of_birth, email, enrollment_date, first_name, is_active, last_name, phone_number)
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+
+✅ Added Students!
+
+
+
+Hibernate:
+    select
+        s1_0.id,
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date,
+        s1_0.date_of_birth,
+        s1_0.email,
+        s1_0.enrollment_date,
+        s1_0.first_name,
+        s1_0.is_active,
+        s1_0.last_name,
+        s1_0.phone_number
+    from
+        student s1_0
+    left join
+        student_course c1_0
+            on s1_0.id=c1_0.student_id
+    left join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.course_code,
+        c1_0.is_active,
+        c1_0.course_name,
+        c1_0.start_date
+    from
+        course c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date,
+        s1_0.date_of_birth,
+        s1_0.email,
+        s1_0.enrollment_date,
+        s1_0.first_name,
+        s1_0.is_active,
+        s1_0.last_name,
+        s1_0.phone_number
+    from
+        student s1_0
+    left join
+        student_course c1_0
+            on s1_0.id=c1_0.student_id
+    left join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.course_code,
+        c1_0.is_active,
+        c1_0.course_name,
+        c1_0.start_date
+    from
+        course c1_0
+    where
+        c1_0.id=?
+
+Hibernate:
+    insert
+    into
+        student_course
+        (student_id, course_id)
+    values
+        (?, ?)
+Student enrolled in the course successfully!
+
+
+Hibernate:
+    select
+        s1_0.id,
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date,
+        s1_0.date_of_birth,
+        s1_0.email,
+        s1_0.enrollment_date,
+        s1_0.first_name,
+        s1_0.is_active,
+        s1_0.last_name,
+        s1_0.phone_number
+    from
+        student s1_0
+    left join
+        student_course c1_0
+            on s1_0.id=c1_0.student_id
+    left join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.course_code,
+        c1_0.is_active,
+        c1_0.course_name,
+        c1_0.start_date
+    from
+        course c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date,
+        s1_0.date_of_birth,
+        s1_0.email,
+        s1_0.enrollment_date,
+        s1_0.first_name,
+        s1_0.is_active,
+        s1_0.last_name,
+        s1_0.phone_number
+    from
+        student s1_0
+    left join
+        student_course c1_0
+            on s1_0.id=c1_0.student_id
+    left join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.course_code,
+        c1_0.is_active,
+        c1_0.course_name,
+        c1_0.start_date
+    from
+        course c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    insert
+    into
+        student_course
+        (student_id, course_id)
+    values
+        (?, ?)
+Student enrolled in the course successfully!
+
+✅ Enrolled Students in Courses!
+
+
+
+🎓 All Students and Their Courses:
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.date_of_birth,
+        s1_0.email,
+        s1_0.enrollment_date,
+        s1_0.first_name,
+        s1_0.is_active,
+        s1_0.last_name,
+        s1_0.phone_number
+    from
+        student s1_0
+Hibernate:
+    select
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date
+    from
+        student_course c1_0
+    join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        c1_0.student_id=?
+Hibernate:
+    select
+        c1_0.student_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.is_active,
+        c1_1.course_name,
+        c1_1.start_date
+    from
+        student_course c1_0
+    join
+        course c1_1
+            on c1_1.id=c1_0.course_id
+    where
+        c1_0.student_id=?
+
+🎓 **Student Details (DTO)** 🎓
+═══════════════════════════════
+🆔 ID: 1
+👤 Name: Ganesh Gupta
+📧 Email: eyeganeshgupta@gmail.com
+📞 Phone: 8983971752
+🎂 Date of Birth: 2003-02-18
+📅 Enrollment Date: 2025-01-01
+🔵 Active Status: ✅ Active
+📚 Courses Enrolled:
+   📘 Java SE (Code: JavaSE101)
+═══════════════════════════════
+
+
+🎓 **Student Details (DTO)** 🎓
+═══════════════════════════════
+🆔 ID: 2
+👤 Name: Virat Gupta
+📧 Email: virat.gupta@outlook.com
+📞 Phone: 8898234049
+🎂 Date of Birth: 2007-07-16
+📅 Enrollment Date: 2025-01-06
+🔵 Active Status: ✅ Active
+📚 Courses Enrolled:
+   📘 MERN Stack Web Development (Code: MERNSTACK)
+═══════════════════════════════

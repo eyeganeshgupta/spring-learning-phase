@@ -2,12 +2,11 @@ package io.spring.runner;
 
 import io.spring.dto.CourseDTO;
 import io.spring.dto.StudentDTO;
-import io.spring.entity.Course;
-import io.spring.entity.Student;
 import io.spring.service.StudentCourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class ApplicationRunner implements CommandLineRunner {
@@ -22,13 +21,15 @@ public class ApplicationRunner implements CommandLineRunner {
         // Add a new course
         CourseDTO javaSE = new CourseDTO();
         javaSE.setName("Java SE");
-        javaSE.setCourseCode("JavaSE103");
+        javaSE.setCourseCode("JavaSE101");
+        javaSE.setStartDate(LocalDate.of(2025, 7, 1));
         javaSE.setIsActive(true);
         javaSE = service.addCourse(javaSE);
 
         CourseDTO mernStack = new CourseDTO();
         mernStack.setName("MERN Stack Web Development");
-        mernStack.setCourseCode("MERNSTACK103");
+        mernStack.setCourseCode("MERNSTACK");
+        mernStack.setStartDate(LocalDate.of(2025, 7, 15));
         mernStack.setIsActive(true);
         mernStack = service.addCourse(mernStack);
 
@@ -41,6 +42,8 @@ public class ApplicationRunner implements CommandLineRunner {
         ganesh.setLastName("Gupta");
         ganesh.setEmail("eyeganeshgupta@gmail.com");
         ganesh.setPhoneNumber("8983971752");
+        ganesh.setDateOfBirth(LocalDate.of(2003, 2, 18));
+        ganesh.setEnrollmentDate(LocalDate.of(2025, 1, 1));
         ganesh.setIsActive(true);
         ganesh = service.addStudent(ganesh);
 
@@ -49,15 +52,23 @@ public class ApplicationRunner implements CommandLineRunner {
         virat.setLastName("Gupta");
         virat.setEmail("virat.gupta@outlook.com");
         virat.setPhoneNumber("8898234049");
+        virat.setDateOfBirth(LocalDate.of(2007, 7, 16));
+        virat.setEnrollmentDate(LocalDate.of(2025, 1, 6));
         virat.setIsActive(true);
         virat = service.addStudent(virat);
 
         System.out.println("\n✅ Added Students!");
 
-        // Enroll a student in a course
+
+        // Enroll students in courses
         System.out.println(service.enrollStudentInCourse(ganesh.getId(), javaSE.getId()));
         System.out.println(service.enrollStudentInCourse(virat.getId(), mernStack.getId()));
-
         System.out.println("\n✅ Enrolled Students in Courses!");
+
+
+        // Retrieve all students along with their courses
+        System.out.println("\n🎓 All Students and Their Courses:");
+        var students=service.getAllStudentsWithCourses();
+        students.forEach(System.out::println);
     }
 }

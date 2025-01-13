@@ -51,4 +51,12 @@ public class StudentCourseService {
         studentRepository.save(student); // Saving updated student
         return "Student enrolled in the course successfully!";
     }
+
+    // Retrieve all students along with their courses
+    public List<StudentDTO> getAllStudentsWithCourses() {
+        List<Student> students = studentRepository.findAll();
+        return students.stream()
+                .map(StudentMapper::toStudentDTO)
+                .collect(Collectors.toList());
+    }
 }

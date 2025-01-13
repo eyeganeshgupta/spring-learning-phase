@@ -85,4 +85,31 @@ public class StudentDTO {
     public void setCourses(List<CourseDTO> courses) {
         this.courses = courses;
     }
+
+    @Override
+    public String toString() {
+        return "\n🎓 **Student Details (DTO)** 🎓" +
+                "\n═══════════════════════════════" +
+                "\n🆔 ID: " + id +
+                "\n👤 Name: " + firstName + " " + lastName +
+                "\n📧 Email: " + email +
+                "\n📞 Phone: " + (phoneNumber != null ? phoneNumber : "N/A") +
+                "\n🎂 Date of Birth: " + (dateOfBirth != null ? dateOfBirth : "N/A") +
+                "\n📅 Enrollment Date: " + (enrollmentDate != null ? enrollmentDate : "N/A") +
+                "\n🔵 Active Status: " + (isActive != null && isActive ? "✅ Active" : "❌ Inactive") +
+                "\n📚 Courses Enrolled:" + formatCourses() +
+                "\n═══════════════════════════════\n";
+    }
+
+    private String formatCourses() {
+        if (courses == null || courses.isEmpty()) {
+            return " None";
+        }
+        StringBuilder formattedCourses = new StringBuilder();
+        for (CourseDTO course : courses) {
+            formattedCourses.append("\n   📘 ").append(course.getName())
+                    .append(" (Code: ").append(course.getCourseCode()).append(")");
+        }
+        return formattedCourses.toString();
+    }
 }
