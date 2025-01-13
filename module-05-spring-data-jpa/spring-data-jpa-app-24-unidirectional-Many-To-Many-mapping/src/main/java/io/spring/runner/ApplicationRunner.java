@@ -32,5 +32,24 @@ public class ApplicationRunner implements CommandLineRunner {
         service.addCourse(science);
 
         System.out.println("\n✅ Added Courses!");
+
+        // Add a new student
+        Student ganesh = new Student();
+        ganesh.setFirstName("Ganesh");
+        ganesh.setLastName("Gupta");
+        ganesh.setEmail("eyeganeshgupta@gmail.com");
+        ganesh.setPhoneNumber("8983971752");
+        ganesh.setIsActive(true);
+        service.addStudent(ganesh);
+
+        Student virat = new Student();
+        virat.setFirstName("Virat");
+        virat.setLastName("Gupta");
+        virat.setEmail("virat.gupta@outlook.com");
+        virat.setPhoneNumber("8898234049");
+        virat.setIsActive(true);
+        service.addStudent(virat);
+
+        System.out.println("\n✅ Added Students!");
     }
 }

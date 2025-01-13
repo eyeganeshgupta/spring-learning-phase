@@ -29,4 +29,10 @@ public class StudentCourseService {
         Course savedCourse = courseRepository.save(course);
         return CourseMapper.toCourseDTO(savedCourse);
     }
+
+    // Add a new student
+    public StudentDTO addStudent(Student student) {
+        Student savedStudent = studentRepository.save(student);
+        return StudentMapper.toStudentDTO(savedStudent);
+    }
 }
