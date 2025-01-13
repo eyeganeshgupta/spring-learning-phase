@@ -1,5 +1,6 @@
 package io.spring.runner;
 
+import io.spring.dto.CourseDTO;
 import io.spring.dto.StudentDTO;
 import io.spring.entity.Course;
 import io.spring.entity.Student;
@@ -19,37 +20,44 @@ public class ApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Add a new course
-        Course math = new Course();
-        math.setName("Math 101");
-        math.setCourseCode("MATH101");
-        math.setIsActive(true);
-        service.addCourse(math);
+        CourseDTO javaSE = new CourseDTO();
+        javaSE.setName("Java SE");
+        javaSE.setCourseCode("JavaSE103");
+        javaSE.setIsActive(true);
+        javaSE = service.addCourse(javaSE);
 
-        Course science = new Course();
-        science.setName("Science 102");
-        science.setCourseCode("SCI102");
-        science.setIsActive(true);
-        service.addCourse(science);
+        CourseDTO mernStack = new CourseDTO();
+        mernStack.setName("MERN Stack Web Development");
+        mernStack.setCourseCode("MERNSTACK103");
+        mernStack.setIsActive(true);
+        mernStack = service.addCourse(mernStack);
 
         System.out.println("\n✅ Added Courses!");
 
+
         // Add a new student
-        Student ganesh = new Student();
+        StudentDTO ganesh = new StudentDTO();
         ganesh.setFirstName("Ganesh");
         ganesh.setLastName("Gupta");
         ganesh.setEmail("eyeganeshgupta@gmail.com");
         ganesh.setPhoneNumber("8983971752");
         ganesh.setIsActive(true);
-        service.addStudent(ganesh);
+        ganesh = service.addStudent(ganesh);
 
-        Student virat = new Student();
+        StudentDTO virat = new StudentDTO();
         virat.setFirstName("Virat");
         virat.setLastName("Gupta");
         virat.setEmail("virat.gupta@outlook.com");
         virat.setPhoneNumber("8898234049");
         virat.setIsActive(true);
-        service.addStudent(virat);
+        virat = service.addStudent(virat);
 
         System.out.println("\n✅ Added Students!");
+
+        // Enroll a student in a course
+        System.out.println(service.enrollStudentInCourse(ganesh.getId(), javaSE.getId()));
+        System.out.println(service.enrollStudentInCourse(virat.getId(), mernStack.getId()));
+
+        System.out.println("\n✅ Enrolled Students in Courses!");
     }
 }
