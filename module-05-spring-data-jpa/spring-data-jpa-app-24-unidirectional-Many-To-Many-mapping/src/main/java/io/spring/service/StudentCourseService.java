@@ -59,4 +59,16 @@ public class StudentCourseService {
                 .map(StudentMapper::toStudentDTO)
                 .collect(Collectors.toList());
     }
+
+    // Delete a student by ID
+    public String deleteStudent(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+        if (student == null) {
+            return "Student not found!";
+        } else {
+            student.getCourses().clear(); // Breaking the association
+            studentRepository.delete(student);
+            return "Student deleted successfully!";
+        }
+    }
 }

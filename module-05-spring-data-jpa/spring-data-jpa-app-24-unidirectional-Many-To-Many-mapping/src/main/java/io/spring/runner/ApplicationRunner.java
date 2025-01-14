@@ -22,14 +22,14 @@ public class ApplicationRunner implements CommandLineRunner {
         CourseDTO javaSE = new CourseDTO();
         javaSE.setName("Java SE");
         javaSE.setCourseCode("JavaSE101");
-        javaSE.setStartDate(LocalDate.of(2025, 7, 1));
+        javaSE.setStartDate(LocalDate.of(2025, 1, 1));
         javaSE.setIsActive(true);
         javaSE = service.addCourse(javaSE);
 
         CourseDTO mernStack = new CourseDTO();
         mernStack.setName("MERN Stack Web Development");
         mernStack.setCourseCode("MERNSTACK");
-        mernStack.setStartDate(LocalDate.of(2025, 7, 15));
+        mernStack.setStartDate(LocalDate.of(2025, 1, 15));
         mernStack.setIsActive(true);
         mernStack = service.addCourse(mernStack);
 
@@ -70,5 +70,9 @@ public class ApplicationRunner implements CommandLineRunner {
         System.out.println("\n🎓 All Students and Their Courses:");
         var students=service.getAllStudentsWithCourses();
         students.forEach(System.out::println);
+
+        // Delete a student
+        System.out.println(service.deleteStudent(ganesh.getId()));
+        System.out.println("\n✅ Deleted " + ganesh.getFirstName() + "!");
     }
 }
