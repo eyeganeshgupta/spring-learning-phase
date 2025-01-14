@@ -52,10 +52,20 @@ public class ApplicationRunner implements CommandLineRunner {
         virat.setLastName("Gupta");
         virat.setEmail("virat.gupta@outlook.com");
         virat.setPhoneNumber("8898234049");
-        virat.setDateOfBirth(LocalDate.of(2007, 7, 16));
+        virat.setDateOfBirth(LocalDate.of(2007, 8, 24));
         virat.setEnrollmentDate(LocalDate.of(2025, 1, 6));
         virat.setIsActive(true);
         virat = service.addStudent(virat);
+
+        StudentDTO sheetal = new StudentDTO();
+        sheetal.setFirstName("Sheetal");
+        sheetal.setLastName("Gupta");
+        sheetal.setEmail("eyesheetalgupta@outlook.com");
+        sheetal.setPhoneNumber("8898234049");
+        sheetal.setDateOfBirth(LocalDate.of(2007, 7, 16));
+        sheetal.setEnrollmentDate(LocalDate.of(2025, 1, 6));
+        sheetal.setIsActive(true);
+        sheetal = service.addStudent(sheetal);
 
         System.out.println("\n✅ Added Students!");
 
@@ -63,6 +73,7 @@ public class ApplicationRunner implements CommandLineRunner {
         // Enroll students in courses
         System.out.println(service.enrollStudentInCourse(ganesh.getId(), javaSE.getId()));
         System.out.println(service.enrollStudentInCourse(virat.getId(), mernStack.getId()));
+        System.out.println(service.enrollStudentInCourse(sheetal.getId(), javaSE.getId()));
         System.out.println("\n✅ Enrolled Students in Courses!");
 
 
@@ -71,9 +82,11 @@ public class ApplicationRunner implements CommandLineRunner {
         var students=service.getAllStudentsWithCourses();
         students.forEach(System.out::println);
 
+
         // Delete a student
         System.out.println(service.deleteStudent(ganesh.getId()));
         System.out.println("\n✅ Deleted " + ganesh.getFirstName() + "!");
+
 
         // Delete a course
         System.out.println(service.deleteCourse(javaSE.getId()));
