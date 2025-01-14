@@ -74,5 +74,9 @@ public class ApplicationRunner implements CommandLineRunner {
         // Delete a student
         System.out.println(service.deleteStudent(ganesh.getId()));
         System.out.println("\n✅ Deleted " + ganesh.getFirstName() + "!");
+
+        // Delete a course
+        System.out.println(service.deleteCourse(javaSE.getId()));
+        System.out.println("\n✅ Deleted " + javaSE.getName() + "!");
     }
 }
