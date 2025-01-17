@@ -10,4 +10,6 @@ public interface StudentService {
     void deleteStudent(Long id);
     StudentDTO getStudentById(Long id);
     List<StudentDTO> getAllStudents();
+    void enrollInCourse(Long studentId, Long courseId);
+    void removeFromCourse(Long studentId, Long courseId);
 }
