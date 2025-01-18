@@ -42,5 +42,16 @@ public class AppRunner implements CommandLineRunner {
 
         // Enroll Ganesh Gupta in Spring Boot Basics (Managed by owning side: Student)
         studentService.enrollInCourse(savedGanesh.getId(), savedSpringBoot.getId());
+
+        // Print enrolled students for Spring Boot Basics (from Course perspective)
+        System.out.println("Enrolled Students in Spring Boot Basics:");
+
+        System.out.println(courseService.getCourseById(savedSpringBoot.getId()));
+
+        // Remove Ganesh Gupta from Spring Boot Basics (Managed by owning side: Student)
+        studentService.removeFromCourse(savedGanesh.getId(), savedSpringBoot.getId());
+
+        System.out.println("Updated Students in Spring Boot Basics:");
+        System.out.println(courseService.getCourseById(savedSpringBoot.getId()));
     }
 }
