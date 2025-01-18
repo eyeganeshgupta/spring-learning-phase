@@ -39,5 +39,8 @@ public class AppRunner implements CommandLineRunner {
         ganesh.setEmail("eyeganeshgupta@gmail.com");
 
         StudentDTO savedGanesh = studentService.createStudent(ganesh);
+
+        // Enroll Ganesh Gupta in Spring Boot Basics (Managed by owning side: Student)
+        studentService.enrollInCourse(savedGanesh.getId(), savedSpringBoot.getId());
     }
 }
