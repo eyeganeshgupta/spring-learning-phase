@@ -48,6 +48,7 @@
 <div class="greeting-card">
     <h1 class="welcome-message">Hello! Welcome to Our Web App</h1>
     <p class="date">Today is <%= request.getAttribute("date") %></p>
+    <p class="date">Today is ${date}</p>
     <p class="subtext">We&apos;re thrilled to have you here. Enjoy your experience!</p>
 </div>
 
