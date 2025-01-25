@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Two Integers</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5', // Indigo
+                        accent: '#FACC15', // Yellow
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-primary to-blue-500 h-screen flex items-center justify-center text-white">
+
+<div class="w-full max-w-md p-6 bg-white bg-opacity-10 rounded-lg shadow-lg text-center animate-fade-in">
+    <h1 class="text-3xl font-bold mb-6">Enter Two Numbers</h1>
+
+    <!-- Input Form -->
+    <form action="/result" method="GET" class="space-y-4">
+        <!-- First Number Input -->
+        <div class="relative">
+            <label for="number1" class="block text-sm font-medium text-gray-200">Enter First Number</label>
+            <input
+                    type="number"
+                    id="number1"
+                    name="number1"
+                    placeholder="e.g., 10"
+                    class="w-full mt-2 p-3 bg-gray-50 text-gray-900 rounded-lg shadow focus:ring-accent focus:border-accent outline-none"
+                    required />
+        </div>
+
+        <!-- Second Number Input -->
+        <div class="relative">
+            <label for="number2" class="block text-sm font-medium text-gray-200">Enter Second Number</label>
+            <input
+                    type="number"
+                    id="number2"
+                    name="number2"
+                    placeholder="e.g., 20"
+                    class="w-full mt-2 p-3 bg-gray-50 text-gray-900 rounded-lg shadow focus:ring-accent focus:border-accent outline-none"
+                    required />
+        </div>
+
+        <!-- Submit Button -->
+        <button
+                type="submit"
+                class="w-full py-3 px-4 bg-accent text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition duration-300">
+            Submit
+        </button>
+    </form>
+</div>
+
+</body>
+</html>
