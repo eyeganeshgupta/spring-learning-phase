@@ -24,7 +24,7 @@ public class LaptopController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getAllLaptops(Model model) {
         model.addAttribute("laptops", laptopData.values());
-        return "laptopList";
+        return "laptop-list";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class LaptopController {
         Laptop laptop = laptopData.get(id);
         if (laptop != null) {
             model.addAttribute("laptop", laptop);
-            return "laptopDetails";
+            return "laptop-detail";
         } else {
             model.addAttribute("errorMessage", "Laptop not found");
             return "error";
