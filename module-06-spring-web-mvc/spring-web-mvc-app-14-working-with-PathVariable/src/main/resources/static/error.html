@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-red-500 via-yellow-500 to-orange-500 min-h-screen flex items-center justify-center">
+
+<div class="text-center text-white p-8 bg-white/10 backdrop-blur-md rounded-lg shadow-lg max-w-lg w-full fade-in">
+    <div class="text-9xl font-bold mb-4">Error</div>
+
+    <h1 class="text-3xl font-extrabold mb-2">Something Went Wrong!</h1>
+    <p class="text-lg mb-6">We’re sorry, but an unexpected error occurred.</p>
+
+    <a href="/" class="bg-white text-red-600 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
+        Back to Homepage
+    </a>
+
+    <div class="mt-8">
+        <svg class="w-16 h-16 mx-auto animate-bounce text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 15L12 12.75m0 0L14.25 15m-2.25-2.25V21m6.75-9.75a9 9 0 11-13.5 0m13.5 0A9.003 9.003 0 0112 3v3m0 0a9.003 9.003 0 016.75 3M12 6V3m0 3a9.003 9.003 0 00-6.75-3m13.5-.75v3"></path>
+        </svg>
+    </div>
+</div>
+
+</body>
+</html>

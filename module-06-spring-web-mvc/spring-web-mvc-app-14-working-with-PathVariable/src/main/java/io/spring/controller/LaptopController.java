@@ -24,18 +24,13 @@ public class LaptopController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getAllLaptops(Model model) {
         model.addAttribute("laptops", laptopData.values());
-        return "laptop-list";
+        return "laptop-list.jsp";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getLaptopById(@PathVariable("id") String id, Model model) {
         Laptop laptop = laptopData.get(id);
-        if (laptop != null) {
-            model.addAttribute("laptop", laptop);
-            return "laptop-detail";
-        } else {
-            model.addAttribute("errorMessage", "Laptop not found");
-            return "error";
-        }
+        model.addAttribute("laptop", laptop);
+        return "laptop-details.jsp";
     }
 }
