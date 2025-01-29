@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,9 +45,8 @@
     <p><strong>Storage:</strong> ${laptop.storage}</p>
     <p><strong>Graphics Card:</strong> ${laptop.graphicsCard}</p>
 
-    <!-- Back Button -->
     <div class="mt-6 text-center">
-        <a href="/laptops"
+        <a href="/laptops/"
            class="bg-blue-500 text-white py-2 px-4 rounded glow-button transition duration-300">
             Back to List
         </a>

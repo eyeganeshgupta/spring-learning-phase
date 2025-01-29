@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,22 +42,25 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="laptop" items="${laptops}">
-            <tr class="hover:bg-gray-100">
-                <td class="border border-gray-300 px-4 py-2">${laptop.id}</td>
-                <td class="border border-gray-300 px-4 py-2">${laptop.name}</td>
-                <td class="border border-gray-300 px-4 py-2">${laptop.processor}</td>
-                <td class="border border-gray-300 px-4 py-2 text-center">
-                    <a href="/laptops/${laptop.id}"
-                       class="text-blue-500 hover:underline hover:text-blue-700 transition duration-300">
-                        View Details
-                    </a>
-                </td>
-            </tr>
-        </c:forEach>
+        <%-- Use EL to iterate over the laptops list --%>
+            <% for (Object laptopObj : (Iterable<?>) request.getAttribute("laptops")) {
+               io.spring.model.Laptop laptop = (io.spring.model.Laptop) laptopObj; %>
+                <tr class="hover:bg-gray-100">
+                    <td class="border border-gray-300 px-4 py-2"><%= laptop.getId() %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= laptop.getName() %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= laptop.getProcessor() %></td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">
+                        <a href="/laptops/<%= laptop.getId() %>"
+                           class="text-blue-500 hover:underline hover:text-blue-700 transition duration-300">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+        <% } %>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
