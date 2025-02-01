@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex items-center justify-center">
+<div class="container mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <h1 class="text-4xl font-bold text-center text-gray-800 mb-8 animate-bounce">Our Products</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="product : ${products}" class="bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+            <img th:src="@{${product.imageUrl}}" alt="Product Image" class="rounded-lg mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2" th:text="${product.name}"></h2>
+            <p class="text-gray-600 mb-4" th:text="${product.description}"></p>
+            <p class="text-lg font-bold text-blue-600 mb-4"><span th:text="${product.price}"></span> ₹</p>
+
+            <!-- Link Expression -->
+            <a th:href="@{/product/{id}(id=${product.id})}"
+               class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 hover:shadow-xl transition duration-300 ease-in-out animate-pulse">
+                View Details
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
