@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<!-- Include Header Fragment -->
+<div th:replace="~{header :: header}"></div>
+
+<main class="container mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Include Product Card Fragment for Each Product -->
+        <div th:each="product : ${products}"
+             th:replace="~{product-card :: card(${product})}"></div>
+    </div>
+</main>
+
+<!-- Include Footer Fragment -->
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>
