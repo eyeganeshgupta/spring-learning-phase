@@ -13,8 +13,11 @@
     <!-- Product List -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Loop through products -->
-        <div th:each="product : ${products}"
+        <div th:each="product, productStat : ${products}"
              class="bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+
+            <h1 class="text-sm font-semibold text-gray-800 mb-2" th:text="${productStat.count}"></h1>
+
             <h2 class="text-xl font-semibold text-gray-800 mb-2" th:text="${product.name}"></h2>
             <p class="text-gray-600 mb-4" th:text="${product.description}"></p>
             <p class="text-lg font-bold text-purple-600 mb-4"><span th:text="${product.price}"></span> ₹</p>
