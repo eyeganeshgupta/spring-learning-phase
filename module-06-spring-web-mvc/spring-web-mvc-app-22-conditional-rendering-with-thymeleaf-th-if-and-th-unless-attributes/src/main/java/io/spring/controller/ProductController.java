@@ -13,9 +13,9 @@ import java.util.List;
 @Controller
 public class ProductController {
     private List<Product> products = Arrays.asList(
-            new Product(1, "Smartphone", "Flagship device with 5G", 799.99, true),
-            new Product(2, "Laptop", "16GB RAM, 1TB SSD", 1299.99, false),
-            new Product(3, "Headphones", "Noise-cancelling headphones", 199.99, true)
+            new Product(1, "Smartphone", "Flagship device with 5G", 95600.99, true),
+            new Product(2, "Laptop", "16GB RAM, 1TB SSD", 125300.99, false),
+            new Product(3, "Headphones", "Noise-cancelling headphones", 1799.99, true)
     );
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
