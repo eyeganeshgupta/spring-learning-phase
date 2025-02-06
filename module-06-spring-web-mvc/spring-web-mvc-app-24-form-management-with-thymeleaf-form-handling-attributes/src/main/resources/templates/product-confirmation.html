@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-purple-600 via-blue-500 to-green-400 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full transform transition hover:scale-105 duration-300 ease-in-out">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center animate-bounce">Product Submitted</h1>
+
+    <!-- Product Details -->
+    <div class="space-y-4">
+        <!-- Name -->
+        <div>
+            <label class="block text-gray-700 font-medium">Product Name:</label>
+            <p class="text-lg text-gray-800 font-semibold" th:text="${submittedProduct.name}">Sample Product</p>
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label class="block text-gray-700 font-medium">Description:</label>
+            <p class="text-lg text-gray-800" th:text="${submittedProduct.description}">Sample Description</p>
+        </div>
+
+        <!-- Price -->
+        <div>
+            <label class="block text-gray-700 font-medium">Price:</label>
+            <p class="text-lg text-gray-800 font-semibold">$<span th:text="${submittedProduct.price}">0.00</span></p>
+        </div>
+
+        <!-- Category -->
+        <div>
+            <label class="block text-gray-700 font-medium">Category:</label>
+            <p class="text-lg text-gray-800" th:text="${submittedProduct.category}">Sample Category</p>
+        </div>
+    </div>
+
+    <!-- Back to Form Button -->
+    <div class="mt-6 text-center">
+        <a href="/product-form"
+           class="px-6 py-3 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 hover:shadow-xl transition duration-300 ease-in-out animate-pulse">
+            Add Another Product
+        </a>
+    </div>
+</div>
+</body>
+</html>

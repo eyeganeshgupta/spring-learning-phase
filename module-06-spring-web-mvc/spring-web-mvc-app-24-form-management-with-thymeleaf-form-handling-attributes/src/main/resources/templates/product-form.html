@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full transform transition hover:scale-105 duration-300 ease-in-out">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center animate-bounce">Add New Product</h1>
+
+    <!-- Form -->
+    <form th:action="@{/submit-product}" th:object="${product}" method="post" class="space-y-4">
+        <!-- Name -->
+        <div>
+            <label for="name" class="block text-gray-700 font-medium">Product Name</label>
+            <input type="text" id="name" name="name" th:field="*{name}"
+                   placeholder="Enter product name"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label for="description" class="block text-gray-700 font-medium">Description</label>
+            <textarea id="description" name="description" th:field="*{description}"
+                      placeholder="Enter product description"
+                      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+        </div>
+
+        <!-- Price -->
+        <div>
+            <label for="price" class="block text-gray-700 font-medium">Price</label>
+            <input type="number" id="price" name="price" th:field="*{price}"
+                   placeholder="Enter price"
+                   step=".01"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+        </div>
+
+        <!-- Category -->
+        <div>
+            <label for="category" class="block text-gray-700 font-medium">Category</label>
+            <select id="category" name="category" th:field="*{category}"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <option value="">Select Category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Appliances">Appliances</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-xl transition duration-300 ease-in-out animate-pulse">
+            Submit Product
+        </button>
+    </form>
+</div>
+</body>
+</html>
