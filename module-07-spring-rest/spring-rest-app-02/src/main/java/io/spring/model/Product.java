@@ -1,8 +1,5 @@
 package io.spring.model;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Product {
     private String name;
     private String description;
