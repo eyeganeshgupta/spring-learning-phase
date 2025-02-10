@@ -19,4 +19,10 @@ public class BookController {
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
+
+    // Fetch a book by ID using @PathVariable
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable String id) {
+        return bookService.getBookById(id);
+    }
 }
