@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SpringRestApp06CustomResponseHandlingWithResponseEntityApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringRestApp06CustomResponseHandlingWithResponseEntityApplication.class, args);
     }
-
 }
