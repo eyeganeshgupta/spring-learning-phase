@@ -1,0 +1,50 @@
+Request 1: Search by Title Only
+URL: GET http://localhost:8003/api/books/search?title=1984
+Response:
+{
+    "success": true,
+    "message": "Book found successfully",
+    "data": {
+        "id": "1",
+        "title": "1984",
+        "author": "George Orwell"
+    }
+}
+
+
+Request 2: Search by Author Only
+URL: GET http://localhost:8003/api/books/search?author=Harper+Lee
+Response:
+{
+    "success": true,
+    "message": "Book found successfully",
+    "data": {
+        "id": "2",
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee"
+    }
+}
+
+
+Request 3: Search by Title and Author
+URL: GET http://localhost:8003/api/books/search?title=1984&author=George+Orwell
+Response:
+{
+    "success": true,
+    "message": "Book found successfully",
+    "data": {
+        "id": "1",
+        "title": "1984",
+        "author": "George Orwell"
+    }
+}
+
+
+Request 4: No Matching Book Found
+URL: GET http://localhost:8003/api/books/search?title=Unknown&author=Unknown
+Response:
+{
+    "success": false,
+    "message": "No book found matching the criteria",
+    "data": null
+}
