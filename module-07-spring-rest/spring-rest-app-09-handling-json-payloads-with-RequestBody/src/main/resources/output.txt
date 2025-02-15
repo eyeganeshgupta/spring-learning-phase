@@ -1,0 +1,22 @@
+Add a New Book
+---------------
+
+URL: POST http://localhost:8080/api/books/add
+
+Request Body (JSON):
+{
+    "id": "1",
+    "title": "1984",
+    "author": "George Orwell"
+}
+
+Response:
+{
+    "success": true,
+    "message": "Book added successfully",
+    "data": {
+        "id": "1",
+        "title": "1984",
+        "author": "George Orwell"
+    }
+}
