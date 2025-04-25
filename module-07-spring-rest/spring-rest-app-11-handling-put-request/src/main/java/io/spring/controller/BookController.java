@@ -41,4 +41,22 @@ public class BookController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<Book>> updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+        boolean isUpdated = bookService.updateBook(id, updatedBook);
+
+        ApiResponse<Book> response = new ApiResponse<>();
+        if (isUpdated) {
+            response.setSuccess(true);
+            response.setMessage("Book updated successfully");
+            response.setData(updatedBook);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Book not found with id: " + id);
+            response.setData(null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
 }

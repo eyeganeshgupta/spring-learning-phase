@@ -22,4 +22,13 @@ public class BookService {
     public List<Book> getAllBooks() {
         return new ArrayList<>(bookMap.values());
     }
+
+    public boolean updateBook(Long id, Book updatedBook) {
+        if (bookMap.containsKey(id)) {
+            updatedBook.setId(id);
+            bookMap.put(id, updatedBook);
+            return true;
+        }
+        return false;
+    }
 }
