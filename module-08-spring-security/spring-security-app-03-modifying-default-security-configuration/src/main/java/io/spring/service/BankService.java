@@ -45,16 +45,16 @@ public class BankService {
         return accountRepo.save(account);
     }
 
-    public void deposit(Long accountId, double amount) {
+    public BankAccount deposit(Long accountId, double amount) {
         log.info("Depositing {} to account ID {}", amount, accountId);
         BankAccount account = accountRepo.findById(accountId)
                 .orElseThrow(() -> new ApiException("Account not found"));
         account.setBalance(account.getBalance() + amount);
         transactionRepo.save(new Transaction(null, "deposit", amount, account, LocalDateTime.now()));
-        accountRepo.save(account);
+        return accountRepo.save(account);
     }
 
-    public void withdraw(Long accountId, double amount) {
+    public BankAccount withdraw(Long accountId, double amount) {
         log.info("Withdrawing {} from account ID {}", amount, accountId);
         BankAccount account = accountRepo.findById(accountId)
                 .orElseThrow(() -> new ApiException("Account not found"));
@@ -63,7 +63,7 @@ public class BankService {
         }
         account.setBalance(account.getBalance() - amount);
         transactionRepo.save(new Transaction(null, "withdraw", amount, account, LocalDateTime.now()));
-        accountRepo.save(account);
+        return accountRepo.save(account);
     }
 
     @Transactional
@@ -75,5 +75,4 @@ public class BankService {
     public List<Transaction> getTransactions(Long accountId) {
         return transactionRepo.findAllByBankAccountId(accountId);
     }
-
 }
