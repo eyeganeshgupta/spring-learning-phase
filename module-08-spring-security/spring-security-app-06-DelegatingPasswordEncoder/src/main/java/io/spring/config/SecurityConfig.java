@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .httpBasic(withDefaults());
 
         http.csrf(AbstractHttpConfigurer::disable);
+        logger.info("CSRF protection is disabled.");
 
         logger.info("SecurityFilterChain configured successfully.");
         return http.build();
@@ -36,6 +37,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        logger.info("Creating a PasswordEncoder bean.");
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
