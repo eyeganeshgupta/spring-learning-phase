@@ -1,4 +1,4 @@
-package io.spring.filter;
+package io.spring.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.spring.response.ApiResponse;
