@@ -1,5 +1,8 @@
 package io.spring.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,6 +35,12 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    public Claims extractClaims(String token) {
+        JwtParser parser = Jwts.parserBuilder().setSigningKey(getSigningKey()).build();
+        Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+        return claimsJws.getBody();
     }
 
 }
