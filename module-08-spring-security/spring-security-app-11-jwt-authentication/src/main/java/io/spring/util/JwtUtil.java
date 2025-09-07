@@ -43,4 +43,9 @@ public class JwtUtil {
         return claimsJws.getBody();
     }
 
+    public String extractEmail(String token) {
+        Claims claims = extractClaims(token);
+        return claims.getSubject();
+    }
+
 }
