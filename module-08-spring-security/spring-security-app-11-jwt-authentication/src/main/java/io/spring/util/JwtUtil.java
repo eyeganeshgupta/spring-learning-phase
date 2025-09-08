@@ -48,4 +48,8 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
+    public boolean isTokenExpired(String token) {
+        return extractClaims(token).getExpiration().before(new Date());
+    }
+
 }
