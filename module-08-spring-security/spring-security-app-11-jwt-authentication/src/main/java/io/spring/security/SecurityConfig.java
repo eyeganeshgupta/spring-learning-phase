@@ -1,5 +1,7 @@
 package io.spring.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
     private final JwtRequestFilter jwtRequestFilter;
 
     public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
@@ -23,22 +27,33 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((request) ->
-                request.requestMatchers("/auth/register", "/auth/login").permitAll()
-                .anyRequest().authenticated()
-        ).sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+        logger.info("Initializing SecurityFilterChain...");
 
+        http.authorizeHttpRequests(requests -> {
+            logger.debug("Setting up public endpoints for '/auth/register' and '/auth/login'");
+            requests
+                    .requestMatchers("/auth/register", "/auth/login").permitAll()
+                    .anyRequest().authenticated();
+        });
+
+        http.sessionManagement(session -> {
+            logger.debug("Setting session management to STATELESS");
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        });
+
+        logger.info("Registering JwtRequestFilter before UsernamePasswordAuthenticationFilter");
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
+        logger.debug("Disabling CSRF protection");
         http.csrf(AbstractHttpConfigurer::disable);
 
+        logger.info("SecurityFilterChain initialized successfully.");
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        logger.info("Initializing BCryptPasswordEncoder...");
         return new BCryptPasswordEncoder();
     }
 
@@ -46,7 +61,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
     ) throws Exception {
+        logger.info("Retrieving AuthenticationManager from AuthenticationConfiguration");
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 }
