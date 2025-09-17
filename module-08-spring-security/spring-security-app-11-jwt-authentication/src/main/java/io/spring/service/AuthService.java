@@ -66,4 +66,35 @@ public class AuthService {
 
         return saved;
     }
+
+    public Customer getCustomerDetails(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            logger.warn("Attempt to fetch customer details with empty or null email");
+            throw new IllegalArgumentException("Email must not be empty");
+        }
+
+        final String normalizedEmail = email.trim().toLowerCase();
+        logger.debug("Fetching customer details for email='{}'", normalizedEmail);
+
+        Optional<Customer> customerOpt;
+        try {
+            customerOpt = customerRepository.findByEmail(normalizedEmail);
+        } catch (Exception ex) {
+            logger.error("Error while retrieving customer details for email='{}'. Reason: {}",
+                    normalizedEmail, ex.getMessage(), ex);
+            throw new IllegalStateException("Unable to retrieve customer details at this time", ex);
+        }
+
+        if (customerOpt.isEmpty()) {
+            logger.info("No customer found with email='{}'", normalizedEmail);
+            throw new IllegalArgumentException("Customer with the provided email does not exist");
+        }
+
+        Customer customer = customerOpt.get();
+        logger.info("Successfully retrieved details for customer with email='{}', id={}",
+                normalizedEmail, customer.getId());
+
+        return customer;
+    }
+
 }
