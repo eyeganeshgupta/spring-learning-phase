@@ -2,6 +2,7 @@ package io.spring.service;
 
 import io.spring.model.Customer;
 import io.spring.repository.CustomerRepository;
+import io.spring.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,10 +21,12 @@ public class AuthService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public AuthService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.customerRepository = Objects.requireNonNull(customerRepository, "customerRepository must not be null");
         this.passwordEncoder = Objects.requireNonNull(passwordEncoder, "passwordEncoder must not be null");
+        this.jwtUtil = jwtUtil;
     }
 
     public Customer register(String email, String rawPassword, Double initialBalance) {
@@ -95,6 +98,10 @@ public class AuthService {
                 normalizedEmail, customer.getId());
 
         return customer;
+    }
+
+    public String generateToken(String email) {
+        return jwtUtil.generateToken(email);
     }
 
 }
