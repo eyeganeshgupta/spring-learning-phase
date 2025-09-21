@@ -5,10 +5,13 @@ import io.spring.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,6 +29,15 @@ public class AuthController {
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest registerRequest) {
         authService.register(registerRequest.getEmail(), registerRequest.getPassword(), registerRequest.getBalance());
         return ResponseEntity.ok("Successfully registered");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        String token = authService.generateToken(email);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
 }
