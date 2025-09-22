@@ -1,15 +1,14 @@
 package io.spring.controller;
 
 import io.spring.dto.RegisterRequest;
+import io.spring.model.Customer;
 import io.spring.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -38,6 +37,13 @@ public class AuthController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
         String token = authService.generateToken(email);
         return ResponseEntity.ok(Map.of("token", token));
+    }
+
+    @GetMapping("/account")
+    public ResponseEntity<Customer> getAccount() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer customer = authService.getCustomerDetails(email);
+        return ResponseEntity.ok(customer);
     }
 
 }
