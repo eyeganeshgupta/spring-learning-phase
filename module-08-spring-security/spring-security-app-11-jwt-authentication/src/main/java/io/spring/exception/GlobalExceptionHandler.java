@@ -83,4 +83,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<ApiError> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+        String path = request != null ? request.getRequestURI() : null;
+        ApiError body = new ApiError(HttpStatus.UNAUTHORIZED.value(),
+                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                "Authentication failed",
+                path);
+        logger.info("Authentication failure for '{}': {}", path, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
+
 }
