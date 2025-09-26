@@ -6,14 +6,19 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +69,17 @@ public class GlobalExceptionHandler {
                 path,
                 details);
         logger.warn("Constraint violations for request '{}': {}", path, details);
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
+    protected ResponseEntity<ApiError> handleBadRequest(RuntimeException ex, HttpServletRequest request) {
+        String path = request != null ? request.getRequestURI() : null;
+        ApiError body = new ApiError(HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage() == null ? "Bad request" : ex.getMessage(),
+                path);
+        logger.warn("Bad request to '{}': {}", path, ex.getMessage());
         return ResponseEntity.badRequest().body(body);
     }
 
