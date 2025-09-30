@@ -1,8 +1,10 @@
 package io.spring.controller;
 
+import io.spring.dto.ApiResponse;
 import io.spring.dto.RegisterRequest;
 import io.spring.model.Customer;
 import io.spring.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,34 +37,37 @@ public class AuthController {
     }
 
     @PostMapping(path = "/register", consumes = "application/json")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> register(
+            @Valid @RequestBody RegisterRequest registerRequest,
+            HttpServletRequest request) {
+
         logger.info("Registration attempt for email='{}'", registerRequest.getEmail());
 
-        Customer savedCustomer;
-        try {
-            savedCustomer = authService.register(
-                    registerRequest.getEmail(),
-                    registerRequest.getPassword(),
-                    registerRequest.getBalance()
-            );
-        } catch (IllegalArgumentException ex) {
-            logger.warn("Registration failed for email='{}': {}", registerRequest.getEmail(), ex.getMessage());
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        } catch (Exception ex) {
-            logger.error("Unexpected error while registering email='{}': {}", registerRequest.getEmail(), ex.getMessage(), ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Registration failed due to an internal error"));
-        }
+        // Letting the exceptions propagate to GlobalExceptionHandler for error cases
+        Customer savedCustomer = authService.register(
+                registerRequest.getEmail(),
+                registerRequest.getPassword(),
+                registerRequest.getBalance()
+        );
 
-        // Building Location URI: /auth/account/{id}
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/account/{id}")
                 .buildAndExpand(savedCustomer.getId())
                 .toUri();
 
+        Map<String, Object> payload = Map.of("id", savedCustomer.getId());
+
+        ApiResponse<Map<String, Object>> body = ApiResponse.success(
+                201,
+                "Successfully registered",
+                request.getRequestURI(),
+                payload
+        );
+
         logger.info("User registered successfully: email='{}', id={}", savedCustomer.getEmail(), savedCustomer.getId());
-        return ResponseEntity.created(location).body(Map.of("message", "Successfully registered", "id", savedCustomer.getId()));
+
+        return ResponseEntity.created(location).body(body);
     }
 
     @PostMapping(path = "/login", consumes = "application/json")
