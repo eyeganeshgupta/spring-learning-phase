@@ -71,33 +71,36 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login", consumes = "application/json")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
+    public ResponseEntity<ApiResponse<Map<String, String>>> login(
+            @RequestBody Map<String, String> loginRequest,
+            HttpServletRequest request) {
+
         String email = loginRequest == null ? null : loginRequest.get("email");
         String password = loginRequest == null ? null : loginRequest.get("password");
 
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             logger.warn("Login attempt with missing credentials");
-            return ResponseEntity.badRequest().body(Map.of("error", "Both 'email' and 'password' must be provided"));
+            throw new IllegalArgumentException("Both 'email' and 'password' must be provided");
         }
 
         logger.info("Authentication attempt for email='{}'", email);
-        try {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
-            Authentication auth = authenticationManager.authenticate(token);
 
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication auth = authenticationManager.authenticate(token);
 
-            String jwt = authService.generateToken(email);
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
-            logger.info("Authentication successful for email='{}'", email);
-            return ResponseEntity.ok(Map.of("token", jwt));
-        } catch (AuthenticationException ex) {
-            logger.warn("Authentication failed for email='{}': {}", email, ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
-        } catch (Exception ex) {
-            logger.error("Unexpected error during authentication for email='{}': {}", email, ex.getMessage(), ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Authentication failed due to an internal error"));
-        }
+        String jwt = authService.generateToken(email);
+
+        ApiResponse<Map<String, String>> body = ApiResponse.success(
+                200,
+                "Authentication successful",
+                request.getRequestURI(),
+                Map.of("token", jwt)
+        );
+
+        logger.info("Authentication successful for email='{}'", email);
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping(path = "/account", produces = "application/json")
