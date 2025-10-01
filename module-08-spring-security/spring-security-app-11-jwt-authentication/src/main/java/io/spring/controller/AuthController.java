@@ -8,12 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -104,28 +102,27 @@ public class AuthController {
     }
 
     @GetMapping(path = "/account", produces = "application/json")
-    public ResponseEntity<?> getAccount() {
+    public ResponseEntity<ApiResponse<Customer>> getAccount(HttpServletRequest request) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null) {
             logger.warn("Unauthorized attempt to access /auth/account");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthenticated"));
+            throw new IllegalArgumentException("Unauthenticated");
         }
 
         String email = authentication.getName();
         logger.debug("Fetching account details for email='{}'", email);
 
-        try {
-            Customer customer = authService.getCustomerDetails(email);
-            if (customer == null) {
-                logger.info("No account found for email='{}'", email);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Account not found"));
-            }
-            logger.info("Account retrieved for email='{}', id={}", customer.getEmail(), customer.getId());
-            return ResponseEntity.ok(customer);
-        } catch (Exception ex) {
-            logger.error("Error retrieving account for email='{}': {}", email, ex.getMessage(), ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Failed to retrieve account"));
-        }
+        Customer customer = authService.getCustomerDetails(email);
+
+        ApiResponse<Customer> body = ApiResponse.success(
+                200,
+                "Account retrieved",
+                request.getRequestURI(),
+                customer
+        );
+
+        logger.info("Account retrieved for email='{}', id={}", customer.getEmail(), customer.getId());
+        return ResponseEntity.ok(body);
     }
 }
