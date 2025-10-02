@@ -1,59 +1,35 @@
 package io.spring.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-
-import io.jsonwebtoken.security.Keys;
-
-import java.util.Date;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class JwtUtil {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public JwtUtil() {
-        System.out.println("secretKey: " + secretKey);
-    }
+    private SecretKey signingKey;
 
-    private SecretKey getSigningKey() {
-        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
-        return key;
-    }
+    private static final long JWT_EXPIRATION_MS = 1000 * 60 * 60;
 
-    public String generateToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(getSigningKey())
-                .compact();
-    }
-
-    public Claims extractClaims(String token) {
-        JwtParser parser = Jwts.parserBuilder().setSigningKey(getSigningKey()).build();
-        Jws<Claims> claimsJws = parser.parseClaimsJws(token);
-        return claimsJws.getBody();
-    }
-
-    public String extractEmail(String token) {
-        Claims claims = extractClaims(token);
-        return claims.getSubject();
-    }
-
-    public boolean isTokenExpired(String token) {
-        return extractClaims(token).getExpiration().before(new Date());
-    }
-
-    public boolean validateToken(String token, String email) {
-        return (extractEmail(token).equals(email) && !isTokenExpired(token));
+    @PostConstruct
+    private void init() {
+        if (secretKey == null || secretKey.trim().isEmpty()) {
+            logger.error("JWT secret key is not configured");
+            throw new IllegalStateException("JWT secret key must not be null or empty");
+        }
+        this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        logger.info("JWT Utility initialized successfully");
     }
 
 }
