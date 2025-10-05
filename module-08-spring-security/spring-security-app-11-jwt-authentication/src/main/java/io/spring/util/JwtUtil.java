@@ -72,4 +72,16 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
+    public boolean isTokenExpired(String token) {
+        try {
+            boolean expired = extractClaims(token).getExpiration().before(new Date());
+            if (expired) {
+                logger.debug("JWT token is expired");
+            }
+            return expired;
+        } catch (ExpiredJwtException ex) {
+            return true;
+        }
+    }
+
 }
