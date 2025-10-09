@@ -20,9 +20,11 @@ public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     private final JwtRequestFilter jwtRequestFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
+    public SecurityConfig(JwtRequestFilter jwtRequestFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.jwtRequestFilter = jwtRequestFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
     @Bean
@@ -34,6 +36,11 @@ public class SecurityConfig {
             requests
                     .requestMatchers("/auth/register", "/auth/login").permitAll()
                     .anyRequest().authenticated();
+        });
+
+        http.exceptionHandling(exception -> {
+            logger.debug("Configuring custom authentication entry point for unauthorized access.");
+            exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
         });
 
         http.sessionManagement(session -> {
