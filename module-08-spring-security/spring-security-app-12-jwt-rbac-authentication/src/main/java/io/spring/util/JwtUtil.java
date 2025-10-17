@@ -46,4 +46,22 @@ public class JwtUtil {
         return token;
     }
 
+    public Claims extractClaims(String token) {
+        try {
+            JwtParser parser = Jwts.parserBuilder()
+                    .setSigningKey(signingKey)
+                    .build();
+
+            Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+            return claimsJws.getBody();
+
+        } catch (ExpiredJwtException ex) {
+            logger.warn("JWT token expired at {}", ex.getClaims().getExpiration());
+            throw ex;
+        } catch (JwtException ex) {
+            logger.error("Invalid JWT token: {}", ex.getMessage());
+            throw ex;
+        }
+    }
+
 }
