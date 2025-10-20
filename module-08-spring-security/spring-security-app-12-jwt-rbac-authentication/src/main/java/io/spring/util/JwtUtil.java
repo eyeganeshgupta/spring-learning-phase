@@ -81,4 +81,20 @@ public class JwtUtil {
         }
     }
 
+    public boolean validateToken(String token, String expectedEmail) {
+        try {
+            String actualEmail = extractEmail(token);
+            boolean valid = actualEmail.equals(expectedEmail) && !isTokenExpired(token);
+
+            if (valid) {
+                logger.debug("JWT validation succeeded for email='{}'", actualEmail);
+            } else {
+                logger.warn("JWT validation failed for expectedEmail='{}', actualEmail='{}'", expectedEmail, actualEmail);
+            }
+            return valid;
+        } catch (JwtException ex) {
+            logger.warn("JWT validation failed: {}", ex.getMessage());
+            return false;
+        }
+    }
 }
