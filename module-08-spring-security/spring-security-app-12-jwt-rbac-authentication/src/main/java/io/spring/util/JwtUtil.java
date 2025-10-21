@@ -10,15 +10,22 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 public class JwtUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
-    private static final long JWT_EXPIRATION_MS = 1000 * 60 * 60;
+
+    @Value("${jwt.expiration-ms:3600000}")
+    private long jwtExpirationMs;
+
     @Value("${jwt.secret}")
     private String secretKey;
+
     private SecretKey signingKey;
 
     @PostConstruct
@@ -28,21 +35,23 @@ public class JwtUtil {
             throw new IllegalStateException("JWT secret key must not be null or empty");
         }
         this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-        logger.info("JWT Utility initialized successfully");
+        logger.info("JWT utility initialized (token TTL = {} ms)", jwtExpirationMs);
     }
 
-    public String generateToken(String email) {
+    public String generateToken(String email, List<String> roles) {
+        Objects.requireNonNull(email, "email must not be null");
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
+        Date expiry = new Date(now.getTime() + jwtExpirationMs);
 
         String token = Jwts.builder()
                 .setSubject(email)
+                .claim("roles", roles == null ? Collections.emptyList() : roles)
                 .setIssuedAt(now)
-                .setExpiration(expiryDate)
+                .setExpiration(expiry)
                 .signWith(signingKey)
                 .compact();
 
-        logger.debug("Generated JWT token for email='{}', expiresAt={}", email, expiryDate);
+        logger.debug("Generated JWT for email='{}' with expiration={}", email, expiry);
         return token;
     }
 
@@ -53,13 +62,13 @@ public class JwtUtil {
                     .build();
 
             Jws<Claims> claimsJws = parser.parseClaimsJws(token);
-            return claimsJws.getBody();
 
+            return claimsJws.getBody();
         } catch (ExpiredJwtException ex) {
-            logger.warn("JWT token expired at {}", ex.getClaims().getExpiration());
+            logger.debug("Attempt to parse expired JWT (expiredAt={})", ex.getClaims() != null ? ex.getClaims().getExpiration() : "unknown");
             throw ex;
         } catch (JwtException ex) {
-            logger.error("Invalid JWT token: {}", ex.getMessage());
+            logger.warn("Failed to parse JWT: {}", ex.getMessage());
             throw ex;
         }
     }
@@ -71,29 +80,35 @@ public class JwtUtil {
 
     public boolean isTokenExpired(String token) {
         try {
-            boolean expired = extractClaims(token).getExpiration().before(new Date());
+            Date expiration = extractClaims(token).getExpiration();
+            boolean expired = expiration == null || expiration.before(new Date());
             if (expired) {
-                logger.debug("JWT token is expired");
+                logger.debug("JWT is expired (expiration={})", expiration);
             }
             return expired;
         } catch (ExpiredJwtException ex) {
+            return true;
+        } catch (JwtException ex) {
+            logger.debug("isTokenExpired check failed parsing token: {}", ex.getMessage());
             return true;
         }
     }
 
     public boolean validateToken(String token, String expectedEmail) {
         try {
-            String actualEmail = extractEmail(token);
-            boolean valid = actualEmail.equals(expectedEmail) && !isTokenExpired(token);
+            String subject = extractEmail(token);
+            boolean notExpired = !isTokenExpired(token);
+            boolean emailMatches = expectedEmail != null && expectedEmail.equals(subject);
+            boolean valid = emailMatches && notExpired;
 
             if (valid) {
-                logger.debug("JWT validation succeeded for email='{}'", actualEmail);
+                logger.debug("JWT validation successful for email='{}'", subject);
             } else {
-                logger.warn("JWT validation failed for expectedEmail='{}', actualEmail='{}'", expectedEmail, actualEmail);
+                logger.warn("JWT validation failed for expectedEmail='{}', tokenSubject='{}', expired={}", expectedEmail, subject, !notExpired);
             }
             return valid;
         } catch (JwtException ex) {
-            logger.warn("JWT validation failed: {}", ex.getMessage());
+            logger.warn("JWT validation error: {}", ex.getMessage());
             return false;
         }
     }
