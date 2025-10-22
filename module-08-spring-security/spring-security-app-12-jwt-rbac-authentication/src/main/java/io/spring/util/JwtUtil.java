@@ -94,6 +94,23 @@ public class JwtUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public List<String> extractRoles(String token) {
+        try {
+            Claims claims = extractClaims(token);
+            Object raw = claims.get("roles");
+            if (raw instanceof List) {
+                return (List<String>) raw;
+            } else {
+                logger.debug("Roles claim missing or not a list; returning empty list");
+                return Collections.emptyList();
+            }
+        } catch (JwtException ex) {
+            logger.debug("Failed to extract roles from token: {}", ex.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
     public boolean validateToken(String token, String expectedEmail) {
         try {
             String subject = extractEmail(token);
