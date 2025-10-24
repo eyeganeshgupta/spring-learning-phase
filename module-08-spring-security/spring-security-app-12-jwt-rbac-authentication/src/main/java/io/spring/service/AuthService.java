@@ -9,27 +9,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
+/**
+ * Service responsible for registration, customer lookup and token generation.
+ */
 @Service
 @Transactional
-public class AuthService {
+public final class AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     private static final String DEFAULT_ROLE = "ROLE_USER";
+    private static final Set<String> ALLOWED_ROLES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("ROLE_USER", "ROLE_ADMIN")));
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public AuthService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public AuthService(CustomerRepository customerRepository,
+                       PasswordEncoder passwordEncoder,
+                       JwtUtil jwtUtil) {
         this.customerRepository = Objects.requireNonNull(customerRepository, "customerRepository must not be null");
         this.passwordEncoder = Objects.requireNonNull(passwordEncoder, "passwordEncoder must not be null");
-        this.jwtUtil = jwtUtil;
+        this.jwtUtil = Objects.requireNonNull(jwtUtil, "jwtUtil must not be null");
     }
 
-    public Customer register(String email, String rawPassword, Double initialBalance) {
+    public Customer register(String email, String rawPassword, Double initialBalance, String role) {
         if (email == null || email.trim().isEmpty()) {
             logger.warn("Attempt to register with empty or null email");
             throw new IllegalArgumentException("Email must not be empty");
@@ -39,13 +45,13 @@ public class AuthService {
             throw new IllegalArgumentException("Password must not be empty");
         }
 
-        final String normalizedEmail = email.trim().toLowerCase();
+        final String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
         final double balance = initialBalance == null ? 0.0 : initialBalance;
+        final String resolvedRole = resolveRole(role);
 
-        logger.info("Registration requested for email='{}'", normalizedEmail);
+        logger.info("Registration requested for email='{}' with role='{}'", normalizedEmail, resolvedRole);
 
-        Optional<Customer> existing = customerRepository.findByEmail(normalizedEmail);
-        if (existing.isPresent()) {
+        if (customerRepository.findByEmail(normalizedEmail).isPresent()) {
             logger.debug("Registration failed: email '{}' already in use", normalizedEmail);
             throw new IllegalArgumentException("An account with the provided email already exists");
         }
@@ -55,19 +61,17 @@ public class AuthService {
         Customer customer = new Customer();
         customer.setEmail(normalizedEmail);
         customer.setPassword(encodedPassword);
-        customer.setRole(DEFAULT_ROLE);
+        customer.setRole(resolvedRole);
         customer.setBalance(balance);
 
-        Customer saved;
         try {
-            saved = customerRepository.save(customer);
-            logger.info("Successfully registered new customer with email='{}', id={}", normalizedEmail, saved.getId());
+            Customer saved = customerRepository.save(customer);
+            logger.info("Successfully registered new customer email='{}', id={}", normalizedEmail, saved.getId());
+            return saved;
         } catch (Exception ex) {
             logger.error("Failed to persist customer with email='{}'. Reason: {}", normalizedEmail, ex.getMessage(), ex);
             throw new IllegalStateException("Unable to complete registration at this time", ex);
         }
-
-        return saved;
     }
 
     public Customer getCustomerDetails(String email) {
@@ -76,32 +80,77 @@ public class AuthService {
             throw new IllegalArgumentException("Email must not be empty");
         }
 
-        final String normalizedEmail = email.trim().toLowerCase();
+        final String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
         logger.debug("Fetching customer details for email='{}'", normalizedEmail);
 
-        Optional<Customer> customerOpt;
         try {
-            customerOpt = customerRepository.findByEmail(normalizedEmail);
+            return customerRepository.findByEmail(normalizedEmail)
+                    .map(customer -> {
+                        logger.info("Successfully retrieved details for customer email='{}', id={}", normalizedEmail, customer.getId());
+                        return customer;
+                    })
+                    .orElseThrow(() -> {
+                        logger.info("No customer found with email='{}'", normalizedEmail);
+                        return new IllegalArgumentException("Customer with the provided email does not exist");
+                    });
+        } catch (IllegalArgumentException ex) {
+            throw ex;
         } catch (Exception ex) {
-            logger.error("Error while retrieving customer details for email='{}'. Reason: {}",
-                    normalizedEmail, ex.getMessage(), ex);
+            logger.error("Error while retrieving customer details for email='{}'. Reason: {}", normalizedEmail, ex.getMessage(), ex);
             throw new IllegalStateException("Unable to retrieve customer details at this time", ex);
         }
-
-        if (customerOpt.isEmpty()) {
-            logger.info("No customer found with email='{}'", normalizedEmail);
-            throw new IllegalArgumentException("Customer with the provided email does not exist");
-        }
-
-        Customer customer = customerOpt.get();
-        logger.info("Successfully retrieved details for customer with email='{}', id={}",
-                normalizedEmail, customer.getId());
-
-        return customer;
     }
 
     public String generateToken(String email) {
-        return jwtUtil.generateToken(email);
+        if (email == null || email.trim().isEmpty()) {
+            logger.warn("Attempt to generate token with empty or null email");
+            throw new IllegalArgumentException("Email must not be empty");
+        }
+
+        final String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+        logger.debug("Generating token for email='{}'", normalizedEmail);
+
+        Customer customer = customerRepository.findByEmail(normalizedEmail)
+                .orElseThrow(() -> {
+                    logger.info("Cannot generate token: no customer found for email='{}'", normalizedEmail);
+                    return new IllegalArgumentException("Customer with the provided email does not exist");
+                });
+
+        List<String> roles = extractRolesFromCustomer(customer);
+        try {
+            String token = jwtUtil.generateToken(normalizedEmail, roles);
+            logger.info("Token generated for email='{}' (roles={})", normalizedEmail, roles);
+            return token;
+        } catch (Exception ex) {
+            logger.error("Failed to generate JWT for email='{}'. Reason: {}", normalizedEmail, ex.getMessage(), ex);
+            throw new IllegalStateException("Failed to generate authentication token", ex);
+        }
     }
 
+    private static String resolveRole(String role) {
+        if (role == null || role.trim().isEmpty()) {
+            return DEFAULT_ROLE;
+        }
+        String normalized = role.trim().toUpperCase(Locale.ROOT);
+        if (!ALLOWED_ROLES.contains(normalized)) {
+            throw new IllegalArgumentException("Role must be one of " + ALLOWED_ROLES);
+        }
+        return normalized;
+    }
+
+    private static List<String> extractRolesFromCustomer(Customer customer) {
+        if (customer == null || customer.getRole() == null || customer.getRole().trim().isEmpty()) {
+            return Collections.singletonList(DEFAULT_ROLE);
+        }
+        String raw = customer.getRole().trim();
+
+        String[] parts = raw.split("\\s*,\\s*");
+        List<String> roles = new ArrayList<>();
+        for (String p : parts) {
+            if (!p.isEmpty()) {
+                roles.add(p.toUpperCase(Locale.ROOT));
+            }
+        }
+        return roles.isEmpty() ? Collections.singletonList(DEFAULT_ROLE) : roles;
+    }
 }
