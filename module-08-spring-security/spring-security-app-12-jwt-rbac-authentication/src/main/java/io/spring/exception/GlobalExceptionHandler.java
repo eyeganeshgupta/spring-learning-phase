@@ -127,4 +127,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ApiError> handleAllUncaught(Exception ex, HttpServletRequest request) {
+        String path = request != null ? request.getRequestURI() : null;
+        ApiError body = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                "An unexpected error occurred",
+                path);
+        logger.error("Unhandled exception for request '{}': {}", path, ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+    }
 }
