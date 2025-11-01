@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -64,6 +67,39 @@ public class AuthController {
         logger.info("User registered successfully: email='{}', id={}", savedCustomer.getEmail(), savedCustomer.getId());
 
         return ResponseEntity.created(location).body(body);
+    }
+
+    @PostMapping(path = "/login", consumes = "application/json")
+    public ResponseEntity<ApiResponse<Map<String, String>>> login(
+            @RequestBody Map<String, String> loginRequest,
+            HttpServletRequest request) {
+
+        String email = loginRequest == null ? null : loginRequest.get("email");
+        String password = loginRequest == null ? null : loginRequest.get("password");
+
+        if (email == null || email.isBlank() || password == null || password.isBlank()) {
+            logger.warn("Login attempt with missing credentials");
+            throw new IllegalArgumentException("Both 'email' and 'password' must be provided");
+        }
+
+        logger.info("Authentication attempt for email='{}'", email);
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication auth = authenticationManager.authenticate(token);
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        String jwt = authService.generateToken(email);
+
+        ApiResponse<Map<String, String>> body = ApiResponse.success(
+                200,
+                "Authentication successful",
+                request.getRequestURI(),
+                Map.of("token", jwt)
+        );
+
+        logger.info("Authentication successful for email='{}'", email);
+        return ResponseEntity.ok(body);
     }
 
 }
