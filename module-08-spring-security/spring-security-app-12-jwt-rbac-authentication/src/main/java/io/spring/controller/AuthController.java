@@ -102,4 +102,28 @@ public class AuthController {
         return ResponseEntity.ok(body);
     }
 
+    @GetMapping(path = "/account", produces = "application/json")
+    public ResponseEntity<ApiResponse<Customer>> getAccount(HttpServletRequest request) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null) {
+            logger.warn("Unauthorized attempt to access /auth/account");
+            throw new IllegalArgumentException("Unauthenticated");
+        }
+
+        String email = authentication.getName();
+        logger.debug("Fetching account details for email='{}'", email);
+
+        Customer customer = authService.getCustomerDetails(email);
+
+        ApiResponse<Customer> body = ApiResponse.success(
+                200,
+                "Account retrieved",
+                request.getRequestURI(),
+                customer
+        );
+
+        logger.info("Account retrieved for email='{}', id={}", customer.getEmail(), customer.getId());
+        return ResponseEntity.ok(body);
+    }
 }
