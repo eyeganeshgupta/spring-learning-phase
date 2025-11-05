@@ -58,4 +58,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        logger.info("Initializing BCryptPasswordEncoder...");
+        return new BCryptPasswordEncoder();
+    }
+
 }
