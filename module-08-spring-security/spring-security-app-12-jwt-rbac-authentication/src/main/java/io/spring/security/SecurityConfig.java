@@ -64,4 +64,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+        logger.info("Retrieving AuthenticationManager from AuthenticationConfiguration");
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }
