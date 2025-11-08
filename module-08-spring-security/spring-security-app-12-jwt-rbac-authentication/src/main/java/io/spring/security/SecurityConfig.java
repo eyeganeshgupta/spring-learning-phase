@@ -35,6 +35,8 @@ public class SecurityConfig {
             logger.debug("Setting up public endpoints for '/auth/register' and '/auth/login'");
             requests
                     .requestMatchers("/auth/register", "/auth/login").permitAll()
+                    .requestMatchers("/auth/account").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/auth/admin/all-accounts").hasRole("ADMIN")
                     .anyRequest().authenticated();
         });
 
