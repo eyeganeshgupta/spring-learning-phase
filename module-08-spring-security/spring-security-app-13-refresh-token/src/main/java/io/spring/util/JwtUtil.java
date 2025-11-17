@@ -111,4 +111,22 @@ public class JwtUtil {
         }
     }
 
+    public boolean validateToken(String token, String expectedEmail) {
+        try {
+            String subject = extractEmail(token);
+            boolean notExpired = !isTokenExpired(token);
+            boolean emailMatches = expectedEmail != null && expectedEmail.equals(subject);
+            boolean valid = emailMatches && notExpired;
+
+            if (valid) {
+                logger.debug("JWT validation successful for email='{}'", subject);
+            } else {
+                logger.warn("JWT validation failed for expectedEmail='{}', tokenSubject='{}', expired={}", expectedEmail, subject, !notExpired);
+            }
+            return valid;
+        } catch (JwtException ex) {
+            logger.warn("JWT validation error: {}", ex.getMessage());
+            return false;
+        }
+    }
 }
