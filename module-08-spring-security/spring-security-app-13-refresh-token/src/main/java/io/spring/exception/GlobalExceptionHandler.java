@@ -2,6 +2,8 @@ package io.spring.exception;
 
 import io.spring.dto.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -44,6 +47,23 @@ public class GlobalExceptionHandler {
                 path,
                 details);
         logger.warn("Validation error for request '{}': {}", path, details);
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException ex,
+                                                                 HttpServletRequest request) {
+        List<String> details = ex.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+        String path = request != null ? request.getRequestURI() : null;
+        ApiError body = new ApiError(HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Constraint violations",
+                path,
+                details);
+        logger.warn("Constraint violations for request '{}': {}", path, details);
         return ResponseEntity.badRequest().body(body);
     }
 
