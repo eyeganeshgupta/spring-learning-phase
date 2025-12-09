@@ -101,4 +101,30 @@ public final class AuthService {
         }
     }
 
+    public String generateToken(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            logger.warn("Attempt to generate token with empty or null email");
+            throw new IllegalArgumentException("Email must not be empty");
+        }
+
+        final String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+        logger.debug("Generating token for email='{}'", normalizedEmail);
+
+        Customer customer = customerRepository.findByEmail(normalizedEmail)
+                .orElseThrow(() -> {
+                    logger.info("Cannot generate token: no customer found for email='{}'", normalizedEmail);
+                    return new IllegalArgumentException("Customer with the provided email does not exist");
+                });
+
+        List<String> roles = extractRolesFromCustomer(customer);
+        try {
+            String token = jwtUtil.generateToken(normalizedEmail, roles);
+            logger.info("Token generated for email='{}' (roles={})", normalizedEmail, roles);
+            return token;
+        } catch (Exception ex) {
+            logger.error("Failed to generate JWT for email='{}'. Reason: {}", normalizedEmail, ex.getMessage(), ex);
+            throw new IllegalStateException("Failed to generate authentication token", ex);
+        }
+    }
+
 }
