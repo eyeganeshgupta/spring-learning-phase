@@ -127,4 +127,15 @@ public final class AuthService {
         }
     }
 
+    private static String resolveRole(String role) {
+        if (role == null || role.trim().isEmpty()) {
+            return DEFAULT_ROLE;
+        }
+        String normalized = role.trim().toUpperCase(Locale.ROOT);
+        if (!ALLOWED_ROLES.contains(normalized)) {
+            throw new IllegalArgumentException("Role must be one of " + ALLOWED_ROLES);
+        }
+        return normalized;
+    }
+
 }
