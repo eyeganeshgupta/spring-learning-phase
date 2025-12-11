@@ -138,4 +138,19 @@ public final class AuthService {
         return normalized;
     }
 
+    private static List<String> extractRolesFromCustomer(Customer customer) {
+        if (customer == null || customer.getRole() == null || customer.getRole().trim().isEmpty()) {
+            return Collections.singletonList(DEFAULT_ROLE);
+        }
+        String raw = customer.getRole().trim();
+
+        String[] parts = raw.split("\\s*,\\s*");
+        List<String> roles = new ArrayList<>();
+        for (String p : parts) {
+            if (!p.isEmpty()) {
+                roles.add(p.toUpperCase(Locale.ROOT));
+            }
+        }
+        return roles.isEmpty() ? Collections.singletonList(DEFAULT_ROLE) : roles;
+    }
 }
