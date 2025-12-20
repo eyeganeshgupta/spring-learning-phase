@@ -126,5 +126,4 @@ public class AuthController {
         logger.info("Account retrieved for email='{}', id={}", customer.getEmail(), customer.getId());
         return ResponseEntity.ok(body);
     }
-
 }
