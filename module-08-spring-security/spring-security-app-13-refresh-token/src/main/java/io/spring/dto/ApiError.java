@@ -50,4 +50,5 @@ public class ApiError {
     public List<String> getDetails() {
         return details;
     }
+    
 }
