@@ -66,5 +66,4 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         out.write(jsonPayload);
         out.flush();
     }
-
 }
