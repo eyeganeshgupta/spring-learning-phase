@@ -53,5 +53,4 @@ public class ApiResponse<T> {
     public T getData() {
         return data;
     }
-    
 }
