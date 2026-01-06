@@ -153,5 +153,4 @@ public final class AuthService {
         }
         return roles.isEmpty() ? Collections.singletonList(DEFAULT_ROLE) : roles;
     }
-
 }
