@@ -73,4 +73,5 @@ public class SecurityConfig {
         logger.info("Retrieving AuthenticationManager from AuthenticationConfiguration");
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 }
