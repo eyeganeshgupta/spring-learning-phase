@@ -137,5 +137,4 @@ public class GlobalExceptionHandler {
         logger.error("Unhandled exception for request '{}': {}", path, ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
-
 }
