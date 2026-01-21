@@ -44,4 +44,5 @@ public class SecureCustomerService implements UserDetailsService {
 
         return new User(customer.getEmail(), customer.getPassword(), authorities);
     }
+
 }
